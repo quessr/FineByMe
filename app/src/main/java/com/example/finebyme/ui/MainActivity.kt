@@ -1,7 +1,8 @@
-package com.example.finebyme
+package com.example.finebyme.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.finebyme.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
