@@ -1,11 +1,19 @@
+import java.util.Properties
+import java.io.File
+import java.io.FileInputStream
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
 
+val properties = Properties().apply {
+    load(FileInputStream(File(project.rootProject.projectDir, "local.properties")))
+}
+
 android {
     namespace = "com.example.finebyme"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.finebyme"
@@ -15,6 +23,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "UNSPLASH_API_KEY", properties["UNSPLASH_API_KEY"] as String)
     }
 
     buildTypes {
@@ -33,6 +43,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -45,8 +59,17 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    // retrofit2
+    //retrofit2
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+
+    //okHttp3
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.8.0")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.9.1")
+
+    //moshi
+    implementation ("com.squareup.retrofit2:converter-moshi:2.11.0")
+
 }
