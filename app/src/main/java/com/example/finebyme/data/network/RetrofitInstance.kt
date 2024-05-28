@@ -10,11 +10,10 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 object RetrofitInstance {
-    val API_KEY = BuildConfig.UNSPLASH_API_KEY
+    private const val BASE_URL = "https://api.unsplash.com/"
+    private val API_KEY = BuildConfig.UNSPLASH_API_KEY
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -28,29 +27,23 @@ object RetrofitInstance {
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
-            .baseUrl("https://api.unsplash.com/")
+            .baseUrl(BASE_URL)
             .build()
 
     }
 
-
-    interface UnsplashApi {
-        @GET("/photos/random")
-        fun getRandomPhoto(@Query("client_id") clientId: String = RetrofitInstance.API_KEY,
-                           @Query("count") count: Int): retrofit2.Call<List<Photo>>
-        @GET("/search/photos/")
-        fun getSearchPhoto(@Query("client_id") clientId: String = RetrofitInstance.API_KEY,
-                           @Query("query") query: String): retrofit2.Call<SearchPhotoResponse>
-    }
-
-    val api: UnsplashApi by lazy {
-        retrofit.create(UnsplashApi::class.java)
+    val retrofitService: RetrofitService by lazy {
+        retrofit.create(RetrofitService::class.java)
     }
 
     fun fetchRandomPhoto() {
-        val call = api.getRandomPhoto(count = 5)
-        call.enqueue(object  : retrofit2.Callback<List<Photo>> {
-            override fun onResponse(p0: retrofit2.Call<List<Photo>>, response: retrofit2.Response<List<Photo>>) {
+        val service = RetrofitInstance.retrofitService
+
+        service.getRandomPhoto(API_KEY, 5).enqueue(object : retrofit2.Callback<List<Photo>> {
+            override fun onResponse(
+                p0: retrofit2.Call<List<Photo>>,
+                response: retrofit2.Response<List<Photo>>
+            ) {
                 if (response.isSuccessful) {
                     val photos = response.body()
                     if (!photos.isNullOrEmpty()) {
@@ -72,20 +65,25 @@ object RetrofitInstance {
     }
 
     fun fetchSearchPhoto() {
-        val call = api.getSearchPhoto(query = "고양이")
-        call.enqueue(object  : retrofit2.Callback<SearchPhotoResponse> {
-            override fun onResponse(p0: retrofit2.Call<SearchPhotoResponse>, response: retrofit2.Response<SearchPhotoResponse>) {
-                if (response.isSuccessful) {
-                    Log.d("RetrofitInstance", "Response: ${response.body()}")
-                } else {
-                    Log.e("RetrofitInstance", "Error: ${response.errorBody()?.string()}")
-                }
-            }
+        val service = RetrofitInstance.retrofitService
 
-            override fun onFailure(p0: retrofit2.Call<SearchPhotoResponse>, t: Throwable) {
-                Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
-            }
-        })
+        service.getSearchPhoto(API_KEY, "고양이")
+            .enqueue(object : retrofit2.Callback<SearchPhotoResponse> {
+                override fun onResponse(
+                    p0: retrofit2.Call<SearchPhotoResponse>,
+                    response: retrofit2.Response<SearchPhotoResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("RetrofitInstance", "Response: ${response.body()}")
+                    } else {
+                        Log.e("RetrofitInstance", "Error: ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(p0: retrofit2.Call<SearchPhotoResponse>, t: Throwable) {
+                    Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
+                }
+            })
     }
 }
 
