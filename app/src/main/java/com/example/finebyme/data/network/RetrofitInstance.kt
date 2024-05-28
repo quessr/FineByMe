@@ -1,26 +1,17 @@
 package com.example.finebyme.data.network
 
-import android.telecom.Call
 import android.util.Log
 import com.example.finebyme.BuildConfig
-import com.example.finebyme.data.model.AlternativeSlugs
 import com.example.finebyme.data.model.Photo
 import com.example.finebyme.data.model.SearchPhotoResponse
-import com.google.gson.internal.GsonBuildConfig
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import io.reactivex.internal.operators.flowable.FlowableCount
 import okhttp3.OkHttpClient
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.create
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.sql.RowId
 
 object RetrofitInstance {
     val API_KEY = BuildConfig.UNSPLASH_API_KEY
@@ -64,7 +55,7 @@ object RetrofitInstance {
                     val photos = response.body()
                     if (!photos.isNullOrEmpty()) {
                         for (photo in photos) {
-                            Log.d("RetrofitInstance", "Topic : ${photo.alternativeSlugs?.ko}")
+                            Log.d("RetrofitInstance", "Topic : ${photo.title?.ko}")
                         }
                     } else {
                         Log.d("RetrofitInstance", "No photos found")
