@@ -46,6 +46,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        viewBinding = true
     }
 }
 
@@ -74,4 +75,7 @@ dependencies {
 
     // Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+
+    // Fragment
+    implementation("androidx.fragment:fragment-ktx:1.5.5")
 }
