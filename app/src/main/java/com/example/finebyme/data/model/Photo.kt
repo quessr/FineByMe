@@ -1,4 +1,19 @@
 package com.example.finebyme.data.model
 
-class Photo {
-}
+import com.squareup.moshi.Json
+
+data class Photo(
+    @Json(name = "id") val id: String,
+    @Json(name = "alternative_slugs") val alternativeSlugs: AlternativeSlugs?,
+    @Json(name = "description") val description: String?,
+    @Json(name = "urls") val urls: Urls,
+)
+
+data class Urls(
+    @Json(name = "full") val full: String,
+    @Json(name = "thumb") val thumb: String
+)
+
+data class AlternativeSlugs(
+    @Json(name = "ko") val ko: String
+)
