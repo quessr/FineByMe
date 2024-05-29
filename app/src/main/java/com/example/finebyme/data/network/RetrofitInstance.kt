@@ -2,6 +2,7 @@ package com.example.finebyme.data.network
 
 import android.util.Log
 import com.example.finebyme.BuildConfig
+import com.example.finebyme.data.model.Photo
 import com.example.finebyme.utils.NetworkUtils.enqueueCall
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -35,23 +36,23 @@ object RetrofitInstance {
         retrofit.create(RetrofitService::class.java)
     }
 
-    fun fetchRandomPhoto() {
+    fun fetchRandomPhoto(onResult: (List<Photo>?) -> Unit) {
         val service = RetrofitInstance.retrofitService
 
         enqueueCall(
-            service.getRandomPhoto(API_KEY, 5),
+            service.getRandomPhoto(API_KEY, 16),
             onSuccess = { response ->
                 val photos = response.body()
                 if (!photos.isNullOrEmpty()) {
-                    for (photo in photos) {
-                        Log.d("RetrofitInstance", "Title : ${photo.title?.ko}")
-                    }
+                    onResult(photos)
                 } else {
                     Log.d("RetrofitInstance", "No photos found")
+                    onResult(null)
                 }
             },
             onFailure = { t ->
                 Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
+                onResult(null)
             })
     }
 
