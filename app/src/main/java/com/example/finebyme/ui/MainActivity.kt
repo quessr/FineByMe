@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity() {
 
         setFragment(HomeFragment())
 
-        RetrofitInstance.fetchRandomPhoto()
-        RetrofitInstance.fetchSearchPhoto()
     }
 
     private fun setFragment( frag : Fragment ) {
