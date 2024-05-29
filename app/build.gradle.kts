@@ -78,4 +78,11 @@ dependencies {
 
     // Fragment
     implementation("androidx.fragment:fragment-ktx:1.5.5")
+
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    // Recyclerview
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 }
