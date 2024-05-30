@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.home
+package com.example.finebyme.ui.photoList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

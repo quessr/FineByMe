@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.details
+package com.example.finebyme.ui.photoDetail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.finebyme.R
 
-class DetailsFragment : Fragment() {
+class PhotoDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
