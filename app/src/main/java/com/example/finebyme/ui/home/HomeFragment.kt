@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.finebyme.R
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.network.RetrofitService
@@ -19,6 +22,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +33,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,8 +42,16 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         _binding = FragmentHomeBinding.bind(view)
 
         photoAdapter = PhotoAdapter()
+
+        recyclerView = binding.recyclerView
+        val numberOfColumns = 2
+
+//        recyclerView.layoutManager = StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
+        val layoutManager = StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        recyclerView.layoutManager = layoutManager
+
         binding.recyclerView.adapter = photoAdapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(context)
 
         RetrofitInstance.fetchRandomPhoto{ photos -> photos?.let { photoAdapter.setPhoto(it) } }
     }
@@ -46,5 +59,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        photoAdapter.clearData()
+
     }
 }
