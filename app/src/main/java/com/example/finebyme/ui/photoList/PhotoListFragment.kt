@@ -12,14 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.finebyme.R
-import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.databinding.FragmentHomeBinding
+import com.example.finebyme.databinding.FragmentPhotoListBinding
 
-class PhotoListFragment : Fragment(R.layout.fragment_home) {
+class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
     private lateinit var photoAdapter: PhotoAdapter
     private val photoListViewModel: PhotoListViewModel by viewModels()
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentPhotoListBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
 
@@ -32,13 +31,13 @@ class PhotoListFragment : Fragment(R.layout.fragment_home) {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater)
+        _binding = FragmentPhotoListBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentHomeBinding.bind(view)
+        _binding = FragmentPhotoListBinding.bind(view)
 
         photoAdapter = PhotoAdapter()
 
