@@ -40,7 +40,7 @@ object RetrofitInstance {
         val service = RetrofitInstance.retrofitService
 
         enqueueCall(
-            service.getRandomPhoto(API_KEY, 16),
+            service.getRandomPhoto(API_KEY, 80),
             onSuccess = { response ->
                 val photos = response.body()
                 if (!photos.isNullOrEmpty()) {
