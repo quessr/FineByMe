@@ -19,10 +19,20 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        Glide.with(this).asGif()
-            .load(R.drawable.camera).circleCrop().into(binding.imageViewSplash)
-        binding.imageViewSplash.visibility = View.VISIBLE
+        loadGifImage()
+        navigateToMainActivity()
+    }
 
+    private fun loadGifImage() {
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.camera)
+            .circleCrop()
+            .into(binding.imageViewSplash)
+        binding.imageViewSplash.visibility = View.VISIBLE
+    }
+
+    private fun navigateToMainActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
