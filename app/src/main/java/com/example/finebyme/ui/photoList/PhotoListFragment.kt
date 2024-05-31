@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -14,6 +16,7 @@ import com.example.finebyme.databinding.FragmentHomeBinding
 
 class PhotoListFragment : Fragment(R.layout.fragment_home) {
     private lateinit var photoAdapter: PhotoAdapter
+    private val photoListViewModel: PhotoListViewModel by viewModels()
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -48,7 +51,8 @@ class PhotoListFragment : Fragment(R.layout.fragment_home) {
 
         binding.recyclerView.adapter = photoAdapter
 
-        RetrofitInstance.fetchRandomPhoto{ photos -> photos?.let { photoAdapter.setPhoto(it) } }
+//        RetrofitInstance.fetchRandomPhoto{ photos -> photos?.let { photoAdapter.setPhoto(it) } }
+        photoListViewModel.photos.observe(viewLifecycleOwner, Observer { photos -> photoAdapter.setPhoto(photos) })
     }
 
     override fun onDestroyView() {
