@@ -8,8 +8,8 @@
     android:background="#000">
     <ImageView
         android:id="@+id/imageViewSplash"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

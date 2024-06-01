@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.finebyme.R
 import com.example.finebyme.databinding.ActivityMainBinding
 import com.example.finebyme.databinding.ActivitySplashBinding
@@ -28,6 +29,7 @@ class SplashActivity : AppCompatActivity() {
             .asGif()
             .load(R.drawable.camera)
             .circleCrop()
+            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
             .into(binding.imageViewSplash)
         binding.imageViewSplash.visibility = View.VISIBLE
     }
