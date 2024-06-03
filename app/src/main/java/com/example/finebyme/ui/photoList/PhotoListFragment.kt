@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -63,10 +64,12 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
                     Glide.with(this).asGif()
                         .load(R.drawable.loading).into(binding.imageViewLoading)
                     binding.imageViewLoading.visibility = View.VISIBLE
+                    binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
                 }
 
                 PhotoListViewModel.State.DONE -> {
                     binding.imageViewLoading.visibility = View.GONE
+                    binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
                 }
 
                 PhotoListViewModel.State.ERROR -> {
