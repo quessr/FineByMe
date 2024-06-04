@@ -16,12 +16,12 @@ interface PhotoDao {
     fun getPhoto(id: Int): Photo
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(photo: Photo)
+    fun insert(photo: Photo)
 
     @Update
-    suspend fun update(photo: Photo)
+    fun update(photo: Photo)
 
     @Delete
-    suspend fun delete(photo: Photo)
+    fun delete(photo: Photo)
 
 }
