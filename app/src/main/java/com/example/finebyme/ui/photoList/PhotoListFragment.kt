@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.finebyme.R
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 
-class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
+class PhotoListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
     private val photoListViewModel: PhotoListViewModel by viewModels()
 
@@ -38,14 +38,11 @@ class PhotoListFragment : Fragment(R.layout.fragment_photo_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentPhotoListBinding.bind(view)
 
         photoAdapter = PhotoAdapter()
-
         recyclerView = binding.recyclerView
-        val numberOfColumns = 2
 
-//        recyclerView.layoutManager = StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
+        val numberOfColumns = 2
         val layoutManager =
             StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
