@@ -1,5 +1,6 @@
 package com.example.finebyme.data.model
 
+import com.example.finebyme.data.db.Photo
 import com.squareup.moshi.Json
 
 data class UnsplashPhoto(
@@ -17,3 +18,12 @@ data class Urls(
 data class AlternativeSlugs(
     @Json(name = "ko") val ko: String
 )
+
+fun UnsplashPhoto.toPhoto(): Photo {
+    return Photo(
+        title = title?.ko ?: "No title",
+        description = description,
+        fullUrl = urls.full,
+        thumbUrl = urls.thumb
+    )
+}
