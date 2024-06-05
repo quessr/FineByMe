@@ -5,11 +5,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
-    <fragment
+    <FrameLayout
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/frameLayout"
-        android:name="com.example.finebyme.ui.photoList.PhotoListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bottom_nav_background"
+        app:itemBackground="@android:color/transparent"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemActiveIndicatorStyle="@android:color/transparent"
+        app:labelVisibilityMode="unlabeled"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
