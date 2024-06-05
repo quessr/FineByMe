@@ -27,12 +27,14 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
-                    PhotoListFragment().changeFragment()
+//                    PhotoListFragment().changeFragment()
+                    changeFragment(PhotoListFragment::class.java.name)
                     Log.d("BottomNav", "Home selected")
                 }
 
                 R.id.nav_favorite -> {
-                    FavoriteListFragment().changeFragment()
+//                    FavoriteListFragment().changeFragment()
+                    changeFragment(FavoriteListFragment::class.java.name)
                     Log.d("BottomNav", "Favorite selected")
                 }
             }
@@ -41,16 +43,30 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun Fragment.changeFragment() {
+    private fun changeFragment(tag: String) {
+        // 현재 프래그먼트 찾기
+        var fragment = supportFragmentManager.findFragmentByTag(tag)
+
+        if (fragment == null) {
+            fragment = when (tag) {
+                PhotoListFragment::class.java.name -> PhotoListFragment()
+                FavoriteListFragment::class.java.name -> FavoriteListFragment()
+                else ->  throw  IllegalStateException("Unknown fragment tag: $tag")
+            }
+        }
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.frameLayout, this)
+            .replace(R.id.frameLayout, fragment, tag)
+            .setReorderingAllowed(true)
+            .addToBackStack(null)
             .commit()
     }
 
     fun showInit() {
-        val transaction = supportFragmentManager.beginTransaction()
-            .add(R.id.frameLayout, PhotoListFragment())
-        transaction.commit()
+//        val transaction = supportFragmentManager.beginTransaction()
+//            .add(R.id.frameLayout, PhotoListFragment())
+//        transaction.commit()
+        changeFragment(PhotoListFragment::class.java.name)
     }
 
 }
