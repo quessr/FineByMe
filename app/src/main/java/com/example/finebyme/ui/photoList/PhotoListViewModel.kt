@@ -3,7 +3,7 @@ package com.example.finebyme.ui.photoList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.finebyme.data.model.Photo
+import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitInstance
 
 class PhotoListViewModel : ViewModel() {
@@ -14,8 +14,8 @@ class PhotoListViewModel : ViewModel() {
         ERROR
     }
 
-    private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
-    val photos: LiveData<List<Photo>> get() = _photos
+    private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
+    val photos: LiveData<List<UnsplashPhoto>> get() = _photos
 
     private val _state: MutableLiveData<State> by lazy { MutableLiveData() }
     val state: LiveData<State> get() = _state

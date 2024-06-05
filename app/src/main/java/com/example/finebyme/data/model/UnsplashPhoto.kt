@@ -2,7 +2,7 @@ package com.example.finebyme.data.model
 
 import com.squareup.moshi.Json
 
-data class Photo(
+data class UnsplashPhoto(
     @Json(name = "id") val id: String,
     @Json(name = "alternative_slugs") val title: AlternativeSlugs?,
     @Json(name = "description") val description: String?,

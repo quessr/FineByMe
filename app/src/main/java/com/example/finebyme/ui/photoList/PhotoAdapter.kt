@@ -6,30 +6,30 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.finebyme.data.model.Photo
+import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.databinding.ItemPhotoBinding
 import java.util.Random
 
 class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
-    private var photoList: List<Photo> = listOf()
+    private var unsplashPhotoList: List<UnsplashPhoto> = listOf()
     private var heights = mutableMapOf<Int, Int>()
 
-    fun setPhoto(photos: List<Photo>) {
-        this.photoList = photos
+    fun setPhoto(unsplashPhotos: List<UnsplashPhoto>) {
+        this.unsplashPhotoList = unsplashPhotos
         heights.clear() // 사진 목록이 업데이트될 때 높이 정보 초기화
         notifyDataSetChanged()
     }
 
     class PhotoViewHolder(private val binding: ItemPhotoBinding): RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(photo: Photo, height: Int) {
+        fun bind(unsplashPhoto: UnsplashPhoto, height: Int) {
             // 이미지 초기화
             Glide.with(binding.imageViewPhoto.context).clear(binding.imageViewPhoto)
             binding.imageViewPhoto.setImageDrawable(null)
 
             Glide.with(binding.imageViewPhoto.context)
-                .load(photo.urls.thumb)
+                .load(unsplashPhoto.urls.thumb)
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.imageViewPhoto)
@@ -62,13 +62,13 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
         val scale = holder.itemView.context.resources.displayMetrics.density
         val heightInPx = (randomHeight * scale + 0.5f).toInt()
 
-        holder.bind(photoList[position], heightInPx)
+        holder.bind(unsplashPhotoList[position], heightInPx)
     }
 
-    override fun getItemCount(): Int = photoList.size
+    override fun getItemCount(): Int = unsplashPhotoList.size
 
     fun clearData() {
-        photoList = listOf()
+        unsplashPhotoList = listOf()
         notifyDataSetChanged()
     }
 }

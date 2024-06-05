@@ -2,7 +2,7 @@ package com.example.finebyme.data.network
 
 import android.util.Log
 import com.example.finebyme.BuildConfig
-import com.example.finebyme.data.model.Photo
+import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.utils.NetworkUtils.enqueueCall
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -36,7 +36,7 @@ object RetrofitInstance {
         retrofit.create(RetrofitService::class.java)
     }
 
-    fun fetchRandomPhoto(onResult: (List<Photo>?) -> Unit) {
+    fun fetchRandomPhoto(onResult: (List<UnsplashPhoto>?) -> Unit) {
         val service = RetrofitInstance.retrofitService
 
         enqueueCall(

@@ -1,6 +1,6 @@
 package com.example.finebyme.data.network
 
-import com.example.finebyme.data.model.Photo
+import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.model.SearchPhotoResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -10,7 +10,7 @@ interface RetrofitService {
     fun getRandomPhoto(
         @Query("client_id") clientId: String,
         @Query("count") count: Int
-    ): retrofit2.Call<List<Photo>>
+    ): retrofit2.Call<List<UnsplashPhoto>>
 
     @GET("/search/photos/")
     fun getSearchPhoto(
