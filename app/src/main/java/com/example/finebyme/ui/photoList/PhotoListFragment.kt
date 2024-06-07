@@ -13,11 +13,21 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.finebyme.R
+import com.example.finebyme.data.db.FavoritePhotosDatabase
+import com.example.finebyme.data.repository.FavoritePhotosImpl
+import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 
 class PhotoListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
-    private val photoListViewModel: PhotoListViewModel by viewModels()
+
+    //    private val photoListViewModel: PhotoListViewModel by viewModels()
+    private val photoListViewModel: PhotoListViewModel by viewModels {
+        val application = requireActivity().application
+        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
+        PhotoListViewModelFactory(application, favoritePhotosRepository)
+    }
 
     private var _binding: FragmentPhotoListBinding? = null
     private val binding get() = _binding!!
@@ -38,6 +48,9 @@ class PhotoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // db test를 위한 코드
+//        photoListViewModel.setContext(requireContext())
 
         photoAdapter = PhotoAdapter()
         recyclerView = binding.recyclerView
@@ -61,12 +74,22 @@ class PhotoListFragment : Fragment() {
                     Glide.with(this).asGif()
                         .load(R.drawable.loading).into(binding.imageViewLoading)
                     binding.imageViewLoading.visibility = View.VISIBLE
-                    binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    binding.root.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.white
+                        )
+                    )
                 }
 
                 PhotoListViewModel.State.DONE -> {
                     binding.imageViewLoading.visibility = View.GONE
-                    binding.root.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.black))
+                    binding.root.setBackgroundColor(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.black
+                        )
+                    )
                 }
 
                 PhotoListViewModel.State.ERROR -> {
@@ -80,6 +103,5 @@ class PhotoListFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         photoAdapter.clearData()
-
     }
 }
