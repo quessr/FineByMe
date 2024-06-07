@@ -8,11 +8,11 @@ import androidx.room.RoomDatabase
 @Database(entities = arrayOf(Photo::class), version = 1, exportSchema = false)
 public abstract class FavoritePhotosDatabase : RoomDatabase() {
 
-    abstract fun PhotoDao() : PhotoDao
+    abstract fun PhotoDao(): PhotoDao
 
     companion object {
         @Volatile
-        private var INSTANCE: FavoritePhotosDatabase?= null
+        private var INSTANCE: FavoritePhotosDatabase? = null
 
         fun getDatabase(context: Context): FavoritePhotosDatabase {
             return INSTANCE ?: synchronized(this) {
@@ -20,7 +20,9 @@ public abstract class FavoritePhotosDatabase : RoomDatabase() {
                     context.applicationContext,
                     FavoritePhotosDatabase::class.java,
                     "favorite_photos_database"
-                ).build()
+                )
+                    .allowMainThreadQueries()
+                    .build()
                 INSTANCE = instance
                 instance
             }
