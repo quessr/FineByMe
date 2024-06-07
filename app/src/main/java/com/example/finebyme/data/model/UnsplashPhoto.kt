@@ -27,3 +27,8 @@ fun UnsplashPhoto.toPhoto(): Photo {
         thumbUrl = urls.thumb
     )
 }
+
+// List<UnsplashPhoto>를 List<Photo>로 변환하는 함수
+fun List<UnsplashPhoto>.toPhotoList(): List<Photo> {
+    return this.map { it.toPhoto() }
+}

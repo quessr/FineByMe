@@ -14,9 +14,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.finebyme.R
 import com.example.finebyme.data.db.FavoritePhotosDatabase
+import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.repository.FavoritePhotosImpl
-import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.databinding.FragmentPhotoListBinding
+import com.example.finebyme.di.AppViewModelFactory
 
 class PhotoListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
@@ -26,7 +27,7 @@ class PhotoListFragment : Fragment() {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
         val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
-        PhotoListViewModelFactory(application, favoritePhotosRepository)
+        AppViewModelFactory(application, favoritePhotosRepository)
     }
 
     private var _binding: FragmentPhotoListBinding? = null
@@ -66,7 +67,8 @@ class PhotoListFragment : Fragment() {
 //        RetrofitInstance.fetchRandomPhoto{ photos -> photos?.let { photoAdapter.setPhoto(it) } }
         photoListViewModel.photos.observe(
             viewLifecycleOwner,
-            Observer { photos -> photoAdapter.setPhoto(photos) })
+            Observer { photos ->
+                photoAdapter.setPhoto(photos.toPhotoList()) })
 
         photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
