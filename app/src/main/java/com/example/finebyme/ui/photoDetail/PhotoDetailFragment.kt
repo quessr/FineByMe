@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -26,6 +27,7 @@ class PhotoDetailFragment : Fragment() {
     private var _binding: FragmentPhotoDetailBinding?= null
     private val binding get() = _binding!!
     private var photo: Photo? = null
+    private lateinit var viewModel: PhotoDetailViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +35,7 @@ class PhotoDetailFragment : Fragment() {
         arguments?.let {
             photo = it.getParcelable(ARG_PHOTO)
         }
+        viewModel = ViewModelProvider(this).get(PhotoDetailViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -58,7 +61,8 @@ class PhotoDetailFragment : Fragment() {
                 .centerCrop()
                 .into(binding.ivPhoto)
 
-            val transformedTitle = it?.title?.replace("-", " ")?.split(" ")?.dropLast(1)?.joinToString(" ")
+            // 타이틀 변환
+            val transformedTitle = it?.title?.let { title -> viewModel.transformTitle(title) }
 
             binding.tvTitle.text = transformedTitle
             binding.tvDescription.text = it?.description
