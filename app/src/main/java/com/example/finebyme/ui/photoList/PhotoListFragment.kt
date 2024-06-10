@@ -14,12 +14,26 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.finebyme.R
 import com.example.finebyme.data.db.FavoritePhotosDatabase
+import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
+import com.example.finebyme.ui.photoDetail.PhotoDetailFragment
 
 class PhotoListFragment : Fragment() {
+    companion object {
+        private const val ARG_PHOTO = "photo"
+
+        fun newInstance(photo: Photo): PhotoDetailFragment {
+            val fragment = PhotoDetailFragment()
+            val args = Bundle()
+            args.putParcelable(ARG_PHOTO, photo)
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
     private lateinit var photoAdapter: PhotoAdapter
 
     //    private val photoListViewModel: PhotoListViewModel by viewModels()
@@ -97,6 +111,16 @@ class PhotoListFragment : Fragment() {
                 PhotoListViewModel.State.ERROR -> {
                     binding.imageViewLoading.visibility = View.GONE
                 }
+            }
+        })
+
+        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
+            override fun onPhotoClick(photo: Photo) {
+                val fragment = PhotoListFragment.newInstance(photo)
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.frameLayout, fragment)
+                    .addToBackStack(null)
+                    .commit()
             }
         })
     }
