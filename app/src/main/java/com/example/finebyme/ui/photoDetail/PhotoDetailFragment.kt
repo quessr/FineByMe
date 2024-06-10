@@ -1,6 +1,7 @@
 package com.example.finebyme.ui.photoDetail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +58,9 @@ class PhotoDetailFragment : Fragment() {
                 .centerCrop()
                 .into(binding.ivPhoto)
 
-            binding.tvTitle.text = it?.title
+            val transformedTitle = it?.title?.replace("-", " ")?.split(" ")?.dropLast(1)?.joinToString(" ")
+
+            binding.tvTitle.text = transformedTitle
             binding.tvDescription.text = it?.description
         }
     }
