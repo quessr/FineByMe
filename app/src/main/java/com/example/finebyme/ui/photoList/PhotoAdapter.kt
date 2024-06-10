@@ -15,6 +15,8 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     private var photoList: List<Photo> = listOf()
     private var heights = mutableMapOf<Int, Int>()
+    private var listener: OnPhotoClickListener? = null
+
 
     fun setPhoto(favoritePhotoList: List<Photo>) {
         this.photoList = favoritePhotoList
@@ -22,7 +24,11 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class PhotoViewHolder(private val binding: ItemPhotoBinding): RecyclerView.ViewHolder(binding.root) {
+    interface OnPhotoClickListener {
+        fun onPhotoClick(photo: Photo)
+    }
+
+    class PhotoViewHolder(private val binding: ItemPhotoBinding, private val listener: OnPhotoClickListener?): RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo, height: Int) {
             // 이미지 초기화
@@ -41,12 +47,17 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
             val layoutParams = binding.root.layoutParams
             layoutParams.height = height
             binding.root.layoutParams = layoutParams
+
+            // 사진 클릭 이벤트 설정
+            binding.imageViewPhoto.setOnClickListener {
+                listener?.onPhotoClick(photo)
+            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PhotoViewHolder(binding)
+        return PhotoViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -68,8 +79,14 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     override fun getItemCount(): Int = photoList.size
 
+    fun setOnPhotoClickListener(listener: OnPhotoClickListener) {
+        this.listener = listener
+    }
+
     fun clearData() {
         photoList = listOf()
         notifyDataSetChanged()
     }
+
+
 }
