@@ -116,7 +116,7 @@ class PhotoListFragment : Fragment() {
 
         photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
             override fun onPhotoClick(photo: Photo) {
-                val fragment = PhotoListFragment.newInstance(photo)
+                val fragment = newInstance(photo)
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.frameLayout, fragment)
                     .addToBackStack(null)
