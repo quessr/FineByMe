@@ -16,6 +16,16 @@
         app:layout_constraintDimensionRatio="1:1" />
 
     <ImageView
+        android:id="@+id/iv_loading"
+        app:layout_constraintTop_toTopOf="@+id/iv_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
+        app:layout_constraintStart_toStartOf="@+id/iv_photo"
+        app:layout_constraintEnd_toEndOf="@+id/iv_photo"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:visibility="gone"/>
+
+    <ImageView
         app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginVertical="16dp"
