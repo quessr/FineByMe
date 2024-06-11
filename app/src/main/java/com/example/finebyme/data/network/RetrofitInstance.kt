@@ -26,7 +26,8 @@ object RetrofitInstance {
         .build()
 
     private val retrofit: Retrofit by lazy {
-        Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi))
+        Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .baseUrl(BASE_URL)
             .build()
@@ -40,9 +41,10 @@ object RetrofitInstance {
         val service = RetrofitInstance.retrofitService
 
         enqueueCall(
-            service.getRandomPhoto(API_KEY, 80),
+            service.getRandomPhoto(API_KEY, 500),
             onSuccess = { response ->
                 val photos = response.body()
+//                val photos = response.body()?.filter { it.description != null }
                 if (!photos.isNullOrEmpty()) {
                     onResult(photos)
                 } else {

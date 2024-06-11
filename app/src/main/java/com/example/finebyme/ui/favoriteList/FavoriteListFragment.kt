@@ -52,8 +52,8 @@ class FavoriteListFragment : Fragment() {
 //        RetrofitInstance.fetchRandomPhoto { photos -> photos?.let { photoAdapter.setPhoto(it) } }
 
         favoriteListViewModel.photos.observe(
-            viewLifecycleOwner,
-            { photos -> photoAdapter.setPhoto(photos) })
+            viewLifecycleOwner
+        ) { photos -> photoAdapter.setPhoto(photos) }
     }
 
     override fun onDestroyView() {
