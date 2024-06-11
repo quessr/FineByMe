@@ -1,5 +1,7 @@
 package com.example.finebyme.ui.photoList
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -19,18 +21,25 @@ import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
+import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
 import com.example.finebyme.ui.photoDetail.PhotoDetailFragment
 
 class PhotoListFragment : Fragment() {
     companion object {
         private const val ARG_PHOTO = "photo"
 
-        fun newInstance(photo: Photo): PhotoDetailFragment {
-            val fragment = PhotoDetailFragment()
-            val args = Bundle()
-            args.putParcelable(ARG_PHOTO, photo)
-            fragment.arguments = args
-            return fragment
+//        fun newInstance(photo: Photo): PhotoDetailFragment {
+//            val fragment = PhotoDetailFragment()
+//            val args = Bundle()
+//            args.putParcelable(ARG_PHOTO, photo)
+//            fragment.arguments = args
+//            return fragment
+//        }
+
+        fun newIntent(context: Context, photo: Photo): Intent {
+            return Intent(context, PhotoDetailActivity::class.java).apply {
+                putExtra(ARG_PHOTO, photo)
+            }
         }
     }
 
@@ -114,13 +123,20 @@ class PhotoListFragment : Fragment() {
             }
         })
 
-        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
+//        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
+//            override fun onPhotoClick(photo: Photo) {
+//                val fragment = newInstance(photo)
+//                parentFragmentManager.beginTransaction()
+//                    .replace(R.id.frameLayout, fragment)
+//                    .addToBackStack(null)
+//                    .commit()
+//            }
+//        })
+
+        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener{
             override fun onPhotoClick(photo: Photo) {
-                val fragment = newInstance(photo)
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.frameLayout, fragment)
-                    .addToBackStack(null)
-                    .commit()
+                val intent = newIntent(requireContext(), photo)
+                startActivity(intent)
             }
         })
     }
