@@ -57,6 +57,9 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private fun setupPhotoDetails() {
         photo?.let {
+            binding.ivLoading.visibility = View.GONE
+            binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+
             Glide.with(this)
                 .load(it.fullUrl)
                 .centerCrop()
@@ -79,12 +82,12 @@ class PhotoDetailActivity : AppCompatActivity() {
             .override(40, 40)
             .into(binding.ivLoading)
         binding.ivLoading.visibility = View.VISIBLE
-        binding.root.setBackgroundColor(
-            ContextCompat.getColor(
-                this,
-                R.color.white
-            )
-        )
+//        binding.root.setBackgroundColor(
+//            ContextCompat.getColor(
+//                this,
+//                R.color.white
+//            )
+//        )
     }
 
     private fun showError() {
