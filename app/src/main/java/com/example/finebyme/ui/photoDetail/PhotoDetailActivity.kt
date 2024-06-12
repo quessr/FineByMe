@@ -2,6 +2,7 @@ package com.example.finebyme.ui.photoDetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -33,12 +34,12 @@ class PhotoDetailActivity() : AppCompatActivity() {
     private var photo: Photo? = null
     private var isFavorite = false
     private lateinit var viewModel: PhotoDetailViewModel
-    private val photoListViewModel: PhotoListViewModel by viewModels {
-        val application = this.application
-        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
-        AppViewModelFactory(application, favoritePhotosRepository)
-    }
+//    private val photoListViewModel: PhotoListViewModel by viewModels {
+//        val application = this.application
+//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+//        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
+//        AppViewModelFactory(application, favoritePhotosRepository)
+//    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,15 +50,21 @@ class PhotoDetailActivity() : AppCompatActivity() {
         photo = intent.getParcelableExtra(ARG_PHOTO)
         viewModel = ViewModelProvider(this).get(PhotoDetailViewModel::class.java)
 
-        setupPhotoDetails()
+//        photoListViewModel.state.observe(this, Observer { state ->
+//            when (state) {
+//                PhotoListViewModel.State.LOADING -> showLoading()
+//                PhotoListViewModel.State.DONE -> setupPhotoDetails()
+//                PhotoListViewModel.State.ERROR -> showError()
+//            }
+//        })
+        if (photo != null) {
+            // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
+            viewModel.onEntryScreen(photo!!)
+        }
 
-        photoListViewModel.state.observe(this, Observer { state ->
-            when (state) {
-                PhotoListViewModel.State.LOADING -> showLoading()
-                PhotoListViewModel.State.DONE -> setupPhotoDetails()
-                PhotoListViewModel.State.ERROR -> showError()
-            }
-        })
+        viewModel.transformedPhoto.observe(this) { transformedPhoto ->
+            setupPhotoDetails(transformedPhoto)
+        }
 
         binding.ivFavorite.setOnClickListener {
             isFavorite = !isFavorite
@@ -71,31 +78,26 @@ class PhotoDetailActivity() : AppCompatActivity() {
         }
     }
 
-    private fun setupPhotoDetails() {
+    private fun setupPhotoDetails(photo: Photo) {
         photo?.let {
             binding.ivLoading.visibility = View.GONE
             binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
 
-            Glide.with(this)
-                .load(it.fullUrl)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.ivPhoto)
+            Glide.with(this).load(it.fullUrl).centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade()).into(binding.ivPhoto)
 
             val transformedTitle = it.title?.let { title ->
                 viewModel.transformTitle(title)
             }
             binding.tvTitle.text = transformedTitle
             binding.tvDescription.text = it?.description
+
+            Log.d("@@@@@@", " photo id : ${photo!!.id}")
         }
     }
 
     private fun showLoading() {
-        Glide.with(this)
-            .asGif()
-            .load(R.drawable.loading)
-            .centerCrop()
-            .override(40, 40)
+        Glide.with(this).asGif().load(R.drawable.loading).centerCrop().override(40, 40)
             .into(binding.ivLoading)
         binding.ivLoading.visibility = View.VISIBLE
 //        binding.root.setBackgroundColor(
