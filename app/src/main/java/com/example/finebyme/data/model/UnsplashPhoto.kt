@@ -21,6 +21,7 @@ data class AlternativeSlugs(
 
 fun UnsplashPhoto.toPhoto(): Photo {
     return Photo(
+        id = id,
         title = title?.ko ?: "No title",
         description = description ?: "이 사진에는 별도의 설명이 제공되지 않습니다.\n이 사진에는 별도의 설명이 제공되지 않습니다.\n이 사진에는 별도의 설명이 제공되지 않습니다.\n",
         fullUrl = urls.full,

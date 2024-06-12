@@ -11,8 +11,8 @@ import kotlinx.parcelize.Parcelize
 /**@Parcelize 어노테이션은 Kotlin에서 Parcelable 인터페이스의 구현을 자동화해 주는 기능입니다.*/
 @Entity(tableName = "favorite_photos")
 data class Photo(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey()
+    var id: String,
     val title: String,
     val description: String?,
     val fullUrl: String,
