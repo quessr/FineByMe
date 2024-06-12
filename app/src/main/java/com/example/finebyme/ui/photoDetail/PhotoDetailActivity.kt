@@ -3,6 +3,7 @@ package com.example.finebyme.ui.photoDetail
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
@@ -15,12 +16,14 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.finebyme.R
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
+import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.FavoritePhotosImpl
+import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.ui.photoList.PhotoListViewModel
 
-class PhotoDetailActivity : AppCompatActivity() {
+class PhotoDetailActivity() : AppCompatActivity() {
 
     companion object {
         private const val ARG_PHOTO = "photo"
@@ -28,6 +31,7 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoDetailBinding
     private var photo: Photo? = null
+    private var isFavorite = false
     private lateinit var viewModel: PhotoDetailViewModel
     private val photoListViewModel: PhotoListViewModel by viewModels {
         val application = this.application
@@ -35,6 +39,7 @@ class PhotoDetailActivity : AppCompatActivity() {
         val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
         AppViewModelFactory(application, favoritePhotosRepository)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +58,17 @@ class PhotoDetailActivity : AppCompatActivity() {
                 PhotoListViewModel.State.ERROR -> showError()
             }
         })
+
+        binding.ivFavorite.setOnClickListener {
+            isFavorite = !isFavorite
+
+            if (isFavorite) {
+                binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
+
+            } else {
+                binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
+            }
+        }
     }
 
     private fun setupPhotoDetails() {
