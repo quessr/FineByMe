@@ -32,7 +32,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoDetailBinding
     private var photo: Photo? = null
-    private var isFavorite = false
     private lateinit var viewModel: PhotoDetailViewModel
 //    private val photoListViewModel: PhotoListViewModel by viewModels {
 //        val application = this.application
@@ -50,31 +49,26 @@ class PhotoDetailActivity() : AppCompatActivity() {
         photo = intent.getParcelableExtra(ARG_PHOTO)
         viewModel = ViewModelProvider(this).get(PhotoDetailViewModel::class.java)
 
-//        photoListViewModel.state.observe(this, Observer { state ->
-//            when (state) {
-//                PhotoListViewModel.State.LOADING -> showLoading()
-//                PhotoListViewModel.State.DONE -> setupPhotoDetails()
-//                PhotoListViewModel.State.ERROR -> showError()
-//            }
-//        })
+
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
             viewModel.onEntryScreen(photo!!)
         }
 
+        setupObservers()
+
+        binding.ivFavorite.setOnClickListener {
+            viewModel.toggleFavorite()
+        }
+    }
+
+    private fun setupObservers() {
         viewModel.transformedPhoto.observe(this) { transformedPhoto ->
             setupPhotoDetails(transformedPhoto)
         }
 
-        binding.ivFavorite.setOnClickListener {
-            isFavorite = !isFavorite
-
-            if (isFavorite) {
-                binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
-
-            } else {
-                binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
-            }
+        viewModel.isFavorite.observe(this) { isFavorite ->
+            updateFavoriteIcon(isFavorite)
         }
     }
 
@@ -93,6 +87,15 @@ class PhotoDetailActivity() : AppCompatActivity() {
             binding.tvDescription.text = it?.description
 
             Log.d("@@@@@@", " photo id : ${photo!!.id}")
+        }
+    }
+
+    private fun updateFavoriteIcon(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
+
+        } else {
+            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
         }
     }
 
