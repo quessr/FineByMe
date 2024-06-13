@@ -57,10 +57,12 @@ class PhotoDetailActivity() : AppCompatActivity() {
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
             viewModel.onEntryScreen(photo!!)
+        } else {
+            finish()
         }
 
         setupObservers()
-
+        // TODO: setupListener()
         binding.ivFavorite.setOnClickListener {
             viewModel.toggleFavorite()
         }
