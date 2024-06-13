@@ -1,5 +1,8 @@
 package com.example.finebyme.ui.photoDetail
 
+import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,9 +14,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.example.finebyme.R
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
@@ -39,7 +46,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
 //        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
 //        AppViewModelFactory(application, favoritePhotosRepository)
 //    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,20 +82,51 @@ class PhotoDetailActivity() : AppCompatActivity() {
         viewModel.isFavorite.observe(this) { isFavorite ->
             updateFavoriteIcon(isFavorite)
         }
+
+        viewModel.state.observe(this) { state ->
+            if (state.equals(PhotoDetailViewModel.State.LOADING)) {
+                showLoading()
+            } else binding.ivLoading.visibility = View.GONE
+        }
     }
 
     private fun setupPhotoDetails(photo: Photo) {
         photo?.let {
-            binding.ivLoading.visibility = View.GONE
+
             binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
 
-            Glide.with(this).load(it.fullUrl).centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade()).into(binding.ivPhoto)
+            Glide.with(this)
+                .load(it.fullUrl)
+                .centerCrop()
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        viewModel.onPhotoLoadFail()
+                        return false
+                    }
 
-            val transformedTitle = it.title?.let { title ->
-                viewModel.transformTitle(title)
-            }
-            binding.tvTitle.text = transformedTitle
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        model: Any,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        viewModel.onPhotoLoadCompleted()
+                        return false
+                    }
+                })
+                .into(binding.ivPhoto)
+
+//            val transformedTitle = it.title?.let { title ->
+//                viewModel.transformTitle(title)
+//            }
+            binding.tvTitle.text = it.title
             binding.tvDescription.text = it?.description
 
             Log.d("@@@@@@", " photo id : ${photo!!.id}")
@@ -106,18 +143,13 @@ class PhotoDetailActivity() : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        Glide.with(this).asGif().load(R.drawable.loading).centerCrop().override(40, 40)
-            .into(binding.ivLoading)
         binding.ivLoading.visibility = View.VISIBLE
-//        binding.root.setBackgroundColor(
-//            ContextCompat.getColor(
-//                this,
-//                R.color.white
-//            )
-//        )
-    }
 
-    private fun showError() {
-        // TODO
+        Glide.with(this)
+            .asGif()
+            .load(R.drawable.loading)
+            .centerCrop()
+            .override(40, 40)
+            .into(binding.ivLoading)
     }
 }
