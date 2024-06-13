@@ -16,6 +16,8 @@ class PhotoDetailViewModel : ViewModel() {
         val transformTitle = transformTitle(photo.title)
         val transformedPhoto = photo.copy(title = transformTitle)
         _transformedPhoto.value = transformedPhoto
+        photo.title = transformTitle
+        _transformedPhoto.value = photo
     }
 
     fun transformTitle(title: String): String {

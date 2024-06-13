@@ -13,7 +13,7 @@ import kotlinx.parcelize.Parcelize
 data class Photo(
     @PrimaryKey()
     var id: String,
-    val title: String,
+    var title: String,
     val description: String?,
     val fullUrl: String,
     val thumbUrl: String,
