@@ -46,9 +46,13 @@ class PhotoDetailActivity() : AppCompatActivity() {
         binding = ActivityPhotoDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        photo = intent.getParcelableExtra(ARG_PHOTO)
-        viewModel = ViewModelProvider(this).get(PhotoDetailViewModel::class.java)
-
+        photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
+        } else {
+            @Suppress("DEPRECATION")
+            intent.getParcelableExtra(ARG_PHOTO)
+        }
+        viewModel = ViewModelProvider(this)[PhotoDetailViewModel::class.java]
 
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
