@@ -7,11 +7,12 @@ import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.FavoritePhotosRepository
+import com.example.finebyme.ui.base.BaseViewModel
 
 class PhotoListViewModel(
     application: Application,
     private val favoritePhotosRepository: FavoritePhotosRepository
-) : AndroidViewModel(application) {
+) : BaseViewModel(application) {
 
     enum class State {
         LOADING,
