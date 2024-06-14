@@ -7,10 +7,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
+import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.ui.base.BaseViewModel
 import java.lang.Appendable
 
-class FavoriteListViewModel(application: Application) : BaseViewModel(application) {
+class FavoriteListViewModel(
+    application: Application,
+    private val favoritePhotosRepository: FavoritePhotosRepository
+) : BaseViewModel(application) {
     private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
     val photos: LiveData<List<Photo>> get() = _photos
 

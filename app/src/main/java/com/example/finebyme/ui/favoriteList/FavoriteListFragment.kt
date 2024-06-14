@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.finebyme.data.db.FavoritePhotosDatabase
+import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.di.AppViewModelFactory
@@ -17,7 +19,9 @@ class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
     private val favoriteListViewModel: FavoriteListViewModel by viewModels {
         val application = requireActivity().application
-        AppViewModelFactory(application)
+        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
+        AppViewModelFactory(application, favoritePhotosRepository)
     }
 
     private var _binding: FragmentFavoriteListBinding? = null
