@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.ui.favoriteList.FavoriteListViewModel
+import com.example.finebyme.ui.photoDetail.PhotoDetailViewModel
 import com.example.finebyme.ui.photoList.PhotoListViewModel
 
 class AppViewModelFactory(
@@ -19,6 +20,10 @@ class AppViewModelFactory(
 
             modelClass.isAssignableFrom(PhotoListViewModel::class.java) -> {
                 favoritePhotosRepository?.let { PhotoListViewModel(application, it) } as T
+            }
+
+            modelClass.isAssignableFrom(PhotoDetailViewModel::class.java) -> {
+                favoritePhotosRepository?.let { PhotoDetailViewModel(application, it) } as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class")
