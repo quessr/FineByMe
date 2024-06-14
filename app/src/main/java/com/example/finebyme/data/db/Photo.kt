@@ -17,6 +17,7 @@ data class Photo(
     val description: String?,
     val fullUrl: String,
     val thumbUrl: String,
+    val inputAt: Long = System.currentTimeMillis()
 ) : Parcelable
 /**Parcelable은 Android에서 객체를 직렬화하기 위한 인터페이스입니다.
  * 객체를 직렬화하면 객체의 상태를 저장하거나 다른 컴포넌트 간에 객체를 전달할 수 있게 됩니다.

@@ -9,7 +9,7 @@ import androidx.room.Update
 
 @Dao
 interface PhotoDao {
-    @Query("SELECT * from favorite_photos ORDER BY title ASC")
+    @Query("SELECT * from favorite_photos ORDER BY inputAt DESC")
     fun getAllPhotos(): List<Photo>
 
     @Query("SELECT * from favorite_photos WHERE id = :id")
