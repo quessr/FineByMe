@@ -5,7 +5,7 @@ import com.example.finebyme.data.db.Photo
 interface FavoritePhotosRepository {
     fun getAllPhotos(): List<Photo>
 
-    fun getPhoto(id: Int): Photo
+    fun getPhoto(id: String): Photo
 
     fun insertPhoto(photo: Photo)
 

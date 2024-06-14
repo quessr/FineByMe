@@ -12,8 +12,8 @@ interface PhotoDao {
     @Query("SELECT * from favorite_photos ORDER BY inputAt DESC")
     fun getAllPhotos(): List<Photo>
 
-    @Query("SELECT * from favorite_photos WHERE id = :id")
-    fun getPhoto(id: Int): Photo
+    @Query("SELECT * from favorite_photos WHERE id = :id LIMIT 1")
+    fun getPhoto(id: String): Photo
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(photo: Photo)
