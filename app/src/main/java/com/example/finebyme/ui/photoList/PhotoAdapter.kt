@@ -9,18 +9,17 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.databinding.ItemPhotoBinding
+import com.example.finebyme.ui.base.BaseViewModel
 import java.util.Random
 
-class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
+class PhotoAdapter(private val viewModel: BaseViewModel): RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     private var photoList: List<Photo> = listOf()
-    private var heights = mutableMapOf<Int, Int>()
     private var listener: OnPhotoClickListener? = null
 
 
     fun setPhoto(favoritePhotoList: List<Photo>) {
         this.photoList = favoritePhotoList
-        heights.clear() // 사진 목록이 업데이트될 때 높이 정보 초기화
         notifyDataSetChanged()
     }
 
@@ -35,6 +34,9 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
             Glide.with(binding.imageViewPhoto.context).clear(binding.imageViewPhoto)
             binding.imageViewPhoto.setImageDrawable(null)
 
+            // 뷰의 높이 설정
+            binding.imageViewPhoto.layoutParams.height = height
+
             Glide.with(binding.imageViewPhoto.context)
                 .load(photo.thumbUrl)
                 .centerCrop()
@@ -42,11 +44,6 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
                 .into(binding.imageViewPhoto)
 
             binding.imageViewPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
-
-            // 뷰의 높이 설정
-            val layoutParams = binding.root.layoutParams
-            layoutParams.height = height
-            binding.root.layoutParams = layoutParams
 
             // 사진 클릭 이벤트 설정
             binding.imageViewPhoto.setOnClickListener {
@@ -61,18 +58,12 @@ class PhotoAdapter: RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val minHeight = 100 // dp
-        val maxHeight = 300 // dp
-        val randomHeight: Int = if (heights.containsKey(position)) {
-            heights[position]!!
-        } else {
-            Random().nextInt(maxHeight - minHeight + 1) + minHeight
-        }
-        heights[position] = randomHeight // 높이 저장
+        val height = viewModel.getPhotoHeight(position)
 
         // dp를 px로 변환
         val scale = holder.itemView.context.resources.displayMetrics.density
-        val heightInPx = (randomHeight * scale + 0.5f).toInt()
+        val heightInPx = (height * scale + 0.5f).toInt()
+
 
         holder.bind(photoList[position], heightInPx)
     }
