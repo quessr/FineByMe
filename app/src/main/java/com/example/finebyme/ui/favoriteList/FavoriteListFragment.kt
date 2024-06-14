@@ -23,6 +23,7 @@ class FavoriteListFragment : Fragment() {
     private var _binding: FragmentFavoriteListBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
+    private var isPass = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -54,6 +55,15 @@ class FavoriteListFragment : Fragment() {
         favoriteListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos -> photoAdapter.setPhoto(photos) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isPass) {
+            isPass = false
+            return
+        }
+        favoriteListViewModel.onResumeScreen()
     }
 
     override fun onDestroyView() {

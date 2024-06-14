@@ -21,7 +21,12 @@ class FavoriteListViewModel(application: Application) : BaseViewModel(applicatio
         fetchFavoritePhotos()
     }
 
+    fun onResumeScreen() {
+        fetchFavoritePhotos()
+    }
+
     private fun fetchFavoritePhotos() {
         _photos.postValue(photoDao.getAllPhotos())
     }
+
 }
