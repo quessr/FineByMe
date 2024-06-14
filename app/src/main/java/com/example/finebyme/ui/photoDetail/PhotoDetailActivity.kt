@@ -39,7 +39,11 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoDetailBinding
     private var photo: Photo? = null
-    private lateinit var viewModel: PhotoDetailViewModel
+    private val viewModel: PhotoDetailViewModel by viewModels {
+        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
+        AppViewModelFactory(application, favoritePhotosRepository)
+    }
 //    private val photoListViewModel: PhotoListViewModel by viewModels {
 //        val application = this.application
 //        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
@@ -58,7 +62,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(ARG_PHOTO)
         }
-        viewModel = ViewModelProvider(this)[PhotoDetailViewModel::class.java]
+//        viewModel = ViewModelProvider(this)[PhotoDetailViewModel::class.java]
 
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
@@ -70,7 +74,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
         setupObservers()
         // TODO: setupListener()
         binding.ivFavorite.setOnClickListener {
-            viewModel.toggleFavorite()
+            photo?.let { it1 -> viewModel.toggleFavorite(it1) }
         }
     }
 
