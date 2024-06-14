@@ -39,7 +39,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoDetailBinding
     private var photo: Photo? = null
-    private val viewModel: PhotoDetailViewModel by viewModels {
+    private val photoDetailViewModel: PhotoDetailViewModel by viewModels {
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
         val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
         AppViewModelFactory(application, favoritePhotosRepository)
@@ -66,7 +66,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
-            viewModel.onEntryScreen(photo!!)
+            photoDetailViewModel.onEntryScreen(photo!!)
         } else {
             finish()
         }
@@ -75,19 +75,20 @@ class PhotoDetailActivity() : AppCompatActivity() {
         // TODO: setupListener()
         binding.ivFavorite.setOnClickListener {
             photo?.let { it1 -> viewModel.toggleFavorite(it1) }
+            photo?.let { photo -> photoDetailViewModel.toggleFavorite(photo) }
         }
     }
 
     private fun setupObservers() {
-        viewModel.transformedPhoto.observe(this) { transformedPhoto ->
+        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
             setupPhotoDetails(transformedPhoto)
         }
 
-        viewModel.isFavorite.observe(this) { isFavorite ->
+        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
             updateFavoriteIcon(isFavorite)
         }
 
-        viewModel.state.observe(this) { state ->
+        photoDetailViewModel.state.observe(this) { state ->
             if (state.equals(PhotoDetailViewModel.State.LOADING)) {
                 showLoading()
             } else binding.ivLoading.visibility = View.GONE
@@ -110,7 +111,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
                         target: Target<Drawable>,
                         isFirstResource: Boolean
                     ): Boolean {
-                        viewModel.onPhotoLoadFail()
+                        photoDetailViewModel.onPhotoLoadFail()
                         return false
                     }
 
@@ -121,7 +122,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
                         dataSource: DataSource,
                         isFirstResource: Boolean
                     ): Boolean {
-                        viewModel.onPhotoLoadCompleted()
+                        photoDetailViewModel.onPhotoLoadCompleted()
                         return false
                     }
                 })
