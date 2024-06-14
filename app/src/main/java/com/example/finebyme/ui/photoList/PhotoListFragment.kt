@@ -22,7 +22,6 @@ import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
-import com.example.finebyme.ui.photoDetail.PhotoDetailFragment
 
 class PhotoListFragment : Fragment() {
     companion object {
@@ -76,7 +75,7 @@ class PhotoListFragment : Fragment() {
         // db test를 위한 코드
 //        photoListViewModel.setContext(requireContext())
 
-        photoAdapter = PhotoAdapter()
+        photoAdapter = PhotoAdapter(photoListViewModel)
         recyclerView = binding.recyclerView
 
         val numberOfColumns = 2

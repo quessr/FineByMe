@@ -38,7 +38,7 @@ class FavoriteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        photoAdapter = PhotoAdapter()
+        photoAdapter = PhotoAdapter(favoriteListViewModel)
         recyclerView = binding.recyclerView
 
         val numberOfColumns = 2
