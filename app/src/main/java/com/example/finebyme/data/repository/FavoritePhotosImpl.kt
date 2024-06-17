@@ -13,4 +13,8 @@ class FavoritePhotosImpl(private val photoDao: PhotoDao) : FavoritePhotosReposit
     override fun deletePhoto(photo: Photo) = photoDao.delete(photo)
 
     override fun updatePhoto(photo: Photo) = photoDao.update(photo)
+
+    override fun isPhotoFavorite(id: String): Boolean {
+        return photoDao.getPhoto(id) != null
+    }
 }

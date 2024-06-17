@@ -12,4 +12,6 @@ interface FavoritePhotosRepository {
     fun deletePhoto(photo: Photo)
 
     fun updatePhoto(photo: Photo)
+
+    fun isPhotoFavorite(photoId: String):Boolean
 }
