@@ -1,35 +1,25 @@
 package com.example.finebyme.ui.photoDetail
 
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.finebyme.R
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.FavoritePhotosImpl
-import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.di.AppViewModelFactory
-import com.example.finebyme.ui.photoList.PhotoListViewModel
 
 class PhotoDetailActivity() : AppCompatActivity() {
 
@@ -71,10 +61,15 @@ class PhotoDetailActivity() : AppCompatActivity() {
             finish()
         }
 
+        // 즐겨찾기 상태를 확인하고 UI 업데이트
+        val isFavorite = photo?.let { photoDetailViewModel.isPhotoFavorite(it.id) }
+        if (isFavorite != null) {
+            updateFavoriteIcon(isFavorite)
+        }
+
         setupObservers()
         // TODO: setupListener()
         binding.ivFavorite.setOnClickListener {
-            photo?.let { it1 -> viewModel.toggleFavorite(it1) }
             photo?.let { photo -> photoDetailViewModel.toggleFavorite(photo) }
         }
     }
