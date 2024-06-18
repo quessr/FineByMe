@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.example.finebyme.R
+import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
@@ -94,7 +95,7 @@ class PhotoListFragment : Fragment() {
 
         photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
-                PhotoListViewModel.State.LOADING -> {
+                State.LOADING -> {
                     Glide.with(this).asGif()
                         .load(R.drawable.loading).into(binding.imageViewLoading)
                     binding.imageViewLoading.visibility = View.VISIBLE
@@ -106,7 +107,7 @@ class PhotoListFragment : Fragment() {
                     )
                 }
 
-                PhotoListViewModel.State.DONE -> {
+                State.DONE -> {
                     binding.imageViewLoading.visibility = View.GONE
                     binding.root.setBackgroundColor(
                         ContextCompat.getColor(
@@ -116,7 +117,7 @@ class PhotoListFragment : Fragment() {
                     )
                 }
 
-                PhotoListViewModel.State.ERROR -> {
+                State.ERROR -> {
                     binding.imageViewLoading.visibility = View.GONE
                 }
             }

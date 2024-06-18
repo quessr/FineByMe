@@ -15,6 +15,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.finebyme.R
+import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosImpl
@@ -77,7 +78,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
         }
 
         photoDetailViewModel.state.observe(this) { state ->
-            if (state.equals(PhotoDetailViewModel.State.LOADING)) {
+            if (state.equals(State.LOADING)) {
                 showLoading()
             } else binding.ivLoading.visibility = View.GONE
         }

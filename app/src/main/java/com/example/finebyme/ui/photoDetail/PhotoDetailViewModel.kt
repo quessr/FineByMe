@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosRepository
@@ -14,11 +15,7 @@ class PhotoDetailViewModel(
     application: Application,
     private val favoritePhotosRepository: FavoritePhotosRepository
 ) : AndroidViewModel(application) {
-    enum class State {
-        LOADING,
-        DONE,
-        ERROR
-    }
+
     private val context = getApplication<Application>().applicationContext
 
     private val _transformedPhoto = MutableLiveData<Photo>()

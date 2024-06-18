@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.FavoritePhotosRepository
@@ -13,12 +14,6 @@ class PhotoListViewModel(
     application: Application,
     private val favoritePhotosRepository: FavoritePhotosRepository
 ) : BaseViewModel(application) {
-
-    enum class State {
-        LOADING,
-        DONE,
-        ERROR
-    }
 
     private val context = getApplication<Application>().applicationContext
 
