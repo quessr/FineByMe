@@ -21,6 +21,7 @@ import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.di.AppViewModelFactory
+import com.example.finebyme.utils.ImageLoader
 
 class PhotoDetailActivity() : AppCompatActivity() {
 
@@ -89,33 +90,12 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
             binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
 
-            Glide.with(this)
-                .load(it.fullUrl)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        photoDetailViewModel.onPhotoLoadFail()
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        model: Any,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        photoDetailViewModel.onPhotoLoadCompleted()
-                        return false
-                    }
-                })
-                .into(binding.ivPhoto)
+            ImageLoader.loadImage(
+                context = this,
+                url = photo.fullUrl,
+                imageView = binding.ivPhoto,
+                photoDetailViewModel = photoDetailViewModel
+            )
 
             binding.tvTitle.text = it.title
             binding.tvDescription.text = it?.description
@@ -136,11 +116,13 @@ class PhotoDetailActivity() : AppCompatActivity() {
     private fun showLoading() {
         binding.ivLoading.visibility = View.VISIBLE
 
-        Glide.with(this)
-            .asGif()
-            .load(R.drawable.loading)
-            .centerCrop()
-            .override(40, 40)
-            .into(binding.ivLoading)
+        ImageLoader.loadGif(
+            context = this,
+            resourceId = R.drawable.loading,
+            imageView = binding.ivLoading,
+            centerCrop = true,
+            overrideWidth = 40,
+            overrideHeight = 40
+        )
     }
 }

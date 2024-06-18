@@ -23,6 +23,7 @@ import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
+import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 
 class PhotoListFragment : Fragment() {
@@ -80,8 +81,12 @@ class PhotoListFragment : Fragment() {
         photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 State.LOADING -> {
-                    Glide.with(this).asGif()
-                        .load(R.drawable.loading).into(binding.imageViewLoading)
+                    ImageLoader.loadGif(
+                        context = binding.imageViewLoading.context,
+                        resourceId = R.drawable.loading,
+                        imageView = binding.imageViewLoading
+                    )
+                    
                     binding.imageViewLoading.visibility = View.VISIBLE
                     binding.root.setBackgroundColor(
                         ContextCompat.getColor(

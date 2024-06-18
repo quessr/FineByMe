@@ -13,6 +13,7 @@ import com.example.finebyme.databinding.ActivityMainBinding
 import com.example.finebyme.databinding.ActivitySplashBinding
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.ui.main.MainActivity
+import com.example.finebyme.utils.ImageLoader
 
 class SplashActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }
@@ -25,12 +26,13 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loadGifImage() {
-        Glide.with(this)
-            .asGif()
-            .load(R.drawable.camera)
-            .circleCrop()
-            .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
-            .into(binding.imageViewSplash)
+
+        ImageLoader.loadGif(
+            context = this,
+            resourceId = R.drawable.camera,
+            circleCrop = true,
+            imageView = binding.imageViewSplash
+        )
         binding.imageViewSplash.visibility = View.VISIBLE
     }
 

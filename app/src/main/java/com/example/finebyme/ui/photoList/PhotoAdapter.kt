@@ -10,9 +10,11 @@ import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.databinding.ItemPhotoBinding
 import com.example.finebyme.ui.base.BaseViewModel
+import com.example.finebyme.utils.ImageLoader
 import java.util.Random
 
-class PhotoAdapter(private val viewModel: BaseViewModel): RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
+class PhotoAdapter(private val viewModel: BaseViewModel) :
+    RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
 
     private var photoList: List<Photo> = listOf()
     private var listener: OnPhotoClickListener? = null
@@ -27,21 +29,21 @@ class PhotoAdapter(private val viewModel: BaseViewModel): RecyclerView.Adapter<P
         fun onPhotoClick(photo: Photo)
     }
 
-    class PhotoViewHolder(private val binding: ItemPhotoBinding, private val listener: OnPhotoClickListener?): RecyclerView.ViewHolder(binding.root) {
+    class PhotoViewHolder(
+        private val binding: ItemPhotoBinding,
+        private val listener: OnPhotoClickListener?
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo, height: Int) {
-            // 이미지 초기화
-            Glide.with(binding.imageViewPhoto.context).clear(binding.imageViewPhoto)
             binding.imageViewPhoto.setImageDrawable(null)
-
             // 뷰의 높이 설정
             binding.imageViewPhoto.layoutParams.height = height
 
-            Glide.with(binding.imageViewPhoto.context)
-                .load(photo.thumbUrl)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(binding.imageViewPhoto)
+            ImageLoader.loadImage(
+                context = binding.imageViewPhoto.context,
+                url = photo.thumbUrl,
+                imageView = binding.imageViewPhoto
+            )
 
             binding.imageViewPhoto.scaleType = ImageView.ScaleType.CENTER_CROP
 
