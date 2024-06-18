@@ -1,5 +1,7 @@
 package com.example.finebyme.ui.favoriteList
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,10 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.finebyme.data.db.FavoritePhotosDatabase
+import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.di.AppViewModelFactory
+import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
+import com.example.finebyme.ui.photoList.PhotoListFragment
 
 class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
@@ -28,6 +33,16 @@ class FavoriteListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private var isPass = false
+
+    companion object {
+        private const val ARG_PHOTO = "photo"
+        fun newIntent(context: Context, photo: Photo): Intent {
+            return Intent(context, PhotoDetailActivity::class.java).apply {
+                putExtra(ARG_PHOTO, photo)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -59,6 +74,14 @@ class FavoriteListFragment : Fragment() {
         favoriteListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos -> photoAdapter.setPhoto(photos) }
+
+        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
+            override fun onPhotoClick(photo: Photo) {
+                val intent = newIntent(requireContext(), photo)
+                startActivity(intent)
+            }
+
+        })
     }
 
     override fun onResume() {
