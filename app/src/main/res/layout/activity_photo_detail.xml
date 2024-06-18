@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.photoDetail.PhotoDetailActivity"
-    android:background="#CC000000">
+    android:background="#2F2D2D">
     <ImageView
         android:id="@+id/iv_photo"
         app:layout_constraintTop_toTopOf="parent"
