@@ -46,11 +46,23 @@ class PhotoDetailViewModel(
         val transformTitle = transformTitle(photo.title)
         photo.title = transformTitle
         _transformedPhoto.value = photo
+        _isFavorite.value = isPhotoFavorite(photo.id)
+    }
+
+    fun isPhotoFavorite(id: String):Boolean {
+        return favoritePhotosRepository.isPhotoFavorite(id)
     }
 
     fun toggleFavorite(photo: Photo) {
-        favoritePhotosRepository.insertPhoto(photo)
-        _isFavorite.value = !(_isFavorite.value ?: false)
+        if(isPhotoFavorite(photo.id)) {
+            favoritePhotosRepository.deletePhoto(photo)
+            _isFavorite.value = false
+        } else {
+            favoritePhotosRepository.insertPhoto(photo)
+            _isFavorite.value = true
+        }
+//        favoritePhotosRepository.insertPhoto(photo)
+//        _isFavorite.value = !(_isFavorite.value ?: false)
     }
 
     private fun transformTitle(title: String): String {
