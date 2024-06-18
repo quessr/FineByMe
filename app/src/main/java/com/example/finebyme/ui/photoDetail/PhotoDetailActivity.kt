@@ -34,12 +34,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
         val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
         AppViewModelFactory(application, favoritePhotosRepository)
     }
-//    private val photoListViewModel: PhotoListViewModel by viewModels {
-//        val application = this.application
-//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-//        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
-//        AppViewModelFactory(application, favoritePhotosRepository)
-//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +46,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
             @Suppress("DEPRECATION")
             intent.getParcelableExtra(ARG_PHOTO)
         }
-//        viewModel = ViewModelProvider(this)[PhotoDetailViewModel::class.java]
 
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
@@ -123,9 +116,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
                 })
                 .into(binding.ivPhoto)
 
-//            val transformedTitle = it.title?.let { title ->
-//                viewModel.transformTitle(title)
-//            }
             binding.tvTitle.text = it.title
             binding.tvDescription.text = it?.description
 

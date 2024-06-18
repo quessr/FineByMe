@@ -8,7 +8,6 @@ import androidx.fragment.app.commit
 import com.example.finebyme.R
 import com.example.finebyme.databinding.ActivityMainBinding
 import com.example.finebyme.ui.favoriteList.FavoriteListFragment
-import com.example.finebyme.ui.photoDetail.PhotoDetailFragment
 import com.example.finebyme.ui.photoList.PhotoListFragment
 
 class MainActivity : AppCompatActivity() {
@@ -27,13 +26,11 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
-//                    PhotoListFragment().changeFragment()
                     changeFragment(PhotoListFragment::class.java.name)
                     Log.d("BottomNav", "Home selected")
                 }
 
                 R.id.nav_favorite -> {
-//                    FavoriteListFragment().changeFragment()
                     changeFragment(FavoriteListFragment::class.java.name)
                     Log.d("BottomNav", "Favorite selected")
                 }
@@ -63,9 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showInit() {
-//        val transaction = supportFragmentManager.beginTransaction()
-//            .add(R.id.frameLayout, PhotoListFragment())
-//        transaction.commit()
         changeFragment(PhotoListFragment::class.java.name)
     }
 
