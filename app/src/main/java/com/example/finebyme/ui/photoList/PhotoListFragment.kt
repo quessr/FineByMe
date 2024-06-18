@@ -23,25 +23,9 @@ import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
+import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 
 class PhotoListFragment : Fragment() {
-    companion object {
-        private const val ARG_PHOTO = "photo"
-
-//        fun newInstance(photo: Photo): PhotoDetailFragment {
-//            val fragment = PhotoDetailFragment()
-//            val args = Bundle()
-//            args.putParcelable(ARG_PHOTO, photo)
-//            fragment.arguments = args
-//            return fragment
-//        }
-
-        fun newIntent(context: Context, photo: Photo): Intent {
-            return Intent(context, PhotoDetailActivity::class.java).apply {
-                putExtra(ARG_PHOTO, photo)
-            }
-        }
-    }
 
     private lateinit var photoAdapter: PhotoAdapter
 
@@ -135,7 +119,7 @@ class PhotoListFragment : Fragment() {
 
         photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener{
             override fun onPhotoClick(photo: Photo) {
-                val intent = newIntent(requireContext(), photo)
+                val intent = newPhotoDetail(requireContext(), photo)
                 startActivity(intent)
             }
         })

@@ -17,8 +17,7 @@ import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.di.AppViewModelFactory
-import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
-import com.example.finebyme.ui.photoList.PhotoListFragment
+import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 
 class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
@@ -34,14 +33,14 @@ class FavoriteListFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private var isPass = false
 
-    companion object {
-        private const val ARG_PHOTO = "photo"
-        fun newIntent(context: Context, photo: Photo): Intent {
-            return Intent(context, PhotoDetailActivity::class.java).apply {
-                putExtra(ARG_PHOTO, photo)
-            }
-        }
-    }
+//    companion object {
+//        private const val ARG_PHOTO = "photo"
+//        fun newIntent(context: Context, photo: Photo): Intent {
+//            return Intent(context, PhotoDetailActivity::class.java).apply {
+//                putExtra(ARG_PHOTO, photo)
+//            }
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,7 +76,7 @@ class FavoriteListFragment : Fragment() {
 
         photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
             override fun onPhotoClick(photo: Photo) {
-                val intent = newIntent(requireContext(), photo)
+                val intent = newPhotoDetail(requireContext(), photo)
                 startActivity(intent)
             }
 
