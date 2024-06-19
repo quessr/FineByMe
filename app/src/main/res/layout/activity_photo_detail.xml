@@ -23,20 +23,35 @@
         app:layout_constraintEnd_toEndOf="@+id/iv_photo"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:alpha="1.0"/>
 
     <ImageView
         android:id="@+id/iv_favorite"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginVertical="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/chip_download"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
+        android:layout_marginVertical="8dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         android:paddingHorizontal="12dp"
         android:paddingVertical="12dp"
         android:background="@drawable/favorite_button_background"
-        android:src="@drawable/ic_nav_favorite_normal"/>
+        android:src="@drawable/ic_nav_favorite_normal" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_download"
+        style="@style/CustomChipStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
+        app:chipSurfaceColor="#66000000"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginVertical="8dp"
+        android:text="다운로드" />
+
 
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@+id/iv_photo"
