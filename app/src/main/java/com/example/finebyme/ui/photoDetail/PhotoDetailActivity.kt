@@ -1,5 +1,6 @@
 package com.example.finebyme.ui.photoDetail
 
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -27,6 +29,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
     companion object {
         private const val ARG_PHOTO = "photo"
+        private const val imagePermission = android.Manifest.permission.READ_MEDIA_IMAGES
     }
 
     private lateinit var binding: ActivityPhotoDetailBinding
@@ -66,6 +69,46 @@ class PhotoDetailActivity() : AppCompatActivity() {
         // TODO: setupListener()
         binding.ivFavorite.setOnClickListener {
             photo?.let { photo -> photoDetailViewModel.toggleFavorite(photo) }
+        }
+
+        binding.chipDownload.setOnClickListener{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                requestTiramisuPermission()
+            }
+        }
+    }
+
+    // Android 13 이상일 때
+    private fun requestTiramisuPermission() {
+        checkPermissionsAndStartMotion(arrayOf(imagePermission), 200)
+    }
+
+    private fun checkPermissionsAndStartMotion(permissions: Array<String>, requestCode: Int) {
+        val permissionResults = permissions.map {
+            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+        }
+
+        if (permissionResults.all { it }) {
+            // TODO 권한이 허용 되었을 때의 액선
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, requestCode)
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            100, 200 -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // TODO 권한이 허용 되었을 때의 액션
+                } else {
+                    finish()
+                }
+            }
         }
     }
 
