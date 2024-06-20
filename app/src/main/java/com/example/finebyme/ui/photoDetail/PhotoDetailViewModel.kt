@@ -1,6 +1,7 @@
 package com.example.finebyme.ui.photoDetail
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -63,9 +64,34 @@ class PhotoDetailViewModel(
     }
 
     private fun transformTitle(title: String): String {
-        return title.replace("-", " ")
-            .split(" ")
-            .dropLast(1)
-            .joinToString(" ")
+        val parts = title.split("-")
+
+        // 제목의 마지막 부분이 영어로 시작되거나 하이픈("-")으로 시작되는지 확인하기 위한 정규 표현식
+        val lastWordFormat = "[a-zA-Z0-9_-]+\$".toRegex()
+
+        // 마지막 부분이 영어형식이 맞는지 확인하고, 맞다면 제외
+        val filteredParts = if (parts.isNotEmpty() && lastWordFormat.matches(parts.last())) {
+            parts.dropLast(1)
+        } else {
+            parts
+        }
+
+        return filteredParts.joinToString(" ")
+
+//        val parts = title.split("-")
+//
+////        val lastIndex = parts.indexOfLast { it.matches("[a-zA-Z0-9-]+".toRegex()) }
+//        val lastIndex = parts.indexOfLast { it.matches("[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*".toRegex()) }
+//
+//        val transformedTitle = if (lastIndex > 0) {
+//            parts.subList(0, lastIndex).joinToString(" ")
+//        } else {
+//            title.replace("-", " ")
+//        }
+//
+//        Log.d("@@@@@", "transformedTitle : ${transformedTitle}")
+//
+//        return transformedTitle
+
     }
 }
