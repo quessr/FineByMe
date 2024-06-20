@@ -1,22 +1,24 @@
 package com.example.finebyme.ui.photoDetail
 
+import android.content.ContentValues
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
+import android.view.Gravity
 import android.view.View
+import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
-import com.example.finebyme.R
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
@@ -24,6 +26,13 @@ import com.example.finebyme.data.repository.FavoritePhotosImpl
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
+import com.google.android.material.snackbar.Snackbar
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import com.example.finebyme.R
+
 
 class PhotoDetailActivity() : AppCompatActivity() {
 
@@ -71,9 +80,11 @@ class PhotoDetailActivity() : AppCompatActivity() {
             photo?.let { photo -> photoDetailViewModel.toggleFavorite(photo) }
         }
 
-        binding.chipDownload.setOnClickListener{
+        binding.chipDownload.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestTiramisuPermission()
+            } else {
+                downloadImage()
             }
         }
     }
@@ -90,6 +101,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
         if (permissionResults.all { it }) {
             // TODO 권한이 허용 되었을 때의 액선
+            downloadImage()
         } else {
             ActivityCompat.requestPermissions(this, permissions, requestCode)
         }
@@ -105,11 +117,78 @@ class PhotoDetailActivity() : AppCompatActivity() {
             100, 200 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // TODO 권한이 허용 되었을 때의 액션
+                    showSnackbar("권한이 허용 되었습니다.")
                 } else {
                     finish()
+                    showSnackbar("권한이 부여되지 않았습니다.")
                 }
             }
         }
+    }
+
+    private fun downloadImage() {
+        Glide.with(this)
+            .asBitmap()
+            .load(photo?.fullUrl)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    saveImageToGallery(resource)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    // Do nothing
+                }
+            })
+    }
+
+
+    private fun saveImageToGallery(bitmap: Bitmap) {
+        val filename = "Finebyme_${
+            SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(
+                Date()
+            )
+        }.jpg"
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+        }
+
+        val uri =
+            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+
+        try {
+            uri.let {
+                val stream: OutputStream? = it?.let { it1 -> contentResolver.openOutputStream(it1) }
+                if (stream != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                    stream.flush()
+                    stream.close()
+                    showSnackbar("이미지가 갤러리에 다운로드 되었습니다.")
+                } else {
+                    showSnackbar("다운로드에 실패했습니다.")
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            showSnackbar("다운로드에 실패했습니다.")
+
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+        val snackbarView: View = snackbar.view
+
+        // 상단 중앙으로 이동
+        val params = snackbarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        snackbarView.layoutParams = params
+
+        val color = ContextCompat.getColor(this, R.color.black_40)
+        snackbar.setBackgroundTint(color)
+
+        snackbar.show()
     }
 
     private fun setupObservers() {
