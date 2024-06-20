@@ -84,6 +84,8 @@ class PhotoDetailActivity() : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestTiramisuPermission()
             } else {
+                binding.progressBar.visibility = View.VISIBLE
+                binding.tvDownloading.visibility= View.VISIBLE
                 downloadImage()
             }
         }
@@ -102,6 +104,8 @@ class PhotoDetailActivity() : AppCompatActivity() {
         if (permissionResults.all { it }) {
             // TODO 권한이 허용 되었을 때의 액선
             downloadImage()
+            binding.progressBar.visibility = View.VISIBLE
+            binding.tvDownloading.visibility= View.VISIBLE
         } else {
             ActivityCompat.requestPermissions(this, permissions, requestCode)
         }
@@ -165,13 +169,19 @@ class PhotoDetailActivity() : AppCompatActivity() {
                     stream.flush()
                     stream.close()
                     showSnackbar("이미지가 갤러리에 다운로드 되었습니다.")
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvDownloading.visibility= View.GONE
                 } else {
                     showSnackbar("다운로드에 실패했습니다.")
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvDownloading.visibility= View.GONE
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
             showSnackbar("다운로드에 실패했습니다.")
+            binding.progressBar.visibility = View.GONE
+            binding.tvDownloading.visibility= View.GONE
 
         }
     }

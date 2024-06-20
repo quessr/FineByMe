@@ -15,6 +15,30 @@
         android:layout_height="0dp"
         app:layout_constraintDimensionRatio="1:1" />
 
+    <ProgressBar
+        android:id="@+id/progressBar"
+        app:layout_constraintTop_toTopOf="@+id/iv_photo"
+        app:layout_constraintStart_toStartOf="@+id/iv_photo"
+        app:layout_constraintEnd_toEndOf="@+id/iv_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="20dp"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"/>
+    <TextView
+        android:id="@+id/tv_downloading"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="@+id/iv_photo"
+        app:layout_constraintEnd_toEndOf="@id/iv_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="다운로드 중..."
+        android:textSize="16dp"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
     <ImageView
         android:id="@+id/iv_loading"
         app:layout_constraintTop_toTopOf="@+id/iv_photo"
