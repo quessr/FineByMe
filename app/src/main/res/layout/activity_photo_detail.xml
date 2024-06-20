@@ -36,6 +36,7 @@
         android:layout_height="wrap_content"
         android:text="다운로드 중..."
         android:textSize="16dp"
+        android:textStyle="bold"
         android:textColor="@color/white"
         android:visibility="gone"/>
 
