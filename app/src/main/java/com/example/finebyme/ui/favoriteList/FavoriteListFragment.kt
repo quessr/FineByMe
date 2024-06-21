@@ -23,7 +23,7 @@ class FavoriteListFragment : Fragment() {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
         val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
-        AppViewModelFactory(application, favoritePhotosRepository)
+        AppViewModelFactory(application, favoritePhotosRepository, null)
     }
 
     private var _binding: FragmentFavoriteListBinding? = null
