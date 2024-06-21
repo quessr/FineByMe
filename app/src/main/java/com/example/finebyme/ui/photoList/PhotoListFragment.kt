@@ -128,6 +128,18 @@ class PhotoListFragment : Fragment() {
                 startActivity(intent)
             }
         })
+
+        binding.editTextSearch.setOnEditorActionListener { _, actionId, _  ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ) {
+                val query = binding.editTextSearch.text.toString()
+                Log.d("@@@@@@", "Search query: $query")
+                photoListViewModel.searchPhotos(query)
+                true
+            } else {
+                false
+            }
+        }
+    }
     }
 
     override fun onDestroyView() {
