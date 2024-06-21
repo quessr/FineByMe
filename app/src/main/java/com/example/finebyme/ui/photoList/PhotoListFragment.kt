@@ -1,8 +1,7 @@
 package com.example.finebyme.ui.photoList
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,16 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.bumptech.glide.Glide
 import com.example.finebyme.R
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
-import com.example.finebyme.data.repository.FavoritePhotosImpl
+import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
-import com.example.finebyme.ui.photoDetail.PhotoDetailActivity
 import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 
@@ -34,7 +31,7 @@ class PhotoListFragment : Fragment() {
     private val photoListViewModel: PhotoListViewModel by viewModels {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
+        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
         AppViewModelFactory(application, favoritePhotosRepository)
     }
 
@@ -76,6 +73,7 @@ class PhotoListFragment : Fragment() {
         photoListViewModel.photos.observe(
             viewLifecycleOwner,
             Observer { photos ->
+//                photos.forEach {photo -> Log.d("@@@@@", "photo title : ${photo.title}")}
                 photoAdapter.setPhoto(photos.toPhotoList()) })
 
         photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->

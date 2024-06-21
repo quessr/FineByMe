@@ -1,7 +1,6 @@
 package com.example.finebyme.ui.photoDetail
 
 import android.content.ContentValues
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -24,7 +23,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.repository.FavoritePhotosImpl
+import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
@@ -48,7 +47,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
     private var photo: Photo? = null
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels {
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val favoritePhotosRepository = FavoritePhotosImpl(photoDao)
+        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
         AppViewModelFactory(application, favoritePhotosRepository)
     }
     private var isDownloading = false  // 다운로드 상태 관리 변수

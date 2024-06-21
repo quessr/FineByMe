@@ -3,7 +3,7 @@ package com.example.finebyme.data.repository
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.db.PhotoDao
 
-class FavoritePhotosImpl(private val photoDao: PhotoDao) : FavoritePhotosRepository {
+class FavoritePhotosRepositoryImpl(private val photoDao: PhotoDao) : FavoritePhotosRepository {
     override fun getAllPhotos(): List<Photo> = photoDao.getAllPhotos()
 
     override fun getPhoto(id: String): Photo = photoDao.getPhoto(id)
