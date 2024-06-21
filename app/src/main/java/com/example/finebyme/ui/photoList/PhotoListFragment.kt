@@ -32,7 +32,9 @@ class PhotoListFragment : Fragment() {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
         val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
-        AppViewModelFactory(application, favoritePhotosRepository)
+        val retrofitService = RetrofitInstance.retrofitService
+        val searchPhotosRepository = SearchPhotosRepositoryImpl(retrofitService)
+        AppViewModelFactory(application, favoritePhotosRepository, searchPhotosRepository)
     }
 
     private var _binding: FragmentPhotoListBinding? = null

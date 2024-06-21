@@ -1,18 +1,20 @@
 package com.example.finebyme.ui.photoList
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.FavoritePhotosRepository
+import com.example.finebyme.data.repository.SearchPhotosRepository
 import com.example.finebyme.ui.base.BaseViewModel
 
 class PhotoListViewModel(
     application: Application,
-    private val favoritePhotosRepository: FavoritePhotosRepository
+    private val favoritePhotosRepository: FavoritePhotosRepository,
+    private val searchPhotosRepository: SearchPhotosRepository
 ) : BaseViewModel(application) {
 
     private val context = getApplication<Application>().applicationContext
@@ -30,7 +32,7 @@ class PhotoListViewModel(
 
     private fun fetchPhotos() {
         _state.postValue(State.LOADING)
-        RetrofitInstance.fetchRandomPhoto { photos ->
+        RetrofitInstance.fetchRandomPhotos { photos ->
             if (photos != null) {
                 _photos.postValue(photos)
                 _state.postValue(State.DONE)
@@ -41,6 +43,24 @@ class PhotoListViewModel(
 
             }
         }
+    }
+
+    fun searchPhotos(query: String) {
+        _state.postValue(State.LOADING)
+        Log.d("PhotoListViewModel", "Searching for photos with query: $query")
+        searchPhotosRepository.searchPhotos(query).observeForever { response ->
+            Log.d("PhotoListViewModel", "Received response: $response")
+            if (response != null && response.results.isNotEmpty()) {
+                Log.d("PhotoListViewModel", "Search successful: ${response.results.size} results found")
+                _photos.postValue(response.results)
+                _state.postValue(State.DONE)
+            } else {
+                Log.d("PhotoListViewModel", "Search failed or no results found")
+                _photos.postValue(emptyList())
+                _state.postValue(State.ERROR)
+            }
+        }
+
     }
 
 //    private fun insertFirstPhotoInDb(unsplashPhoto: UnsplashPhoto) {
