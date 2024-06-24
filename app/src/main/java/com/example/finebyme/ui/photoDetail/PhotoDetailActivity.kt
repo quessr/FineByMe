@@ -16,6 +16,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -50,8 +51,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
         val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
         AppViewModelFactory(application, favoritePhotosRepository)
     }
-    private var isDownloading = false  // 다운로드 상태 관리 변수
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,9 +73,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
         // 즐겨찾기 상태를 확인하고 UI 업데이트
         val isFavorite = photo?.let { photoDetailViewModel.isPhotoFavorite(it.id) }
-        if (isFavorite != null) {
-            updateFavoriteIcon(isFavorite)
-        }
+        isFavorite?.let { updateFavoriteIcon(it) }
 
         setupObservers()
         // TODO: setupListener()
@@ -90,7 +87,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
             } else {
                 binding.progressBar.visibility = View.VISIBLE
                 binding.tvDownloading.visibility = View.VISIBLE
-                downloadImage()
+                photo?.let { photoDetailViewModel.downloadImage(it) }
             }
         }
     }
@@ -107,9 +104,9 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
         if (permissionResults.all { it }) {
             // TODO 권한이 허용 되었을 때의 액선
-            downloadImage()
             binding.progressBar.visibility = View.VISIBLE
             binding.tvDownloading.visibility = View.VISIBLE
+            photo?.let { photoDetailViewModel.downloadImage(it) }
         } else {
             ActivityCompat.requestPermissions(this, permissions, requestCode)
         }
@@ -134,150 +131,89 @@ class PhotoDetailActivity() : AppCompatActivity() {
         }
     }
 
-    private fun downloadImage() {
-        if (!isDownloading) {
-            isDownloading = true
-            binding.progressBar.visibility = View.VISIBLE
-            binding.tvDownloading.visibility = View.VISIBLE
-
-            Glide.with(this)
-                .asBitmap()
-                .load(photo?.fullUrl)
-                .skipMemoryCache(true)  // 메모리 캐시 무시
-                .diskCacheStrategy(DiskCacheStrategy.NONE)  // 디스크 캐시 무시
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        saveImageToGallery(resource)
-                        isDownloading = false  // 다운로드 완료
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // 로드 취소 또는 실패
-                        isDownloading = false
-                        binding.progressBar.visibility = View.GONE
-                        binding.tvDownloading.visibility = View.GONE
-                    }
-
-                    override fun onLoadFailed(errorDrawable: Drawable?) {
-                        super.onLoadFailed(errorDrawable)
-                        showSnackbar("다운로드에 실패했습니다.")
-                        isDownloading = false
-                        binding.progressBar.visibility = View.GONE
-                        binding.tvDownloading.visibility = View.GONE
-                    }
-                })
-        }
-    }
-
-
-    private fun saveImageToGallery(bitmap: Bitmap) {
-        val filename = "Finebyme_${
-            SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault()).format(Date())
-        }.jpg"
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+    private fun setupObservers() {
+        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
+            setupPhotoDetails(transformedPhoto)
         }
 
-        val uri =
-            contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-        var stream: OutputStream? = null
+        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
+            updateFavoriteIcon(isFavorite)
+        }
 
-        try {
-            uri.let {
-                stream = it?.let { it1 -> contentResolver.openOutputStream(it1) }
-                stream?.let { it1 -> bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it1) }
-                stream?.flush()
-                showSnackbar("이미지가 갤러리에 다운로드 되었습니다.")
+        photoDetailViewModel.LoadingState.observe(this) { state ->
+            if (state.equals(State.LOADING)) {
+                showLoading()
+            } else binding.ivLoading.visibility = View.GONE
+        }
+
+        photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
+            if (isDownloading) {
+                binding.progressBar.isVisible = true
+                binding.tvDownloading.isVisible = true
+            } else {
+                binding.progressBar.isVisible = false
+                binding.tvDownloading.isVisible = false
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showSnackbar("다운로드에 실패했습니다.")
-        } finally {
-            try {
-                stream?.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-            isDownloading = false
-            binding.progressBar.visibility = View.GONE
-            binding.tvDownloading.visibility = View.GONE
         }
-}
 
-private fun showSnackbar(message: String) {
-    val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
-    val snackbarView: View = snackbar.view
-
-    // 상단 중앙으로 이동
-    val params = snackbarView.layoutParams as FrameLayout.LayoutParams
-    params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-    snackbarView.layoutParams = params
-
-    val color = ContextCompat.getColor(this, R.color.black_40)
-    snackbar.setBackgroundTint(color)
-
-    snackbar.show()
-}
-
-private fun setupObservers() {
-    photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
-        setupPhotoDetails(transformedPhoto)
+        photoDetailViewModel.downloadState.observe(this) { message ->
+            showSnackbar(message)
+        }
     }
 
-    photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
-        updateFavoriteIcon(isFavorite)
+    private fun setupPhotoDetails(photo: Photo) {
+        photo?.let {
+
+            binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+
+            ImageLoader.loadImage(
+                context = this,
+                url = photo.fullUrl,
+                imageView = binding.ivPhoto,
+                photoDetailViewModel = photoDetailViewModel
+            )
+
+            binding.tvTitle.text = it.title
+            binding.tvDescription.text = it?.description
+
+            Log.d("@@@@@@", " photo id : ${photo!!.id}")
+        }
     }
 
-    photoDetailViewModel.LoadingState.observe(this) { state ->
-        if (state.equals(State.LOADING)) {
-            showLoading()
-        } else binding.ivLoading.visibility = View.GONE
+    private fun updateFavoriteIcon(isFavorite: Boolean) {
+        if (isFavorite) {
+            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
+
+        } else {
+            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
+        }
     }
-}
 
-private fun setupPhotoDetails(photo: Photo) {
-    photo?.let {
+    private fun showLoading() {
+        binding.ivLoading.visibility = View.VISIBLE
 
-        binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-
-        ImageLoader.loadImage(
+        ImageLoader.loadGif(
             context = this,
-            url = photo.fullUrl,
-            imageView = binding.ivPhoto,
-            photoDetailViewModel = photoDetailViewModel
+            resourceId = R.drawable.loading,
+            imageView = binding.ivLoading,
+            centerCrop = true,
+            overrideWidth = 40,
+            overrideHeight = 40
         )
-
-        binding.tvTitle.text = it.title
-        binding.tvDescription.text = it?.description
-
-        Log.d("@@@@@@", " photo id : ${photo!!.id}")
     }
-}
 
-private fun updateFavoriteIcon(isFavorite: Boolean) {
-    if (isFavorite) {
-        binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
+    private fun showSnackbar(message: String) {
+        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+        val snackbarView: View = snackbar.view
 
-    } else {
-        binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
+        // 상단 중앙으로 이동
+        val params = snackbarView.layoutParams as FrameLayout.LayoutParams
+        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+        snackbarView.layoutParams = params
+
+        val color = ContextCompat.getColor(this, R.color.black_40)
+        snackbar.setBackgroundTint(color)
+
+        snackbar.show()
     }
-}
-
-private fun showLoading() {
-    binding.ivLoading.visibility = View.VISIBLE
-
-    ImageLoader.loadGif(
-        context = this,
-        resourceId = R.drawable.loading,
-        imageView = binding.ivLoading,
-        centerCrop = true,
-        overrideWidth = 40,
-        overrideHeight = 40
-    )
-}
 }
