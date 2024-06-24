@@ -1,12 +1,18 @@
 package com.example.finebyme.ui.photoList
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +23,11 @@ import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
+import com.example.finebyme.data.network.RetrofitInstance
+import com.example.finebyme.data.network.RetrofitService
 import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
+import com.example.finebyme.data.repository.SearchPhotosRepository
+import com.example.finebyme.data.repository.SearchPhotosRepositoryImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
@@ -76,7 +86,8 @@ class PhotoListFragment : Fragment() {
             viewLifecycleOwner,
             Observer { photos ->
 //                photos.forEach {photo -> Log.d("@@@@@", "photo title : ${photo.title}")}
-                photoAdapter.setPhoto(photos.toPhotoList()) })
+                photoAdapter.setPhoto(photos.toPhotoList())
+            })
 
         photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
@@ -86,7 +97,7 @@ class PhotoListFragment : Fragment() {
                         resourceId = R.drawable.loading,
                         imageView = binding.imageViewLoading
                     )
-                    
+
                     binding.imageViewLoading.visibility = View.VISIBLE
                     binding.root.setBackgroundColor(
                         ContextCompat.getColor(
@@ -112,34 +123,54 @@ class PhotoListFragment : Fragment() {
             }
         })
 
-//        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
-//            override fun onPhotoClick(photo: Photo) {
-//                val fragment = newInstance(photo)
-//                parentFragmentManager.beginTransaction()
-//                    .replace(R.id.frameLayout, fragment)
-//                    .addToBackStack(null)
-//                    .commit()
-//            }
-//        })
-
-        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener{
+        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
             override fun onPhotoClick(photo: Photo) {
                 val intent = newPhotoDetail(requireContext(), photo)
                 startActivity(intent)
             }
         })
 
-        binding.editTextSearch.setOnEditorActionListener { _, actionId, _  ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH ) {
-                val query = binding.editTextSearch.text.toString()
-                Log.d("@@@@@@", "Search query: $query")
-                photoListViewModel.searchPhotos(query)
-                true
-            } else {
-                false
+        /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
+//        binding.editTextSearch.setOnEditorActionListener { _, actionId, _  ->
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH ) {
+//                val query = binding.editTextSearch.text.toString()
+//                Log.d("@@@@@@", "Search query: $query")
+//                photoListViewModel.searchPhotos(query)
+//                hideKeyboard()
+//                true
+//            } else {
+//                false
+//            }
+//        }
+
+        binding.editTextSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
-        }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val query = p0.toString()
+
+                photoListViewModel.searchPhotos(query)
+
+                if (query.isEmpty()) {
+                    hideKeyboard()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
     }
+
+    private fun hideKeyboard() {
+        val imm = ContextCompat.getSystemService(
+            requireContext(),
+            android.view.inputmethod.InputMethodManager::class.java
+        )
+        val view = requireActivity().currentFocus
+        view?.let {
+            imm?.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
     override fun onDestroyView() {
