@@ -101,15 +101,9 @@ class PhotoListFragment : Fragment() {
         })
 
         binding.editTextSearch.apply {
-            // 검색어 입력후 엔터키를 눌렀을 때 동작
             setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    val query = binding.editTextSearch.text.toString()
-                    Log.d("@@@@@@", "Search query: $query")
-//                /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
-//                photoListViewModel.searchPhotos(query)
-                    hideKeyboard()
-                    binding.tvCancleInput.isVisible = false
+                    handleSearchAction()
                     true
                 } else {
                     false
@@ -122,18 +116,7 @@ class PhotoListFragment : Fragment() {
                 }
 
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                    val query = p0.toString()
-
-                    /**텍스트가 변경될 때마다 photos api 호출 방식*/
-                    photoListViewModel.searchPhotos(query)
-
-                    binding.tvCancleInput.isVisible = query.isNotEmpty()
-
-                    if (query.isEmpty()) {
-                        hideKeyboard()
-                        binding.editTextSearch.clearFocus()
-                        binding.headerLayout.requestFocus()
-                    }
+                    handleTextChange(p0)
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
@@ -141,26 +124,50 @@ class PhotoListFragment : Fragment() {
 
             })
 
-            setOnClickListener {
-                if (binding.editTextSearch.text.isNotEmpty()) {
-                    binding.tvCancleInput.isVisible = true
-                }
-            }
-
-            setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    Log.d("!!!!!!", "hasFocus : $hasFocus")
-                    binding.tvCancleInput.isVisible = true
-                } else {
-                    binding.tvCancleInput.isVisible = binding.editTextSearch.text.isNotEmpty()
-                }
+            setOnFocusChangeListener()
+            { _, hasFocus ->
+                handleFocusChange(hasFocus)
             }
         }
 
-        binding.tvCancleInput.setOnClickListener{
+        binding.tvCancleInput.setOnClickListener {
             binding.editTextSearch.text.clear()
         }
     }
+
+    /**검색어 입력후 엔터키를 눌렀을 때 동작*/
+    private fun handleSearchAction() {
+        val query = binding.editTextSearch.text.toString()
+        Log.d("@@@@@@", "Search query: $query")
+//                /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
+//                photoListViewModel.searchPhotos(query)
+        hideKeyboard()
+        binding.editTextSearch.clearFocus()
+        binding.headerLayout.requestFocus()
+        binding.tvCancleInput.isVisible = false
+    }
+
+    private fun handleTextChange(query: CharSequence?) {
+        /**텍스트가 변경될 때마다 photos api 호출 방식*/
+        photoListViewModel.searchPhotos(query.toString())
+        binding.tvCancleInput.isVisible = query?.isNotEmpty() == true
+
+        if (query.isNullOrEmpty()) {
+            hideKeyboard()
+            binding.editTextSearch.clearFocus()
+            binding.headerLayout.requestFocus()
+        }
+    }
+
+    private fun handleFocusChange(hasFocus: Boolean) {
+        if (hasFocus) {
+            Log.d("!!!!!!", "hasFocus : $hasFocus")
+            binding.tvCancleInput.isVisible = true
+        } else {
+            binding.tvCancleInput.isVisible = binding.editTextSearch.text.isNotEmpty()
+        }
+    }
+
 
     private fun hideKeyboard() {
         val imm = ContextCompat.getSystemService(
