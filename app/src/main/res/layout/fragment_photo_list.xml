@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingVertical="8dp"
-        android:paddingHorizontal="26dp"
+        android:paddingHorizontal="16dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,6 +36,17 @@
             android:drawablePadding="8dp"
             android:imeOptions="actionSearch"
             android:inputType="text" />
+
+        <TextView
+            android:id="@+id/tv_cancle_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="취소"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:layout_marginStart="16dp"
+            android:visibility="gone"/>
     </LinearLayout>
 
 

@@ -131,18 +131,20 @@ class PhotoListFragment : Fragment() {
         })
 
         /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
-//        binding.editTextSearch.setOnEditorActionListener { _, actionId, _  ->
-//            if (actionId == EditorInfo.IME_ACTION_SEARCH ) {
-//                val query = binding.editTextSearch.text.toString()
-//                Log.d("@@@@@@", "Search query: $query")
+        binding.editTextSearch.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val query = binding.editTextSearch.text.toString()
+                Log.d("@@@@@@", "Search query: $query")
 //                photoListViewModel.searchPhotos(query)
-//                hideKeyboard()
-//                true
-//            } else {
-//                false
-//            }
-//        }
+                hideKeyboard()
+                binding.tvCancleInput.isVisible = false
+                true
+            } else {
+                false
+            }
+        }
 
+        /**텍스트가 변경될 때마다 photos api 호출 방식*/
         binding.editTextSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
@@ -152,14 +154,32 @@ class PhotoListFragment : Fragment() {
 
                 photoListViewModel.searchPhotos(query)
 
+                binding.tvCancleInput.isVisible = query.isNotEmpty()
+
                 if (query.isEmpty()) {
                     hideKeyboard()
+                }
             }
 
             override fun afterTextChanged(p0: Editable?) {
             }
 
         })
+
+        binding.editTextSearch.setOnClickListener {
+            if (binding.editTextSearch.text.isNotEmpty()) {
+                binding.tvCancleInput.isVisible = true
+            }
+        }
+
+        binding.editTextSearch.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                Log.d("!!!!!!", "hasFocus : $hasFocus")
+                binding.tvCancleInput.isVisible = true
+            } else {
+                binding.tvCancleInput.isVisible = binding.editTextSearch.text.isNotEmpty()
+            }
+        }
     }
 
     private fun hideKeyboard() {
@@ -172,6 +192,7 @@ class PhotoListFragment : Fragment() {
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
