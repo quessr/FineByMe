@@ -233,7 +233,7 @@ private fun setupObservers() {
         updateFavoriteIcon(isFavorite)
     }
 
-    photoDetailViewModel.state.observe(this) { state ->
+    photoDetailViewModel.LoadingState.observe(this) { state ->
         if (state.equals(State.LOADING)) {
             showLoading()
         } else binding.ivLoading.visibility = View.GONE

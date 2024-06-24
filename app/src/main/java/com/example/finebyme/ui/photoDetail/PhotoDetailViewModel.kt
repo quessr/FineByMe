@@ -1,16 +1,12 @@
 package com.example.finebyme.ui.photoDetail
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.finebyme.common.enums.State
-import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosRepository
-import com.example.finebyme.ui.photoList.PhotoListViewModel
 
 class PhotoDetailViewModel(
     application: Application,
@@ -23,19 +19,20 @@ class PhotoDetailViewModel(
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite: LiveData<Boolean> get() = _isFavorite
 
-    private val _state: MutableLiveData<State> by lazy { MutableLiveData() }
-    val state: LiveData<State> get() = _state
+    private val _LoadingState: MutableLiveData<State> by lazy { MutableLiveData() }
+    val LoadingState: LiveData<State> get() = _LoadingState
+
 
     init {
-        _state.value = State.LOADING
+        _LoadingState.value = State.LOADING
     }
 
     fun onPhotoLoadCompleted() {
-        _state.value = State.DONE
+        _LoadingState.value = State.DONE
     }
 
     fun onPhotoLoadFail() {
-        _state.value = State.ERROR
+        _LoadingState.value = State.ERROR
     }
 
     fun onEntryScreen(photo: Photo) {
