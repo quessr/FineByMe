@@ -25,6 +25,9 @@ class PhotoListViewModel(
     private val _state: MutableLiveData<State> by lazy { MutableLiveData() }
     val state: LiveData<State> get() = _state
 
+    // 검색 전 사진 목록을 캐싱하기 위한 변수
+    private var cachedPhotos: List<UnsplashPhoto> = emptyList()
+
     init {
         fetchPhotos()
     }
@@ -35,6 +38,7 @@ class PhotoListViewModel(
         RetrofitInstance.fetchRandomPhotos { photos ->
             if (photos != null) {
                 _photos.postValue(photos)
+                cachedPhotos = photos
                 _state.postValue(State.DONE)
 //                insertFirstPhotoInDb(photos[0])
             } else {
@@ -46,6 +50,14 @@ class PhotoListViewModel(
     }
 
     fun searchPhotos(query: String) {
+
+        // 검색어가 비어있을 때 캐시된 사진 목록을 다시 설정
+        if (query.isEmpty()) {
+            _photos.postValue(cachedPhotos)
+            _state.postValue(State.DONE)
+            return
+        }
+
         _state.postValue(State.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
         searchPhotosRepository.searchPhotos(query).observeForever { response ->
@@ -60,7 +72,6 @@ class PhotoListViewModel(
                 _state.postValue(State.ERROR)
             }
         }
-
     }
 
 //    private fun insertFirstPhotoInDb(unsplashPhoto: UnsplashPhoto) {
