@@ -2,6 +2,7 @@ package com.example.finebyme.data.network
 
 import android.util.Log
 import com.example.finebyme.BuildConfig
+import com.example.finebyme.data.model.SearchPhotoResponse
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.utils.NetworkUtils.enqueueCall
 import com.squareup.moshi.Moshi
@@ -37,14 +38,13 @@ object RetrofitInstance {
         retrofit.create(RetrofitService::class.java)
     }
 
-    fun fetchRandomPhoto(onResult: (List<UnsplashPhoto>?) -> Unit) {
+    fun fetchRandomPhotos(onResult: (List<UnsplashPhoto>?) -> Unit) {
         val service = RetrofitInstance.retrofitService
 
         enqueueCall(
-            service.getRandomPhoto(API_KEY, 500),
+            service.getRandomPhoto(API_KEY, 1000),
             onSuccess = { response ->
                 val photos = response.body()
-//                val photos = response.body()?.filter { it.description != null }
                 if (!photos.isNullOrEmpty()) {
                     onResult(photos)
                 } else {
@@ -58,15 +58,27 @@ object RetrofitInstance {
             })
     }
 
-    fun fetchSearchPhoto() {
-        val service = RetrofitInstance.retrofitService
-
-        enqueueCall(
-            service.getSearchPhoto(API_KEY, "고양이"),
-            onSuccess = { response -> Log.d("RetrofitInstance", "Response: ${response.body()}") },
-            onFailure = { t -> Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}") }
-        )
-    }
+//    fun fetchSearchPhotos(query: String, onResult: (SearchPhotoResponse?) -> Unit) {
+//        val service = retrofitService
+//
+//        enqueueCall(
+//            service.getSearchPhoto(API_KEY, query),
+//            onSuccess = { response ->
+//                val photos = response.body()
+//                onResult(photos)
+//                if (photos != null) {
+//                    Log.d("@@@@@@", "fetchSearchPhotos API Call Successful: ${response.body()}")
+//                } else {
+//                    Log.d("@@@@@@", "fetchSearchPhotos API Call Successful but no data found")
+//                }
+////                Log.d("RetrofitInstance", "Response: ${response.body()}")
+//            },
+//            onFailure = { t ->
+//                Log.e("@@@@@@", "fetchSearchPhotos Failed to fetch data: ${t.message}")
+//                onResult(null)
+//            }
+//        )
+//    }
 }
 
 
