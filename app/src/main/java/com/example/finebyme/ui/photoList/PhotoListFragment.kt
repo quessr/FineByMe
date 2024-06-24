@@ -51,11 +51,6 @@ class PhotoListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -66,26 +61,27 @@ class PhotoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        setupObservers()
+        setupListeners()
+    }
 
-        // db test를 위한 코드
-//        photoListViewModel.setContext(requireContext())
-
+    private fun setupRecyclerView() {
         photoAdapter = PhotoAdapter(photoListViewModel)
         recyclerView = binding.recyclerView
 
-        val numberOfColumns = 2
         val layoutManager =
-            StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
-        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+            }
         recyclerView.layoutManager = layoutManager
-
         binding.recyclerView.adapter = photoAdapter
+    }
 
-//        RetrofitInstance.fetchRandomPhoto{ photos -> photos?.let { photoAdapter.setPhoto(it) } }
+    private fun setupObservers() {
         photoListViewModel.photos.observe(
             viewLifecycleOwner,
             Observer { photos ->
-//                photos.forEach {photo -> Log.d("@@@@@", "photo title : ${photo.title}")}
                 photoAdapter.setPhoto(photos.toPhotoList())
             })
 
@@ -122,7 +118,9 @@ class PhotoListFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun setupListeners() {
         photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
             override fun onPhotoClick(photo: Photo) {
                 val intent = newPhotoDetail(requireContext(), photo)
@@ -130,55 +128,65 @@ class PhotoListFragment : Fragment() {
             }
         })
 
-        /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
-        binding.editTextSearch.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                val query = binding.editTextSearch.text.toString()
-                Log.d("@@@@@@", "Search query: $query")
+        binding.editTextSearch.apply {
+            // 검색어 입력후 엔터키를 눌렀을 때 동작
+            setOnEditorActionListener { _, actionId, _ ->
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    val query = binding.editTextSearch.text.toString()
+                    Log.d("@@@@@@", "Search query: $query")
+//                /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
 //                photoListViewModel.searchPhotos(query)
-                hideKeyboard()
-                binding.tvCancleInput.isVisible = false
-                true
-            } else {
-                false
-            }
-        }
-
-        /**텍스트가 변경될 때마다 photos api 호출 방식*/
-        binding.editTextSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val query = p0.toString()
-
-                photoListViewModel.searchPhotos(query)
-
-                binding.tvCancleInput.isVisible = query.isNotEmpty()
-
-                if (query.isEmpty()) {
                     hideKeyboard()
+                    binding.tvCancleInput.isVisible = false
+                    true
+                } else {
+                    false
                 }
             }
 
-            override fun afterTextChanged(p0: Editable?) {
+            // text input의 텍스트가 변경 될때마다 동작
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    val query = p0.toString()
+
+                    /**텍스트가 변경될 때마다 photos api 호출 방식*/
+                    photoListViewModel.searchPhotos(query)
+
+                    binding.tvCancleInput.isVisible = query.isNotEmpty()
+
+                    if (query.isEmpty()) {
+                        hideKeyboard()
+                        binding.editTextSearch.clearFocus()
+                        binding.headerLayout.requestFocus()
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+            })
+
+            setOnClickListener {
+                if (binding.editTextSearch.text.isNotEmpty()) {
+                    binding.tvCancleInput.isVisible = true
+                }
             }
 
-        })
-
-        binding.editTextSearch.setOnClickListener {
-            if (binding.editTextSearch.text.isNotEmpty()) {
-                binding.tvCancleInput.isVisible = true
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    Log.d("!!!!!!", "hasFocus : $hasFocus")
+                    binding.tvCancleInput.isVisible = true
+                } else {
+                    binding.tvCancleInput.isVisible = binding.editTextSearch.text.isNotEmpty()
+                }
             }
         }
 
-        binding.editTextSearch.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                Log.d("!!!!!!", "hasFocus : $hasFocus")
-                binding.tvCancleInput.isVisible = true
-            } else {
-                binding.tvCancleInput.isVisible = binding.editTextSearch.text.isNotEmpty()
-            }
+        binding.tvCancleInput.setOnClickListener{
+            binding.editTextSearch.text.clear()
         }
     }
 
@@ -192,7 +200,6 @@ class PhotoListFragment : Fragment() {
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
