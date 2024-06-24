@@ -32,12 +32,13 @@ import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
+import com.example.finebyme.utils.LoadingHandler
 
 class PhotoListFragment : Fragment() {
 
     private lateinit var photoAdapter: PhotoAdapter
+    private lateinit var loadingHandler: LoadingHandler
 
-    //    private val photoListViewModel: PhotoListViewModel by viewModels()
     private val photoListViewModel: PhotoListViewModel by viewModels {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
@@ -56,6 +57,7 @@ class PhotoListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentPhotoListBinding.inflate(inflater)
+        loadingHandler = LoadingHandler(binding, requireContext())
         return binding.root
     }
 
@@ -86,37 +88,7 @@ class PhotoListFragment : Fragment() {
             })
 
         photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->
-            when (state) {
-                State.LOADING -> {
-                    ImageLoader.loadGif(
-                        context = binding.imageViewLoading.context,
-                        resourceId = R.drawable.loading,
-                        imageView = binding.imageViewLoading
-                    )
-
-                    binding.imageViewLoading.visibility = View.VISIBLE
-                    binding.root.setBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.white
-                        )
-                    )
-                }
-
-                State.DONE -> {
-                    binding.imageViewLoading.visibility = View.GONE
-                    binding.root.setBackgroundColor(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.black
-                        )
-                    )
-                }
-
-                State.ERROR -> {
-                    binding.imageViewLoading.visibility = View.GONE
-                }
-            }
+            loadingHandler.setLoadingState(state)
         })
     }
 
