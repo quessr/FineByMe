@@ -17,8 +17,6 @@ class PhotoDetailViewModel(
     private val favoritePhotosRepository: FavoritePhotosRepository
 ) : AndroidViewModel(application) {
 
-    private val context = getApplication<Application>().applicationContext
-
     private val _transformedPhoto = MutableLiveData<Photo>()
     val transformedPhoto: LiveData<Photo> get() = _transformedPhoto
 
@@ -59,8 +57,6 @@ class PhotoDetailViewModel(
             favoritePhotosRepository.insertPhoto(photo)
             _isFavorite.value = true
         }
-//        favoritePhotosRepository.insertPhoto(photo)
-//        _isFavorite.value = !(_isFavorite.value ?: false)
     }
 
     private fun transformTitle(title: String): String {
@@ -77,21 +73,5 @@ class PhotoDetailViewModel(
         }
 
         return filteredParts.joinToString(" ")
-
-//        val parts = title.split("-")
-//
-////        val lastIndex = parts.indexOfLast { it.matches("[a-zA-Z0-9-]+".toRegex()) }
-//        val lastIndex = parts.indexOfLast { it.matches("[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*".toRegex()) }
-//
-//        val transformedTitle = if (lastIndex > 0) {
-//            parts.subList(0, lastIndex).joinToString(" ")
-//        } else {
-//            title.replace("-", " ")
-//        }
-//
-//        Log.d("@@@@@", "transformedTitle : ${transformedTitle}")
-//
-//        return transformedTitle
-
     }
 }
