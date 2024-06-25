@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import com.example.finebyme.R
+import com.example.finebyme.utils.LoadingHandler
 import java.io.IOException
 
 
@@ -52,10 +53,13 @@ class PhotoDetailActivity() : AppCompatActivity() {
         AppViewModelFactory(application, favoritePhotosRepository)
     }
 
+    private lateinit var loadingHandler: LoadingHandler<ActivityPhotoDetailBinding>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        loadingHandler = LoadingHandler(binding, this)
 
         photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
@@ -141,9 +145,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
         }
 
         photoDetailViewModel.LoadingState.observe(this) { state ->
-            if (state.equals(State.LOADING)) {
-                showLoading()
-            } else binding.ivLoading.visibility = View.GONE
+            loadingHandler.setLoadingState(state)
         }
 
         photoDetailViewModel.isDownloading.observe(this) { isDownloading ->

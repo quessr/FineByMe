@@ -63,7 +63,8 @@
         android:paddingHorizontal="12dp"
         android:paddingVertical="12dp"
         android:background="@drawable/favorite_button_background"
-        android:src="@drawable/ic_nav_favorite_normal" />
+        android:src="@drawable/ic_nav_favorite_normal"
+        android:visibility="gone"/>
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_download"
@@ -75,7 +76,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="8dp"
-        android:text="다운로드" />
+        android:text="다운로드"
+        android:visibility="gone"/>
 
 
     <LinearLayout

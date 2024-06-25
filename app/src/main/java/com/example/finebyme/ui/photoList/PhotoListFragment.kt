@@ -37,7 +37,7 @@ import com.example.finebyme.utils.LoadingHandler
 class PhotoListFragment : Fragment() {
 
     private lateinit var photoAdapter: PhotoAdapter
-    private lateinit var loadingHandler: LoadingHandler
+    private lateinit var loadingHandler: LoadingHandler<FragmentPhotoListBinding>
 
     private val photoListViewModel: PhotoListViewModel by viewModels {
         val application = requireActivity().application
