@@ -131,7 +131,9 @@ class PhotoListFragment : Fragment() {
         }
 
         binding.tvCancleInput.setOnClickListener {
+            binding.tvCancleInput.isVisible = false
             binding.editTextSearch.text.clear()
+            hideKeyboard()
         }
     }
 
