@@ -191,19 +191,6 @@ class PhotoDetailActivity() : AppCompatActivity() {
         }
     }
 
-    private fun showLoading() {
-        binding.ivLoading.visibility = View.VISIBLE
-
-        ImageLoader.loadGif(
-            context = this,
-            resourceId = R.drawable.loading,
-            imageView = binding.ivLoading,
-            centerCrop = true,
-            overrideWidth = 40,
-            overrideHeight = 40
-        )
-    }
-
     private fun showSnackbar(message: String) {
         val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
         val snackbarView: View = snackbar.view
