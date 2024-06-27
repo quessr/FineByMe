@@ -1,6 +1,5 @@
 package com.example.finebyme.ui.photoList
 
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,25 +11,18 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.finebyme.R
-import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.data.network.RetrofitService
 import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
-import com.example.finebyme.data.repository.SearchPhotosRepository
 import com.example.finebyme.data.repository.SearchPhotosRepositoryImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
-import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 import com.example.finebyme.utils.LoadingHandler
 
@@ -55,7 +47,7 @@ class PhotoListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentPhotoListBinding.inflate(inflater)
         loadingHandler = LoadingHandler(binding, requireContext())
         return binding.root
@@ -82,14 +74,14 @@ class PhotoListFragment : Fragment() {
 
     private fun setupObservers() {
         photoListViewModel.photos.observe(
-            viewLifecycleOwner,
-            Observer { photos ->
-                photoAdapter.setPhoto(photos.toPhotoList())
-            })
+            viewLifecycleOwner
+        ) { photos ->
+            photoAdapter.setPhoto(photos.toPhotoList())
+        }
 
-        photoListViewModel.state.observe(viewLifecycleOwner, Observer { state ->
+        photoListViewModel.state.observe(viewLifecycleOwner) { state ->
             loadingHandler.setLoadingState(state)
-        })
+        }
     }
 
     private fun setupListeners() {
@@ -163,7 +155,6 @@ class PhotoListFragment : Fragment() {
 
     private fun handleFocusChange(hasFocus: Boolean) {
         if (hasFocus) {
-            Log.d("!!!!!!", "hasFocus : $hasFocus")
             binding.tvCancleInput.isVisible = true
         } else {
             binding.tvCancleInput.isVisible = binding.editTextSearch.text.isNotEmpty()
