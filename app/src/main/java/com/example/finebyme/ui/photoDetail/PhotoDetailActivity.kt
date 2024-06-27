@@ -1,13 +1,8 @@
 package com.example.finebyme.ui.photoDetail
 
-import android.content.ContentValues
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -18,11 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
@@ -30,21 +20,22 @@ import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
 import com.google.android.material.snackbar.Snackbar
-import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import com.example.finebyme.R
 import com.example.finebyme.utils.LoadingHandler
-import java.io.IOException
 
 
-class PhotoDetailActivity() : AppCompatActivity() {
+class PhotoDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val ARG_PHOTO = "photo"
-        private const val IMAGE_PERMISSION = android.Manifest.permission.READ_MEDIA_IMAGES
-        private const val WRITE_PERMISSION = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        private val IMAGE_PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            android.Manifest.permission.READ_MEDIA_IMAGES
+        } else {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE
+        }
+        private const val REQUEST_CODE_TIRAMISU = 200
+        private const val REQUEST_CODE_LEGACY = 100
+//        private const val WRITE_PERMISSION = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
     }
 
     private lateinit var binding: ActivityPhotoDetailBinding
@@ -91,18 +82,22 @@ class PhotoDetailActivity() : AppCompatActivity() {
             photo?.let { photoDetailViewModel.toggleFavorite(it) }
         }
 
-        binding.chipDownload.setOnClickListener{
+        binding.chipDownload.setOnClickListener {
             requestPermissionDownload()
         }
     }
 
     private fun requestPermissionDownload() {
-        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            arrayOf(IMAGE_PERMISSION)
+//        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            arrayOf(IMAGE_PERMISSION)
+//        } else {
+//            arrayOf(WRITE_PERMISSION)
+//        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            checkPermissionsAndStartMotion(arrayOf(IMAGE_PERMISSION), REQUEST_CODE_TIRAMISU)
         } else {
-            arrayOf(WRITE_PERMISSION)
+            checkPermissionsAndStartMotion(arrayOf(IMAGE_PERMISSION), REQUEST_CODE_LEGACY)
         }
-        checkPermissionsAndStartMotion(permissions, 100)
     }
 
     private fun checkPermissionsAndStartMotion(permissions: Array<String>, requestCode: Int) {
@@ -171,7 +166,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
     }
 
     private fun setupPhotoDetails(photo: Photo) {
-        photo?.let {
+        photo.let {
 
             binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
 
@@ -183,9 +178,9 @@ class PhotoDetailActivity() : AppCompatActivity() {
             )
 
             binding.tvTitle.text = it.title
-            binding.tvDescription.text = it?.description
+            binding.tvDescription.text = it.description
 
-            Log.d("@@@@@@", " photo id : ${photo!!.id}")
+            Log.d("@@@@@@", " photo id : ${photo.id}")
         }
     }
 
