@@ -4,12 +4,15 @@ import android.app.Application
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.media.MediaScannerConnection
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -17,6 +20,8 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosRepository
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
@@ -39,12 +44,11 @@ class PhotoDetailViewModel(
     private val _LoadingState: MutableLiveData<State> by lazy { MutableLiveData() }
     val LoadingState: LiveData<State> get() = _LoadingState
 
-    private val _isDownloading =  MutableLiveData<Boolean>()
+    private val _isDownloading = MutableLiveData<Boolean>()
     val isDownloading: LiveData<Boolean> get() = _isDownloading
 
     private var _downloadState = MutableLiveData<String>()
     val downloadState: LiveData<String> get() = _downloadState
-
 
 
     init {
@@ -66,12 +70,12 @@ class PhotoDetailViewModel(
         _isFavorite.value = isPhotoFavorite(photo.id)
     }
 
-    fun isPhotoFavorite(id: String):Boolean {
+    fun isPhotoFavorite(id: String): Boolean {
         return favoritePhotosRepository.isPhotoFavorite(id)
     }
 
     fun toggleFavorite(photo: Photo) {
-        if(isPhotoFavorite(photo.id)) {
+        if (isPhotoFavorite(photo.id)) {
             favoritePhotosRepository.deletePhoto(photo)
             _isFavorite.value = false
         } else {
@@ -110,8 +114,11 @@ class PhotoDetailViewModel(
                     resource: Bitmap,
                     transition: Transition<in Bitmap>?
                 ) {
-                    saveImageToGallery(resource)
-//                    _isDownloading.value = false  // 다운로드 완료
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        saveImageToGallery(resource)
+                    } else {
+                        saveImageToGalleryBelowAndroidQ(resource)
+                    }
                 }
 
                 override fun onLoadCleared(placeholder: Drawable?) {
@@ -122,7 +129,8 @@ class PhotoDetailViewModel(
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
                     _isDownloading.value = false
-                    _downloadState.value = "다운로드에 실패했습니다."
+                    _downloadState.value = "다운로드에 실패했습니다. $errorDrawable"
+
                 }
             })
     }
@@ -138,7 +146,10 @@ class PhotoDetailViewModel(
         }
 
         val uri =
-            context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            context.contentResolver.insert(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                contentValues
+            )
         var stream: OutputStream? = null
 
         try {
@@ -159,5 +170,33 @@ class PhotoDetailViewModel(
             }
             _isDownloading.value = false
         }
+    }
+
+    private fun saveImageToGalleryBelowAndroidQ(bitmap: Bitmap) {
+        val filename = "Finebyme_${
+            SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault()).format(Date())
+        }.jpg"
+        val pictureDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val file = File(pictureDir, filename)
+        var stream: OutputStream? = null
+
+        try {
+            stream = FileOutputStream(file)
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            stream.flush()
+            _downloadState.value = "이미지가 갤러리에 다운로드 되었습니다."
+        } catch (e: Exception) {
+            e.printStackTrace()
+            _downloadState.value = "다운로드에 실패했습니다."
+        } finally {
+            try {
+                stream?.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            _isDownloading.value = false
+        }
+
+        MediaScannerConnection.scanFile(context, arrayOf(file.toString()), null, null)
     }
 }

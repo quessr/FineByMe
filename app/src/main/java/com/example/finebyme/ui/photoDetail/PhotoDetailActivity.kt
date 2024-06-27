@@ -44,6 +44,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
     companion object {
         private const val ARG_PHOTO = "photo"
         private const val imagePermission = android.Manifest.permission.READ_MEDIA_IMAGES
+        private const val writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
     }
 
     private lateinit var binding: ActivityPhotoDetailBinding
@@ -90,9 +91,7 @@ class PhotoDetailActivity() : AppCompatActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestTiramisuPermission()
             } else {
-                binding.progressBar.visibility = View.VISIBLE
-                binding.tvDownloading.visibility = View.VISIBLE
-                photo?.let { photoDetailViewModel.downloadImage(it) }
+                requestLegacyPermission()
             }
         }
 
@@ -104,16 +103,18 @@ class PhotoDetailActivity() : AppCompatActivity() {
         checkPermissionsAndStartMotion(arrayOf(imagePermission), 200)
     }
 
+    // Android 13 이하일 때
+    private fun requestLegacyPermission() {
+        checkPermissionsAndStartMotion(arrayOf(writePermission), 100)
+    }
+
     private fun checkPermissionsAndStartMotion(permissions: Array<String>, requestCode: Int) {
         val permissionResults = permissions.map {
             ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
         }
 
         if (permissionResults.all { it }) {
-            // TODO 권한이 허용 되었을 때의 액선
-            binding.progressBar.visibility = View.VISIBLE
-            binding.tvDownloading.visibility = View.VISIBLE
-            photo?.let { photoDetailViewModel.downloadImage(it) }
+            startDownload()
         } else {
             ActivityCompat.requestPermissions(this, permissions, requestCode)
         }
@@ -128,14 +129,20 @@ class PhotoDetailActivity() : AppCompatActivity() {
         when (requestCode) {
             100, 200 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // TODO 권한이 허용 되었을 때의 액션
                     showSnackbar("권한이 허용 되었습니다.")
+                    startDownload()
                 } else {
                     finish()
                     showSnackbar("권한이 부여되지 않았습니다.")
                 }
             }
         }
+    }
+
+    private fun startDownload() {
+        binding.progressBar.isVisible = true
+        binding.tvDownloading.isVisible = true
+        photo?.let { photoDetailViewModel.downloadImage(it) }
     }
 
     private fun setupObservers() {
