@@ -8,11 +8,9 @@ import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.View
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -33,7 +31,7 @@ class PhotoDetailViewModel(
     private val favoritePhotosRepository: FavoritePhotosRepository
 ) : AndroidViewModel(application) {
 
-    private val context = getApplication<Application>().applicationContext
+//    private val context = getApplication<Application>().applicationContext
 
     private val _transformedPhoto = MutableLiveData<Photo>()
     val transformedPhoto: LiveData<Photo> get() = _transformedPhoto
@@ -41,8 +39,8 @@ class PhotoDetailViewModel(
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite: LiveData<Boolean> get() = _isFavorite
 
-    private val _LoadingState: MutableLiveData<State> by lazy { MutableLiveData() }
-    val LoadingState: LiveData<State> get() = _LoadingState
+    private val _loadingState: MutableLiveData<State> by lazy { MutableLiveData() }
+    val loadingState: LiveData<State> get() = _loadingState
 
     private val _isDownloading = MutableLiveData<Boolean>()
     val isDownloading: LiveData<Boolean> get() = _isDownloading
@@ -52,15 +50,15 @@ class PhotoDetailViewModel(
 
 
     init {
-        _LoadingState.value = State.LOADING
+        _loadingState.value = State.LOADING
     }
 
     fun onPhotoLoadCompleted() {
-        _LoadingState.value = State.DONE
+        _loadingState.value = State.DONE
     }
 
     fun onPhotoLoadFail() {
-        _LoadingState.value = State.ERROR
+        _loadingState.value = State.ERROR
     }
 
     fun onEntryScreen(photo: Photo) {
@@ -104,9 +102,9 @@ class PhotoDetailViewModel(
         if (_isDownloading.value == true) return
 
         _isDownloading.value = true
-        Glide.with(context)
+        Glide.with(getApplication<Application>().applicationContext)
             .asBitmap()
-            .load(photo?.fullUrl)
+            .load(photo.fullUrl)
             .skipMemoryCache(true)  // 메모리 캐시 무시
             .diskCacheStrategy(DiskCacheStrategy.NONE)  // 디스크 캐시 무시
             .into(object : CustomTarget<Bitmap>() {
@@ -146,7 +144,7 @@ class PhotoDetailViewModel(
         }
 
         val uri =
-            context.contentResolver.insert(
+            getApplication<Application>().applicationContext.contentResolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues
             )
@@ -154,7 +152,7 @@ class PhotoDetailViewModel(
 
         try {
             uri.let {
-                stream = it?.let { it1 -> context.contentResolver.openOutputStream(it1) }
+                stream = it?.let { it1 -> getApplication<Application>().applicationContext.contentResolver.openOutputStream(it1) }
                 stream?.let { it1 -> bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it1) }
                 stream?.flush()
                 _downloadState.value = "이미지가 갤러리에 다운로드 되었습니다."
@@ -197,6 +195,6 @@ class PhotoDetailViewModel(
             _isDownloading.value = false
         }
 
-        MediaScannerConnection.scanFile(context, arrayOf(file.toString()), null, null)
+        MediaScannerConnection.scanFile(getApplication<Application>().applicationContext, arrayOf(file.toString()), null, null)
     }
 }
