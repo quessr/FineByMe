@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -94,6 +95,8 @@ class PhotoDetailActivity() : AppCompatActivity() {
                 photo?.let { photoDetailViewModel.downloadImage(it) }
             }
         }
+
+        handleOnBackPressed()
     }
 
     // Android 13 이상일 때
@@ -204,5 +207,13 @@ class PhotoDetailActivity() : AppCompatActivity() {
         snackbar.setBackgroundTint(color)
 
         snackbar.show()
+    }
+
+    private fun handleOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish() // 기본 동작으로 MainActivity로 돌아가기
+            }
+        })
     }
 }

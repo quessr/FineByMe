@@ -1,10 +1,11 @@
 package com.example.finebyme.ui.main
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.FragmentManager
 import com.example.finebyme.R
 import com.example.finebyme.databinding.ActivityMainBinding
 import com.example.finebyme.ui.favoriteList.FavoriteListFragment
@@ -18,6 +19,58 @@ class MainActivity : AppCompatActivity() {
 
         showInit()
         initBottomNav()
+        handleOnBackPressed()
+    }
+
+    private fun handleOnBackPressed() {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+                if (supportFragmentManager.backStackEntryCount == 1) {
+                    showExitConfirmationDialog()
+                } else {
+                    supportFragmentManager.popBackStack()
+
+                    supportFragmentManager.addOnBackStackChangedListener(object :
+                        FragmentManager.OnBackStackChangedListener {
+                        override fun onBackStackChanged() {
+                            supportFragmentManager.removeOnBackStackChangedListener(this)
+
+                            val currentFragment =
+                                supportFragmentManager.findFragmentById(R.id.frameLayout)
+
+                            Log.d("@@@@@@", "currentFragment : $currentFragment")
+                            when (currentFragment) {
+                                is PhotoListFragment -> {
+                                    binding.bottomNavigation.menu.findItem(R.id.nav_home).isChecked =
+                                        true
+                                }
+
+                                is FavoriteListFragment -> {
+                                    binding.bottomNavigation.menu.findItem(R.id.nav_favorite).isChecked =
+                                        true
+                                }
+                            }
+
+                        }
+
+                    })
+                }
+            }
+        })
+    }
+
+    private fun showExitConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setMessage("앱을 종료하시겠습니까?")
+            .setPositiveButton("확인") { dialog, _ ->
+                dialog.dismiss()
+                finish()
+            }
+            .setNegativeButton("취소") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
     }
 
     private fun initBottomNav() {
@@ -48,15 +101,17 @@ class MainActivity : AppCompatActivity() {
             fragment = when (tag) {
                 PhotoListFragment::class.java.name -> PhotoListFragment()
                 FavoriteListFragment::class.java.name -> FavoriteListFragment()
-                else ->  throw  IllegalStateException("Unknown fragment tag: $tag")
+                else -> throw IllegalStateException("Unknown fragment tag: $tag")
             }
         }
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.frameLayout, fragment, tag)
             .setReorderingAllowed(true)
-            .addToBackStack(null)
+            .addToBackStack(tag)
             .commit()
+
+        Log.d("tag : ", tag)
     }
 
     fun showInit() {
