@@ -30,7 +30,7 @@ class PhotoDetailViewModel(
     application: Application,
     private val favoritePhotosRepository: FavoritePhotosRepository
 ) : AndroidViewModel(application) {
-    
+
     private val _transformedPhoto = MutableLiveData<Photo>()
     val transformedPhoto: LiveData<Photo> get() = _transformedPhoto
 
