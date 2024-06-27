@@ -7,17 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.data.repository.SearchPhotosRepository
 import com.example.finebyme.ui.base.BaseViewModel
 
 class PhotoListViewModel(
     application: Application,
-    private val favoritePhotosRepository: FavoritePhotosRepository,
     private val searchPhotosRepository: SearchPhotosRepository
 ) : BaseViewModel(application) {
-
-    private val context = getApplication<Application>().applicationContext
 
     private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
     val photos: LiveData<List<UnsplashPhoto>> get() = _photos
