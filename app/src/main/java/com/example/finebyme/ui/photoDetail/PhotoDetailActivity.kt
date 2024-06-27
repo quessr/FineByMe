@@ -43,8 +43,8 @@ class PhotoDetailActivity() : AppCompatActivity() {
 
     companion object {
         private const val ARG_PHOTO = "photo"
-        private const val imagePermission = android.Manifest.permission.READ_MEDIA_IMAGES
-        private const val writePermission = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        private const val IMAGE_PERMISSION = android.Manifest.permission.READ_MEDIA_IMAGES
+        private const val WRITE_PERMISSION = android.Manifest.permission.WRITE_EXTERNAL_STORAGE
     }
 
     private lateinit var binding: ActivityPhotoDetailBinding
@@ -73,39 +73,36 @@ class PhotoDetailActivity() : AppCompatActivity() {
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
             photoDetailViewModel.onEntryScreen(photo!!)
+            setupUI()
         } else {
             finish()
         }
 
-        // 즐겨찾기 상태를 확인하고 UI 업데이트
-        val isFavorite = photo?.let { photoDetailViewModel.isPhotoFavorite(it.id) }
-        isFavorite?.let { updateFavoriteIcon(it) }
-
         setupObservers()
         // TODO: setupListener()
-        binding.ivFavorite.setOnClickListener {
-            photo?.let { photo -> photoDetailViewModel.toggleFavorite(photo) }
-        }
-
-        binding.chipDownload.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                requestTiramisuPermission()
-            } else {
-                requestLegacyPermission()
-            }
-        }
-
         handleOnBackPressed()
     }
 
-    // Android 13 이상일 때
-    private fun requestTiramisuPermission() {
-        checkPermissionsAndStartMotion(arrayOf(imagePermission), 200)
+    private fun setupUI() {
+        val isFavorite = photo?.let { photoDetailViewModel.isPhotoFavorite(it.id) }
+        isFavorite?.let { updateFavoriteIcon(it) }
+
+        binding.ivFavorite.setOnClickListener {
+            photo?.let { photoDetailViewModel.toggleFavorite(it) }
+        }
+
+        binding.chipDownload.setOnClickListener{
+            requestPermissionDownload()
+        }
     }
 
-    // Android 13 이하일 때
-    private fun requestLegacyPermission() {
-        checkPermissionsAndStartMotion(arrayOf(writePermission), 100)
+    private fun requestPermissionDownload() {
+        val permissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            arrayOf(IMAGE_PERMISSION)
+        } else {
+            arrayOf(WRITE_PERMISSION)
+        }
+        checkPermissionsAndStartMotion(permissions, 100)
     }
 
     private fun checkPermissionsAndStartMotion(permissions: Array<String>, requestCode: Int) {
