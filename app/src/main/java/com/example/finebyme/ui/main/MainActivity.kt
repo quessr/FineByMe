@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("tag : ", tag)
     }
 
-    fun showInit() {
+    private fun showInit() {
         changeFragment(PhotoListFragment::class.java.name)
     }
 

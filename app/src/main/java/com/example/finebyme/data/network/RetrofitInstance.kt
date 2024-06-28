@@ -2,7 +2,6 @@ package com.example.finebyme.data.network
 
 import android.util.Log
 import com.example.finebyme.BuildConfig
-import com.example.finebyme.data.model.SearchPhotoResponse
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.utils.NetworkUtils.enqueueCall
 import com.squareup.moshi.Moshi
@@ -14,7 +13,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
     private const val BASE_URL = "https://api.unsplash.com/"
-    private val API_KEY = BuildConfig.UNSPLASH_API_KEY
+    private const val API_KEY = BuildConfig.UNSPLASH_API_KEY
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -22,7 +21,7 @@ object RetrofitInstance {
             .build()
     }
 
-    val moshi = Moshi.Builder()
+    private val moshi = Moshi.Builder()
         .addLast(KotlinJsonAdapterFactory())
         .build()
 
@@ -39,7 +38,7 @@ object RetrofitInstance {
     }
 
     fun fetchRandomPhotos(onResult: (List<UnsplashPhoto>?) -> Unit) {
-        val service = RetrofitInstance.retrofitService
+        val service = retrofitService
 
         enqueueCall(
             service.getRandomPhoto(API_KEY, 1000),

@@ -3,7 +3,6 @@ package com.example.finebyme.data.db
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.versionedparcelable.VersionedParcelize
 import kotlinx.parcelize.Parcelize
 
 //사용자가 즐겨찾기한 사진들
@@ -11,7 +10,7 @@ import kotlinx.parcelize.Parcelize
 /**@Parcelize 어노테이션은 Kotlin에서 Parcelable 인터페이스의 구현을 자동화해 주는 기능입니다.*/
 @Entity(tableName = "favorite_photos")
 data class Photo(
-    @PrimaryKey()
+    @PrimaryKey
     var id: String,
     var title: String,
     val description: String?,

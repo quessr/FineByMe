@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = arrayOf(Photo::class), version = 3, exportSchema = false)
-public abstract class FavoritePhotosDatabase : RoomDatabase() {
+@Database(entities = [Photo::class], version = 3, exportSchema = false)
+abstract class FavoritePhotosDatabase : RoomDatabase() {
 
     abstract fun PhotoDao(): PhotoDao
 

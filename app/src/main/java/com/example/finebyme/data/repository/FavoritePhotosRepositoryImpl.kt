@@ -14,7 +14,8 @@ class FavoritePhotosRepositoryImpl(private val photoDao: PhotoDao) : FavoritePho
 
     override fun updatePhoto(photo: Photo) = photoDao.update(photo)
 
-    override fun isPhotoFavorite(id: String): Boolean {
-        return photoDao.getPhoto(id) != null
+    @Suppress("SENSELESS_COMPARISON")
+    override fun isPhotoFavorite(photoId: String): Boolean {
+        return photoDao.getPhoto(photoId) != null
     }
 }

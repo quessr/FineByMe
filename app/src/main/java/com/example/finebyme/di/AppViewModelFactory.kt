@@ -14,16 +14,15 @@ class AppViewModelFactory(
     private val favoritePhotosRepository: FavoritePhotosRepository,
     private val searchPhotosRepository: SearchPhotosRepository? = null,
 ) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(FavoriteListViewModel::class.java) -> {
-                FavoriteListViewModel(application, favoritePhotosRepository) as T
+                FavoriteListViewModel(application) as T
             }
             modelClass.isAssignableFrom(PhotoListViewModel::class.java) -> {
                 searchPhotosRepository?.let {
-                    PhotoListViewModel(application, favoritePhotosRepository,
-                        it
-                    )
+                    PhotoListViewModel(application, searchPhotosRepository)
                 } as T
             }
             modelClass.isAssignableFrom(PhotoDetailViewModel::class.java) -> {
