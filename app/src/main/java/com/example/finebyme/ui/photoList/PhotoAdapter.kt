@@ -3,15 +3,13 @@ package com.example.finebyme.ui.photoList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.databinding.ItemPhotoBinding
 import com.example.finebyme.ui.base.BaseViewModel
 import com.example.finebyme.utils.ImageLoader
-import java.util.Random
+import com.example.finebyme.utils.PhotoDiffCallback
 
 class PhotoAdapter(private val viewModel: BaseViewModel) :
     RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
@@ -20,9 +18,11 @@ class PhotoAdapter(private val viewModel: BaseViewModel) :
     private var listener: OnPhotoClickListener? = null
 
 
-    fun setPhoto(favoritePhotoList: List<Photo>) {
-        this.photoList = favoritePhotoList
-        notifyDataSetChanged()
+    fun setPhoto(newPhotoList: List<Photo>) {
+        val diffCallback = PhotoDiffCallback(photoList, newPhotoList)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        photoList = newPhotoList
+        diffResult.dispatchUpdatesTo(this)
     }
 
     interface OnPhotoClickListener {
@@ -77,9 +77,9 @@ class PhotoAdapter(private val viewModel: BaseViewModel) :
     }
 
     fun clearData() {
+        val diffCallback = PhotoDiffCallback(photoList, listOf())
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
         photoList = listOf()
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
-
-
 }
