@@ -7,9 +7,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.finebyme.ui.photoDetail.PhotoDetailViewModel
 
@@ -22,15 +22,19 @@ object ImageLoader {
         crossFade: Boolean = true,
         photoDetailViewModel: PhotoDetailViewModel? = null,
     ) {
-        val glideRequest = Glide.with(context)
+        var glideRequest = Glide.with(context)
             .load(url)
-            .apply {
-                if (centerCrop) centerCrop()
-                if (crossFade) transition(DrawableTransitionOptions.withCrossFade())
-            }
+
+        if (centerCrop) {
+            glideRequest = glideRequest.apply(RequestOptions().centerCrop())
+        }
+
+        if (crossFade) {
+            glideRequest = glideRequest.transition(DrawableTransitionOptions.withCrossFade())
+        }
 
         if (photoDetailViewModel != null) {
-            glideRequest.listener(object : RequestListener<Drawable> {
+            glideRequest = glideRequest.listener(object : RequestListener<Drawable> {
                 override fun onLoadFailed(
                     e: GlideException?,
                     model: Any?,
@@ -67,21 +71,22 @@ object ImageLoader {
         overrideWidth: Int? = null,
         overrideHeight: Int? = null
     ) {
-        val glideRequest = Glide.with(context)
+        var glideRequest = Glide.with(context)
             .asGif()
             .load(resourceId)
             .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
 
         if (circleCrop) {
-            glideRequest.circleCrop()
+            glideRequest = glideRequest.apply(RequestOptions().circleCrop())
         }
 
         if (centerCrop) {
-            glideRequest.centerCrop()
+            glideRequest = glideRequest.apply(RequestOptions().centerCrop())
         }
 
         if (overrideWidth != null && overrideHeight != null) {
-            glideRequest.override(overrideWidth, overrideHeight)
+            glideRequest =
+                glideRequest.apply(RequestOptions().override(overrideWidth, overrideHeight))
         }
 
         glideRequest.into(imageView)
