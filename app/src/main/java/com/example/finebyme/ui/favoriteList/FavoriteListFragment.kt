@@ -31,24 +31,10 @@ class FavoriteListFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private var isPass = false
-
-//    companion object {
-//        private const val ARG_PHOTO = "photo"
-//        fun newIntent(context: Context, photo: Photo): Intent {
-//            return Intent(context, PhotoDetailActivity::class.java).apply {
-//                putExtra(ARG_PHOTO, photo)
-//            }
-//        }
-//    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentFavoriteListBinding.inflate(inflater)
         return binding.root
     }

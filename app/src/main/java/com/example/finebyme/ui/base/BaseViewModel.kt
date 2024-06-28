@@ -17,10 +17,6 @@ open class BaseViewModel(application: Application) : AndroidViewModel(applicatio
         val maxHeight = 300
         return (minHeight..maxHeight).random()
     }
-
-    fun getAllHeights(): Map<Int, Int> {
-        return _photoHeights
-    }
 }
 
 
