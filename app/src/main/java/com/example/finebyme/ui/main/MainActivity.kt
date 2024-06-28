@@ -62,12 +62,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun showExitConfirmationDialog() {
         AlertDialog.Builder(this)
-            .setMessage("앱을 종료하시겠습니까?")
-            .setPositiveButton("확인") { dialog, _ ->
+            .setMessage(R.string.dialog_exit_confirmation)
+            .setPositiveButton(R.string.dialog_confirm) { dialog, _ ->
                 dialog.dismiss()
                 finish()
             }
-            .setNegativeButton("취소") { dialog, _ ->
+            .setNegativeButton(R.string.dialog_cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

@@ -76,7 +76,7 @@ class PhotoListFragment : Fragment() {
         photoListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos ->
-            photoAdapter.setPhoto(photos.toPhotoList())
+            photoAdapter.setPhoto(photos.toPhotoList(requireContext()))
         }
 
         photoListViewModel.state.observe(viewLifecycleOwner) { state ->

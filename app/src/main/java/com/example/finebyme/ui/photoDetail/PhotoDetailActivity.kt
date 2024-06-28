@@ -121,11 +121,11 @@ class PhotoDetailActivity : AppCompatActivity() {
         when (requestCode) {
             100, 200 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showSnackbar("권한이 허용 되었습니다.")
+                    showSnackbar(R.string.permission_granted.toString())
                     startDownload()
                 } else {
                     finish()
-                    showSnackbar("권한이 부여되지 않았습니다.")
+                    showSnackbar(R.string.permission_granted.toString())
                 }
             }
         }

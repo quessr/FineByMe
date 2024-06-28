@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.finebyme.R
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosRepository
@@ -45,7 +46,10 @@ class PhotoDetailViewModel(
 
     private var _downloadState = MutableLiveData<String>()
     val downloadState: LiveData<String> get() = _downloadState
-
+    private val dateFormat =
+        getApplication<Application>().applicationContext.getString(R.string.date_format)
+    private val appName =
+        getApplication<Application>().applicationContext.getString(R.string.app_name)
 
     init {
         _loadingState.value = State.LOADING
@@ -83,10 +87,10 @@ class PhotoDetailViewModel(
     private fun transformTitle(title: String): String {
         val parts = title.split("-")
 
-        // 제목의 마지막 부분이 영어로 시작되거나 하이픈("-")으로 시작되는지 확인하기 위한 정규 표현식
+        /**제목의 마지막 부분이 영어로 시작되거나 하이픈("-")으로 시작되는지 확인하기 위한 정규 표현식*/
         val lastWordFormat = "[a-zA-Z0-9_-]+\$".toRegex()
 
-        // 마지막 부분이 영어형식이 맞는지 확인하고, 맞다면 제외
+        /**마지막 부분이 영어형식이 맞는지 확인하고, 맞다면 제외*/
         val filteredParts = if (parts.isNotEmpty() && lastWordFormat.matches(parts.last())) {
             parts.dropLast(1)
         } else {
@@ -125,15 +129,16 @@ class PhotoDetailViewModel(
                 override fun onLoadFailed(errorDrawable: Drawable?) {
                     super.onLoadFailed(errorDrawable)
                     _isDownloading.value = false
-                    _downloadState.value = "다운로드에 실패했습니다. $errorDrawable"
+                    _downloadState.value =
+                        getApplication<Application>().applicationContext.getString(R.string.download_failed)
 
                 }
             })
     }
 
     fun saveImageToGallery(bitmap: Bitmap) {
-        val filename = "Finebyme_${
-            SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault()).format(Date())
+        val filename = "${appName}_${
+            SimpleDateFormat(dateFormat, Locale.getDefault()).format(Date())
         }.jpg"
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, filename)
@@ -150,14 +155,20 @@ class PhotoDetailViewModel(
 
         try {
             uri.let {
-                stream = it?.let { it1 -> getApplication<Application>().applicationContext.contentResolver.openOutputStream(it1) }
+                stream = it?.let { it1 ->
+                    getApplication<Application>().applicationContext.contentResolver.openOutputStream(
+                        it1
+                    )
+                }
                 stream?.let { it1 -> bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it1) }
                 stream?.flush()
-                _downloadState.value = "이미지가 갤러리에 다운로드 되었습니다."
+                _downloadState.value =
+                    getApplication<Application>().applicationContext.getString(R.string.download_success)
             }
         } catch (e: Exception) {
             e.printStackTrace()
-            _downloadState.value = "다운로드에 실패했습니다."
+            _downloadState.value =
+                getApplication<Application>().applicationContext.getString(R.string.download_failed)
         } finally {
             try {
                 stream?.close()
@@ -169,10 +180,11 @@ class PhotoDetailViewModel(
     }
 
     private fun saveImageToGalleryBelowAndroidQ(bitmap: Bitmap) {
-        val filename = "Finebyme_${
-            SimpleDateFormat("yyyyMMdd_HHmmssSSS", Locale.getDefault()).format(Date())
+        val filename = "${appName}_${
+            SimpleDateFormat(dateFormat, Locale.getDefault()).format(Date())
         }.jpg"
-        val pictureDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+        val pictureDir =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
         val file = File(pictureDir, filename)
         var stream: OutputStream? = null
 
@@ -180,10 +192,12 @@ class PhotoDetailViewModel(
             stream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
-            _downloadState.value = "이미지가 갤러리에 다운로드 되었습니다."
+            _downloadState.value =
+                getApplication<Application>().applicationContext.getString(R.string.download_success)
         } catch (e: Exception) {
             e.printStackTrace()
-            _downloadState.value = "다운로드에 실패했습니다."
+            _downloadState.value =
+                getApplication<Application>().applicationContext.getString(R.string.download_failed)
         } finally {
             try {
                 stream?.close()
@@ -193,6 +207,11 @@ class PhotoDetailViewModel(
             _isDownloading.value = false
         }
 
-        MediaScannerConnection.scanFile(getApplication<Application>().applicationContext, arrayOf(file.toString()), null, null)
+        MediaScannerConnection.scanFile(
+            getApplication<Application>().applicationContext,
+            arrayOf(file.toString()),
+            null,
+            null
+        )
     }
 }

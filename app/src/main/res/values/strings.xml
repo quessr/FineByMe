@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">FineByMe</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="download_failed">다운로드에 실패했습니다.</string>
+    <string name="download_success">이미지가 갤러리에 다운로드 되었습니다.</string>
+    <string name="date_format">yyyyMMdd_HHmmssSSS</string>
+    <string name="permission_granted">권한이 허용 되었습니다.</string>
+    <string name="permission_denied">권한이 부여되지 않았습니다.</string>
+    <string name="dialog_exit_confirmation">앱을 종료하시겠습니까?</string>
+    <string name="dialog_confirm">확인</string>
+    <string name="dialog_cancel">취소</string>
+    <string name="photo_no_title">No title</string>
+    <string name="photo_no_description">이 사진에는 별도의 설명이 제공되지 않습니다.\n이 사진에는 별도의 설명이 제공되지 않습니다.\n이 사진에는 별도의 설명이 제공되지 않습니다.\n</string>
 </resources>
