@@ -21,6 +21,10 @@ import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
 import com.google.android.material.snackbar.Snackbar
 import com.example.finebyme.R
+import com.example.finebyme.data.datasource.UnSplashDataSource
+import com.example.finebyme.data.datasource.UserDataSource
+import com.example.finebyme.data.network.RetrofitInstance
+import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.utils.LoadingHandler
 
 
@@ -42,8 +46,12 @@ class PhotoDetailActivity : AppCompatActivity() {
     private var photo: Photo? = null
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels {
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
-        AppViewModelFactory(application, favoritePhotosRepository)
+//        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
+        val retrofitService = RetrofitInstance.retrofitService
+        val unSplashDataSource = UnSplashDataSource(retrofitService)
+        val userDataSource = UserDataSource(photoDao)
+        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
+        AppViewModelFactory(application, photoRepository)
     }
 
     private lateinit var loadingHandler: LoadingHandler<ActivityPhotoDetailBinding>

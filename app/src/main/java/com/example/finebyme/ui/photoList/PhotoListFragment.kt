@@ -15,11 +15,14 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.finebyme.data.datasource.UnSplashDataSource
+import com.example.finebyme.data.datasource.UserDataSource
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
+import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.data.repository.SearchPhotosRepositoryImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
@@ -34,10 +37,11 @@ class PhotoListFragment : Fragment() {
     private val photoListViewModel: PhotoListViewModel by viewModels {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
         val retrofitService = RetrofitInstance.retrofitService
-        val searchPhotosRepository = SearchPhotosRepositoryImpl(retrofitService)
-        AppViewModelFactory(application, favoritePhotosRepository, searchPhotosRepository)
+        val unSplashDataSource = UnSplashDataSource(retrofitService)
+        val userDataSource = UserDataSource(photoDao)
+        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
+        AppViewModelFactory(application, photoRepository)
     }
 
     private var _binding: FragmentPhotoListBinding? = null

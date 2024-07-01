@@ -5,10 +5,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
+import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.ui.base.BaseViewModel
 
 class FavoriteListViewModel(
     application: Application,
+    private val photoRepository: PhotoRepository
 ) : BaseViewModel(application) {
     private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
     val photos: LiveData<List<Photo>> get() = _photos
@@ -16,15 +18,15 @@ class FavoriteListViewModel(
     private val photoDao = FavoritePhotosDatabase.getDatabase(getApplication<Application>().applicationContext).PhotoDao()
 
     init {
-        fetchFavoritePhotos()
+        loadFavoritePhotos()
     }
 
     fun onResumeScreen() {
-        fetchFavoritePhotos()
+        loadFavoritePhotos()
     }
 
-    private fun fetchFavoritePhotos() {
-        _photos.postValue(photoDao.getAllPhotos())
+    private fun loadFavoritePhotos() {
+        _photos.value = photoRepository.getFavoritePhotoList()
     }
 
 }

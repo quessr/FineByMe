@@ -7,12 +7,13 @@ import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitInstance
+import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.data.repository.SearchPhotosRepository
 import com.example.finebyme.ui.base.BaseViewModel
 
 class PhotoListViewModel(
     application: Application,
-    private val searchPhotosRepository: SearchPhotosRepository
+    private val photoRepository: PhotoRepository,
 ) : BaseViewModel(application) {
 
     private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
@@ -31,7 +32,7 @@ class PhotoListViewModel(
 
     private fun fetchPhotos() {
         _state.postValue(State.LOADING)
-        RetrofitInstance.fetchRandomPhotos { photos ->
+        photoRepository.getRandomPhotoList { photos ->
             if (photos != null) {
                 _photos.postValue(photos)
                 cachedPhotos = photos
@@ -56,7 +57,7 @@ class PhotoListViewModel(
 
         _state.postValue(State.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
-        searchPhotosRepository.searchPhotos(query).observeForever { response ->
+        photoRepository.getSearchPhotoList(query).observeForever { response ->
             Log.d("PhotoListViewModel", "Received response: $response")
             if (response != null && response.results.isNotEmpty()) {
                 Log.d("PhotoListViewModel", "Search successful: ${response.results.size} results found")

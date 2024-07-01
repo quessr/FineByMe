@@ -19,6 +19,7 @@ import com.example.finebyme.R
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.FavoritePhotosRepository
+import com.example.finebyme.data.repository.PhotoRepository
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -29,7 +30,8 @@ import java.util.Locale
 
 class PhotoDetailViewModel(
     application: Application,
-    private val favoritePhotosRepository: FavoritePhotosRepository
+//    private val favoritePhotosRepository: FavoritePhotosRepository,
+    private val photoRepository: PhotoRepository
 ) : AndroidViewModel(application) {
 
     private val _transformedPhoto = MutableLiveData<Photo>()
@@ -71,15 +73,18 @@ class PhotoDetailViewModel(
     }
 
     fun isPhotoFavorite(id: String): Boolean {
-        return favoritePhotosRepository.isPhotoFavorite(id)
+//        return favoritePhotosRepository.isPhotoFavorite(id)
+        return photoRepository.isPhotoFavorite(id)
     }
 
     fun toggleFavorite(photo: Photo) {
         if (isPhotoFavorite(photo.id)) {
-            favoritePhotosRepository.deletePhoto(photo)
+//            favoritePhotosRepository.deletePhoto(photo)
+            photoRepository.removePhotoFromFavorites(photo)
             _isFavorite.value = false
         } else {
-            favoritePhotosRepository.insertPhoto(photo)
+//            favoritePhotosRepository.insertPhoto(photo)
+            photoRepository.addPhotoToFavorites(photo)
             _isFavorite.value = true
         }
     }

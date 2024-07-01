@@ -10,9 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.finebyme.data.datasource.UnSplashDataSource
+import com.example.finebyme.data.datasource.UserDataSource
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
+import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
+import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.di.AppViewModelFactory
@@ -23,8 +27,11 @@ class FavoriteListFragment : Fragment() {
     private val favoriteListViewModel: FavoriteListViewModel by viewModels {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
-        AppViewModelFactory(application, favoritePhotosRepository, null)
+        val retrofitService = RetrofitInstance.retrofitService
+        val unSplashDataSource = UnSplashDataSource(retrofitService)
+        val userDataSource = UserDataSource(photoDao)
+        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
+        AppViewModelFactory(application, photoRepository)
     }
 
     private var _binding: FragmentFavoriteListBinding? = null
