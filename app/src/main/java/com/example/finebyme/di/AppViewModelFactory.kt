@@ -10,8 +10,6 @@ import com.example.finebyme.ui.photoList.PhotoListViewModel
 
 class AppViewModelFactory(
     private val application: Application,
-//    private val favoritePhotosRepository: FavoritePhotosRepository,
-//    private val searchPhotosRepository: SearchPhotosRepository? = null,
     private val photoRepository: PhotoRepository? = null,
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")

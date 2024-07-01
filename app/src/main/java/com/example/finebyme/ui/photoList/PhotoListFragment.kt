@@ -21,9 +21,7 @@ import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
 import com.example.finebyme.data.repository.PhotoRepository
-import com.example.finebyme.data.repository.SearchPhotosRepositoryImpl
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail

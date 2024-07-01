@@ -6,9 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
-import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.PhotoRepository
-import com.example.finebyme.data.repository.SearchPhotosRepository
 import com.example.finebyme.ui.base.BaseViewModel
 
 class PhotoListViewModel(

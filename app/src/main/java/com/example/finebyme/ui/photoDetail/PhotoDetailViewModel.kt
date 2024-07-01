@@ -18,7 +18,6 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.finebyme.R
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.repository.FavoritePhotosRepository
 import com.example.finebyme.data.repository.PhotoRepository
 import java.io.File
 import java.io.FileOutputStream
@@ -30,7 +29,6 @@ import java.util.Locale
 
 class PhotoDetailViewModel(
     application: Application,
-//    private val favoritePhotosRepository: FavoritePhotosRepository,
     private val photoRepository: PhotoRepository
 ) : AndroidViewModel(application) {
 
@@ -73,17 +71,14 @@ class PhotoDetailViewModel(
     }
 
     fun isPhotoFavorite(id: String): Boolean {
-//        return favoritePhotosRepository.isPhotoFavorite(id)
         return photoRepository.isPhotoFavorite(id)
     }
 
     fun toggleFavorite(photo: Photo) {
         if (isPhotoFavorite(photo.id)) {
-//            favoritePhotosRepository.deletePhoto(photo)
             photoRepository.removePhotoFromFavorites(photo)
             _isFavorite.value = false
         } else {
-//            favoritePhotosRepository.insertPhoto(photo)
             photoRepository.addPhotoToFavorites(photo)
             _isFavorite.value = true
         }

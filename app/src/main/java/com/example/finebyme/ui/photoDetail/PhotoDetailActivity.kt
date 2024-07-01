@@ -13,19 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.example.finebyme.data.db.FavoritePhotosDatabase
-import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
-import com.example.finebyme.databinding.ActivityPhotoDetailBinding
-import com.example.finebyme.di.AppViewModelFactory
-import com.example.finebyme.utils.ImageLoader
-import com.google.android.material.snackbar.Snackbar
 import com.example.finebyme.R
 import com.example.finebyme.data.datasource.UnSplashDataSource
 import com.example.finebyme.data.datasource.UserDataSource
+import com.example.finebyme.data.db.FavoritePhotosDatabase
+import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.PhotoRepository
+import com.example.finebyme.databinding.ActivityPhotoDetailBinding
+import com.example.finebyme.di.AppViewModelFactory
+import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.LoadingHandler
+import com.google.android.material.snackbar.Snackbar
 
 
 class PhotoDetailActivity : AppCompatActivity() {
@@ -46,7 +45,6 @@ class PhotoDetailActivity : AppCompatActivity() {
     private var photo: Photo? = null
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels {
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-//        val favoritePhotosRepository = FavoritePhotosRepositoryImpl(photoDao)
         val retrofitService = RetrofitInstance.retrofitService
         val unSplashDataSource = UnSplashDataSource(retrofitService)
         val userDataSource = UserDataSource(photoDao)

@@ -15,7 +15,6 @@ import com.example.finebyme.data.datasource.UserDataSource
 import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.data.repository.FavoritePhotosRepositoryImpl
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter

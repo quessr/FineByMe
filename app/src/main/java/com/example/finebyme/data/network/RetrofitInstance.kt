@@ -13,7 +13,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitInstance {
     private const val BASE_URL = "https://api.unsplash.com/"
-    private const val API_KEY = BuildConfig.UNSPLASH_API_KEY
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -36,48 +35,6 @@ object RetrofitInstance {
     val retrofitService: RetrofitService by lazy {
         retrofit.create(RetrofitService::class.java)
     }
-
-    fun fetchRandomPhotos(onResult: (List<UnsplashPhoto>?) -> Unit) {
-        val service = retrofitService
-
-        enqueueCall(
-            service.getRandomPhoto(API_KEY, 1000),
-            onSuccess = { response ->
-                val photos = response.body()
-                if (!photos.isNullOrEmpty()) {
-                    onResult(photos)
-                } else {
-                    Log.d("RetrofitInstance", "No photos found")
-                    onResult(null)
-                }
-            },
-            onFailure = { t ->
-                Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
-                onResult(null)
-            })
-    }
-
-//    fun fetchSearchPhotos(query: String, onResult: (SearchPhotoResponse?) -> Unit) {
-//        val service = retrofitService
-//
-//        enqueueCall(
-//            service.getSearchPhoto(API_KEY, query),
-//            onSuccess = { response ->
-//                val photos = response.body()
-//                onResult(photos)
-//                if (photos != null) {
-//                    Log.d("@@@@@@", "fetchSearchPhotos API Call Successful: ${response.body()}")
-//                } else {
-//                    Log.d("@@@@@@", "fetchSearchPhotos API Call Successful but no data found")
-//                }
-////                Log.d("RetrofitInstance", "Response: ${response.body()}")
-//            },
-//            onFailure = { t ->
-//                Log.e("@@@@@@", "fetchSearchPhotos Failed to fetch data: ${t.message}")
-//                onResult(null)
-//            }
-//        )
-//    }
 }
 
 
