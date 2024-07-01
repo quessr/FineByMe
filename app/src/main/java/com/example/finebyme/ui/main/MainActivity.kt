@@ -63,11 +63,11 @@ class MainActivity : AppCompatActivity() {
     private fun showExitConfirmationDialog() {
         AlertDialog.Builder(this)
             .setMessage(R.string.dialog_exit_confirmation)
-            .setPositiveButton(R.string.dialog_confirm) { dialog, _ ->
+            .setPositiveButton(R.string.confirm) { dialog, _ ->
                 dialog.dismiss()
                 finish()
             }
-            .setNegativeButton(R.string.dialog_cancel) { dialog, _ ->
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()

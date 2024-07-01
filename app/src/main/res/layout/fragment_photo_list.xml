@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="검색"
+            android:hint="@string/search_hint"
             android:textColorHint="#C0C0C0C0"
             android:textStyle="bold"
             android:textSize="20sp"
@@ -37,13 +37,14 @@
             android:drawableTint="#C0C0C0C0"
             android:drawablePadding="8dp"
             android:imeOptions="actionSearch"
-            android:inputType="text" />
+            android:inputType="text"
+            android:minHeight="48dp"/>
 
         <TextView
             android:id="@+id/tv_cancle_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="취소"
+            android:text="@string/cancel"
             android:textSize="20sp"
             android:textColor="#fff"
             android:textStyle="bold"

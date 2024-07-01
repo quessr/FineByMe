@@ -34,7 +34,7 @@
         app:layout_constraintEnd_toEndOf="@id/iv_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="다운로드 중..."
+        android:text="@string/downloading_message"
         android:textSize="16dp"
         android:textStyle="bold"
         android:textColor="@color/white"
@@ -76,7 +76,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="8dp"
-        android:text="다운로드"
+        android:text="@string/download"
         android:visibility="gone"/>
 
 
