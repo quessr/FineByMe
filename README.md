@@ -10,7 +10,6 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 - **사진 다운로드:** 즐겨찾기한 사진을 기기에 다운로드할 수 있습니다.
 - **즐겨찾기 관리:** 즐겨찾기한 사진을 삭제하거나 갤러리에서 확인할 수 있습니다.
 
-
 ## Screenshots
 
 - **사진 목록 화면**
@@ -26,12 +25,19 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 <img src="https://github.com/quessr/fine-by-me/assets/96334609/e9c8f2b8-8ba8-49fc-be48-d51d9783392e" width="200"/>
 
 ## 🛠 Skills
+
 - **Kotlin:** 메인 프로그래밍 언어
 - **Android Jetpack:** ViewModel, LiveData, Room, Data Binding
 - **Retrofit:** REST API 통신
 - **Glide:** 이미지 로딩 및 캐싱
 - **Coroutine:** 비동기 작업 처리
 - **Hilt:** 의존성 주입
+
+## Roadmap
+
+- **Hilt:** 의존성 주입을 위해 Hilt를 도입할 예정입니다.
+- **Coroutines:** 비동기 작업 처리를 위해 Coroutines를 사용할 예정입니다.
+- **Clean Architecture:** 코드의 유지보수성과 확장성을 높이기 위해 Clean Architecture를 적용할 예정입니다.
 
 
 ## Environment Variables
