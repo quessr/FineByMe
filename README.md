@@ -12,16 +12,16 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 
 ## Screenshots
 
-- **사진 목록 화면**
+#### **사진 목록 화면**
 <img src="https://github.com/quessr/fine-by-me/assets/96334609/18d7699d-7b74-4d15-b994-18e8cf2e556d" width="200" />
 
-- **사진 상세 화면**
+#### **사진 상세 화면**
 <img src="https://github.com/LayTheGroundWork/Eighteen_Android/assets/96334609/bfafeef7-5681-4809-a6b5-a69b086aeb52" width="200"/>
 
-- **즐겨찾기 목록 화면**
+#### **즐겨찾기 목록 화면**
 <img src="https://github.com/LayTheGroundWork/Eighteen_Android/assets/96334609/3a5c7b08-68cc-466b-bf7b-42a44118b25d" width="200"/>
 
-- **검색 화면**
+#### **검색 화면**
 <img src="https://github.com/quessr/fine-by-me/assets/96334609/e9c8f2b8-8ba8-49fc-be48-d51d9783392e" width="200"/>
 
 ## 🛠 Skills
@@ -30,8 +30,8 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 - **Android Jetpack:** ViewModel, LiveData, Room, Data Binding
 - **Retrofit:** REST API 통신
 - **Glide:** 이미지 로딩 및 캐싱
-//- **Coroutine:** 비동기 작업 처리
-//- **Hilt:** 의존성 주입
+<!-- **Coroutine:** 비동기 작업 처리 -->
+<!-- **Hilt:** 의존성 주입 -->
 
 ## Roadmap
 
