@@ -1,6 +1,6 @@
 # Fine By Me
 
-Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 있는 안드로이드 애플리케이션입니다. 이 앱은 Unsplash API를 통해 사진을 검색하고 즐겨찾기 및 다운로드할 수 있는 기능을 제공합니다.
+Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 있는 안드로이드 애플리케이션입니다. <br>이 앱은 Unsplash API를 통해 사진을 검색하고 즐겨찾기 및 다운로드할 수 있는 기능을 제공합니다.
 
 
 ## Features
@@ -23,6 +23,14 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 
 #### **검색 화면**
 <img src="https://github.com/quessr/fine-by-me/assets/96334609/e9c8f2b8-8ba8-49fc-be48-d51d9783392e" width="200"/>
+
+<!--<div style="display: flex; justify-content: space-between; margin-right: 20px">
+  <img src="https://github.com/quessr/fine-by-me/assets/96334609/18d7699d-7b74-4d15-b994-18e8cf2e556d" width="200"/>
+  <img src="https://github.com/LayTheGroundWork/Eighteen_Android/assets/96334609/bfafeef7-5681-4809-a6b5-a69b086aeb52" width="200"/>
+  <img src="https://github.com/LayTheGroundWork/Eighteen_Android/assets/96334609/3a5c7b08-68cc-466b-bf7b-42a44118b25d" width="200"/>
+  <img src="https://github.com/quessr/fine-by-me/assets/96334609/e9c8f2b8-8ba8-49fc-be48-d51d9783392e" width="200"/>
+</div> -->
+
 
 ## 🛠 Skills
 
