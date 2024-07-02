@@ -58,7 +58,7 @@ class PhotoListViewModel @Inject constructor(
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
         photoRepository.getSearchPhotoList(query) { response ->
             Log.d("PhotoListViewModel", "Received response: $response")
-            if (response != null && response.isNotEmpty()) {
+            if (!response.isNullOrEmpty()) {
                 Log.d("PhotoListViewModel", "Search successful: ${response.size} results found")
                 _photos.postValue(response)
                 _loadingState.postValue(State.DONE)
