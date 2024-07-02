@@ -30,8 +30,8 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 - **Android Jetpack:** ViewModel, LiveData, Room, Data Binding
 - **Retrofit:** REST API 통신
 - **Glide:** 이미지 로딩 및 캐싱
-- **Coroutine:** 비동기 작업 처리
-- **Hilt:** 의존성 주입
+//- **Coroutine:** 비동기 작업 처리
+//- **Hilt:** 의존성 주입
 
 ## Roadmap
 
