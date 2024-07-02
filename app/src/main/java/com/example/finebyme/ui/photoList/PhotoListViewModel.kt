@@ -55,11 +55,11 @@ class PhotoListViewModel(
 
         _loadingState.postValue(State.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
-        photoRepository.getSearchPhotoList(query).observeForever { response ->
+        photoRepository.getSearchPhotoList(query) { response ->
             Log.d("PhotoListViewModel", "Received response: $response")
-            if (response != null && response.results.isNotEmpty()) {
-                Log.d("PhotoListViewModel", "Search successful: ${response.results.size} results found")
-                _photos.postValue(response.results)
+            if (!response.isNullOrEmpty()) {
+                Log.d("PhotoListViewModel", "Search successful: ${response.size} results found")
+                _photos.postValue(response)
                 _loadingState.postValue(State.DONE)
             } else {
                 Log.d("PhotoListViewModel", "Search failed or no results found")

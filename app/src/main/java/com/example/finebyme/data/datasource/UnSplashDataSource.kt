@@ -31,23 +31,19 @@ class UnSplashDataSource(private val retrofitService: RetrofitService) {
     }
 
     // Search photos by query
-    fun getSearchPhotoList(query: String): MutableLiveData<SearchPhotoResponse> {
-        val result = MutableLiveData<SearchPhotoResponse>()
-
+    fun getSearchPhotoList(query: String, onResult: (List<UnsplashPhoto>?) -> Unit) {
         NetworkUtils.enqueueCall(retrofitService.getSearchPhoto(apiKey, query),
             onSuccess = { response ->
-                val photos = response.body()
-                result.postValue(photos ?: SearchPhotoResponse(emptyList()))
-                if (photos != null) {
-                    Log.d("@@@@@@", "fetchSearchPhotos API Call Successful: ${response.body()}")
+                val photos = response.body()?.results ?: emptyList()
+                if (photos.isNotEmpty()) {
+                    onResult(photos)
                 } else {
-                    Log.d("@@@@@@", "fetchSearchPhotos API Call Successful but no data found")
+                    Log.d("RetrofitInstance", "No photos found")
+                    onResult(null)
                 }
             }, onFailure = { t ->
-                result.postValue(SearchPhotoResponse(emptyList()))
-                Log.e("@@@@@@", "fetchSearchPhotos Failed to fetch data: ${t.message}")
+                Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
+                onResult(null)
             })
-
-        return result
     }
 }

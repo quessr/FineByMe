@@ -15,8 +15,8 @@ class PhotoRepository(
         unsplashDataSource.getRandomPhotoList(onResult)
     }
 
-    fun getSearchPhotoList(query: String): MutableLiveData<SearchPhotoResponse> {
-        return unsplashDataSource.getSearchPhotoList(query)
+    fun getSearchPhotoList(query: String, onResult: (List<UnsplashPhoto>?) -> Unit) {
+        return unsplashDataSource.getSearchPhotoList(query, onResult)
     }
 
     fun getFavoritePhotoList(): List<Photo> {
