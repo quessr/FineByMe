@@ -21,12 +21,12 @@ import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
-import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.LoadingHandler
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class PhotoDetailActivity : AppCompatActivity() {
 
     companion object {
@@ -43,14 +43,15 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoDetailBinding
     private var photo: Photo? = null
-    private val photoDetailViewModel: PhotoDetailViewModel by viewModels {
-        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val retrofitService = RetrofitInstance.retrofitService
-        val unSplashDataSource = UnSplashDataSource(retrofitService)
-        val userDataSource = UserDataSource(photoDao)
-        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
-        AppViewModelFactory(application, photoRepository)
-    }
+//    private val photoDetailViewModel: PhotoDetailViewModel by viewModels {
+//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+//        val retrofitService = RetrofitInstance.retrofitService
+//        val unSplashDataSource = UnSplashDataSource(retrofitService)
+//        val userDataSource = UserDataSource(photoDao)
+//        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
+//        AppViewModelFactory(application, photoRepository)
+//    }
+    private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
 
     private lateinit var loadingHandler: LoadingHandler<ActivityPhotoDetailBinding>
 

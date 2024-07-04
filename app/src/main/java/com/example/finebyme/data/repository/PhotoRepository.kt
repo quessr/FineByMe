@@ -6,8 +6,9 @@ import com.example.finebyme.data.datasource.UserDataSource
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.SearchPhotoResponse
 import com.example.finebyme.data.model.UnsplashPhoto
+import javax.inject.Inject
 
-class PhotoRepository(
+class PhotoRepository @Inject constructor(
     private val unsplashDataSource: UnSplashDataSource,
     private val userDataSource: UserDataSource
 ) {

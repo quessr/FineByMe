@@ -10,7 +10,9 @@ import com.example.finebyme.R
 import com.example.finebyme.databinding.ActivityMainBinding
 import com.example.finebyme.ui.favoriteList.FavoriteListFragment
 import com.example.finebyme.ui.photoList.PhotoListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {

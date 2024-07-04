@@ -2,6 +2,7 @@ package com.example.finebyme.ui.photoDetail
 
 import android.app.Application
 import android.content.ContentValues
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.media.MediaScannerConnection
@@ -11,6 +12,7 @@ import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -19,6 +21,9 @@ import com.example.finebyme.R
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.PhotoRepository
+import dagger.hilt.android.internal.Contexts.getApplication
+import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -26,11 +31,13 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 
-class PhotoDetailViewModel(
-    application: Application,
+@HiltViewModel
+class PhotoDetailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val photoRepository: PhotoRepository
-) : AndroidViewModel(application) {
+) : ViewModel() {
 
     private val _transformedPhoto = MutableLiveData<Photo>()
     val transformedPhoto: LiveData<Photo> get() = _transformedPhoto
@@ -47,9 +54,9 @@ class PhotoDetailViewModel(
     private var _downloadState = MutableLiveData<String>()
     val downloadState: LiveData<String> get() = _downloadState
     private val dateFormat =
-        getApplication<Application>().applicationContext.getString(R.string.date_format)
+        context.applicationContext.getString(R.string.date_format)
     private val appName =
-        getApplication<Application>().applicationContext.getString(R.string.app_name)
+        context.applicationContext.getString(R.string.app_name)
 
     init {
         _loadingState.value = State.LOADING
@@ -104,7 +111,7 @@ class PhotoDetailViewModel(
         if (_isDownloading.value == true) return
 
         _isDownloading.value = true
-        Glide.with(getApplication<Application>().applicationContext)
+        Glide.with(context.applicationContext)
             .asBitmap()
             .load(photo.fullUrl)
             .skipMemoryCache(true)  // 메모리 캐시 무시
@@ -130,7 +137,7 @@ class PhotoDetailViewModel(
                     super.onLoadFailed(errorDrawable)
                     _isDownloading.value = false
                     _downloadState.value =
-                        getApplication<Application>().applicationContext.getString(R.string.download_failed)
+                        context.applicationContext.getString(R.string.download_failed)
 
                 }
             })
@@ -147,7 +154,7 @@ class PhotoDetailViewModel(
         }
 
         val uri =
-            getApplication<Application>().applicationContext.contentResolver.insert(
+            context.applicationContext.contentResolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 contentValues
             )
@@ -156,19 +163,19 @@ class PhotoDetailViewModel(
         try {
             uri.let {
                 stream = it?.let { it1 ->
-                    getApplication<Application>().applicationContext.contentResolver.openOutputStream(
+                    context.applicationContext.contentResolver.openOutputStream(
                         it1
                     )
                 }
                 stream?.let { it1 -> bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it1) }
                 stream?.flush()
                 _downloadState.value =
-                    getApplication<Application>().applicationContext.getString(R.string.download_success)
+                    context.applicationContext.getString(R.string.download_success)
             }
         } catch (e: Exception) {
             e.printStackTrace()
             _downloadState.value =
-                getApplication<Application>().applicationContext.getString(R.string.download_failed)
+                context.applicationContext.getString(R.string.download_failed)
         } finally {
             try {
                 stream?.close()
@@ -193,11 +200,11 @@ class PhotoDetailViewModel(
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
             stream.flush()
             _downloadState.value =
-                getApplication<Application>().applicationContext.getString(R.string.download_success)
+                context.applicationContext.getString(R.string.download_success)
         } catch (e: Exception) {
             e.printStackTrace()
             _downloadState.value =
-                getApplication<Application>().applicationContext.getString(R.string.download_failed)
+                context.applicationContext.getString(R.string.download_failed)
         } finally {
             try {
                 stream?.close()
@@ -208,7 +215,7 @@ class PhotoDetailViewModel(
         }
 
         MediaScannerConnection.scanFile(
-            getApplication<Application>().applicationContext,
+            context.applicationContext,
             arrayOf(file.toString()),
             null,
             null

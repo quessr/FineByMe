@@ -6,11 +6,13 @@ import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class FavoriteListViewModel(
-    application: Application,
+@HiltViewModel
+class FavoriteListViewModel @Inject constructor(
     private val photoRepository: PhotoRepository
-) : BaseViewModel(application) {
+) : BaseViewModel() {
     private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
     val photos: LiveData<List<Photo>> get() = _photos
 

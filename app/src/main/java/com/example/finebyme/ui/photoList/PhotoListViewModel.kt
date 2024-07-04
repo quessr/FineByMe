@@ -8,11 +8,13 @@ import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.ui.base.BaseViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class PhotoListViewModel(
-    application: Application,
+@HiltViewModel
+class PhotoListViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
-) : BaseViewModel(application) {
+) : BaseViewModel() {
 
     private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
     val photos: LiveData<List<UnsplashPhoto>> get() = _photos

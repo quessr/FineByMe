@@ -18,20 +18,23 @@ import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter
-import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
-    private val favoriteListViewModel: FavoriteListViewModel by viewModels {
-        val application = requireActivity().application
-        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val retrofitService = RetrofitInstance.retrofitService
-        val unSplashDataSource = UnSplashDataSource(retrofitService)
-        val userDataSource = UserDataSource(photoDao)
-        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
-        AppViewModelFactory(application, photoRepository)
-    }
+//    private val favoriteListViewModel: FavoriteListViewModel by viewModels {
+//        val application = requireActivity().application
+//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+//        val retrofitService = RetrofitInstance.retrofitService
+//        val unSplashDataSource = UnSplashDataSource(retrofitService)
+//        val userDataSource = UserDataSource(photoDao)
+//        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
+//        AppViewModelFactory(application, photoRepository)
+//    }
+
+    private val favoriteListViewModel: FavoriteListViewModel by viewModels()
 
     private var _binding: FragmentFavoriteListBinding? = null
     private val binding get() = _binding!!

@@ -23,24 +23,27 @@ import com.example.finebyme.data.model.toPhotoList
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentPhotoListBinding
-import com.example.finebyme.di.AppViewModelFactory
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 import com.example.finebyme.utils.LoadingHandler
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PhotoListFragment : Fragment() {
 
     private lateinit var photoAdapter: PhotoAdapter
     private lateinit var loadingHandler: LoadingHandler<FragmentPhotoListBinding>
 
-    private val photoListViewModel: PhotoListViewModel by viewModels {
-        val application = requireActivity().application
-        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-        val retrofitService = RetrofitInstance.retrofitService
-        val unSplashDataSource = UnSplashDataSource(retrofitService)
-        val userDataSource = UserDataSource(photoDao)
-        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
-        AppViewModelFactory(application, photoRepository)
-    }
+//    private val photoListViewModel: PhotoListViewModel by viewModels {
+//        val application = requireActivity().application
+//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
+//        val retrofitService = RetrofitInstance.retrofitService
+//        val unSplashDataSource = UnSplashDataSource(retrofitService)
+//        val userDataSource = UserDataSource(photoDao)
+//        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
+//        AppViewModelFactory(application, photoRepository)
+//    }
+
+    private val photoListViewModel: PhotoListViewModel by viewModels()
 
     private var _binding: FragmentPhotoListBinding? = null
     private val binding get() = _binding!!
@@ -135,8 +138,9 @@ class PhotoListFragment : Fragment() {
     private fun handleSearchAction() {
         val query = binding.editTextSearch.text.toString()
         Log.d("@@@@@@", "Search query: $query")
-//                /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
-//                photoListViewModel.searchPhotos(query)
+//        /**텍스트 입력 후 엔터를 치면 search photos api 호출 방식*/
+//        photoListViewModel.searchPhotos(query)
+
         hideKeyboard()
         binding.editTextSearch.clearFocus()
         binding.headerLayout.requestFocus()
