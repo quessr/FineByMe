@@ -2,8 +2,11 @@ package com.example.finebyme.ui.base
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-open class BaseViewModel(application: Application) : AndroidViewModel(application) {
+open class BaseViewModel : ViewModel() {
     private val _photoHeights = mutableMapOf<Int, Int>()
 
     fun getPhotoHeight(position: Int): Int {
