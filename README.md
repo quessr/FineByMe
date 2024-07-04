@@ -46,6 +46,12 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 - **MVVM Pattern:** Model-View-ViewModel 아키텍처 패턴 사용
 - **Repository Pattern:** 데이터 관리를 위한 Repository 패턴 사용
 
+## 🏠 Project Structure
+
+이 문서는 프로젝트의 구조를 설명합니다. 각 버전에 대한 자세한 정보는 아래 링크를 참고하세요.
+
+- [기본 버전](PROJECT_STRUCTURE_BASIC.md)
+
 ## 🛤 Roadmap
 
 - **Coroutines:** 비동기 작업 처리를 위해 Coroutines를 사용할 예정입니다.
