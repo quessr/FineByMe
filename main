@@ -1,0 +1,2342 @@
+.
+├── README.md
+├── app
+│   ├── build
+│   │   ├── generated
+│   │   │   ├── ap_generated_sources
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── data_binding_base_class_source_out
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           └── com
+│   │   │   │               └── example
+│   │   │   │                   └── finebyme
+│   │   │   │                       └── databinding
+│   │   │   │                           ├── ActivityMainBinding.java
+│   │   │   │                           ├── ActivityPhotoDetailBinding.java
+│   │   │   │                           ├── ActivitySplashBinding.java
+│   │   │   │                           ├── FragmentBaseBinding.java
+│   │   │   │                           ├── FragmentFavoriteListBinding.java
+│   │   │   │                           ├── FragmentPhotoListBinding.java
+│   │   │   │                           └── ItemPhotoBinding.java
+│   │   │   ├── hilt
+│   │   │   │   ├── component_sources
+│   │   │   │   │   └── debug
+│   │   │   │   │       └── com
+│   │   │   │   │           └── example
+│   │   │   │   │               └── finebyme
+│   │   │   │   │                   ├── DaggerFineByMeApplication_HiltComponents_SingletonC.java
+│   │   │   │   │                   ├── FineByMeApplication_HiltComponents.java
+│   │   │   │   │                   └── Hilt_FineByMeApplication.java
+│   │   │   │   └── component_trees
+│   │   │   │       └── debug
+│   │   │   │           ├── com
+│   │   │   │           │   └── example
+│   │   │   │           │       └── finebyme
+│   │   │   │           │           └── FineByMeApplication_ComponentTreeDeps.java
+│   │   │   │           └── dagger
+│   │   │   │               └── hilt
+│   │   │   │                   └── internal
+│   │   │   │                       └── processedrootsentinel
+│   │   │   │                           └── codegen
+│   │   │   │                               └── _com_example_finebyme_FineByMeApplication.java
+│   │   │   ├── res
+│   │   │   │   ├── pngs
+│   │   │   │   │   └── debug
+│   │   │   │   └── resValues
+│   │   │   │       └── debug
+│   │   │   └── source
+│   │   │       ├── buildConfig
+│   │   │       │   └── debug
+│   │   │       │       └── com
+│   │   │       │           └── example
+│   │   │       │               └── finebyme
+│   │   │       │                   └── BuildConfig.java
+│   │   │       ├── kapt
+│   │   │       │   └── debug
+│   │   │       │       ├── com
+│   │   │       │       │   └── example
+│   │   │       │       │       └── finebyme
+│   │   │       │       │           ├── FineByMeApplication_GeneratedInjector.java
+│   │   │       │       │           ├── data
+│   │   │       │       │           │   ├── db
+│   │   │       │       │           │   │   ├── FavoritePhotosDatabase_Impl.java
+│   │   │       │       │           │   │   └── PhotoDao_Impl.java
+│   │   │       │       │           │   └── repository
+│   │   │       │       │           │       └── PhotoRepository_Factory.java
+│   │   │       │       │           ├── di
+│   │   │       │       │           │   ├── AppModule_ProvidePhotoDaoFactory.java
+│   │   │       │       │           │   ├── AppModule_ProvidePhotoRepositoryFactory.java
+│   │   │       │       │           │   ├── AppModule_ProvideRetrofitServiceFactory.java
+│   │   │       │       │           │   ├── AppModule_ProvideUnsplashDataSourceFactory.java
+│   │   │       │       │           │   └── AppModule_ProvideUserDataSourceFactory.java
+│   │   │       │       │           └── ui
+│   │   │       │       │               ├── favoriteList
+│   │   │       │       │               │   ├── FavoriteListFragment_GeneratedInjector.java
+│   │   │       │       │               │   ├── FavoriteListViewModel_Factory.java
+│   │   │       │       │               │   ├── FavoriteListViewModel_HiltModules.java
+│   │   │       │       │               │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory.java
+│   │   │       │       │               │   └── Hilt_FavoriteListFragment.java
+│   │   │       │       │               ├── main
+│   │   │       │       │               │   ├── Hilt_MainActivity.java
+│   │   │       │       │               │   └── MainActivity_GeneratedInjector.java
+│   │   │       │       │               ├── photoDetail
+│   │   │       │       │               │   ├── Hilt_PhotoDetailActivity.java
+│   │   │       │       │               │   ├── PhotoDetailActivity_GeneratedInjector.java
+│   │   │       │       │               │   ├── PhotoDetailViewModel_Factory.java
+│   │   │       │       │               │   ├── PhotoDetailViewModel_HiltModules.java
+│   │   │       │       │               │   └── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory.java
+│   │   │       │       │               └── photoList
+│   │   │       │       │                   ├── Hilt_PhotoListFragment.java
+│   │   │       │       │                   ├── PhotoListFragment_GeneratedInjector.java
+│   │   │       │       │                   ├── PhotoListViewModel_Factory.java
+│   │   │       │       │                   ├── PhotoListViewModel_HiltModules.java
+│   │   │       │       │                   └── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory.java
+│   │   │       │       ├── dagger
+│   │   │       │       │   └── hilt
+│   │   │       │       │       └── internal
+│   │   │       │       │           └── aggregatedroot
+│   │   │       │       │               └── codegen
+│   │   │       │       │                   └── _com_example_finebyme_FineByMeApplication.java
+│   │   │       │       └── hilt_aggregated_deps
+│   │   │       │           ├── _com_example_finebyme_FineByMeApplication_GeneratedInjector.java
+│   │   │       │           ├── _com_example_finebyme_di_AppModule.java
+│   │   │       │           ├── _com_example_finebyme_ui_favoriteList_FavoriteListFragment_GeneratedInjector.java
+│   │   │       │           ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_BindsModule.java
+│   │   │       │           ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_KeyModule.java
+│   │   │       │           ├── _com_example_finebyme_ui_main_MainActivity_GeneratedInjector.java
+│   │   │       │           ├── _com_example_finebyme_ui_photoDetail_PhotoDetailActivity_GeneratedInjector.java
+│   │   │       │           ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_BindsModule.java
+│   │   │       │           ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_KeyModule.java
+│   │   │       │           ├── _com_example_finebyme_ui_photoList_PhotoListFragment_GeneratedInjector.java
+│   │   │       │           ├── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_BindsModule.java
+│   │   │       │           └── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_KeyModule.java
+│   │   │       └── kaptKotlin
+│   │   │           └── debug
+│   │   ├── intermediates
+│   │   │   ├── aar_metadata_check
+│   │   │   │   └── debug
+│   │   │   ├── annotation_processor_list
+│   │   │   │   └── debug
+│   │   │   │       └── annotationProcessors.json
+│   │   │   ├── apk
+│   │   │   │   └── debug
+│   │   │   │       ├── app-debug.apk
+│   │   │   │       └── output-metadata.json
+│   │   │   ├── apk_ide_redirect_file
+│   │   │   │   └── debug
+│   │   │   │       └── redirect.txt
+│   │   │   ├── app_metadata
+│   │   │   │   └── debug
+│   │   │   │       └── app-metadata.properties
+│   │   │   ├── assets
+│   │   │   │   └── debug
+│   │   │   ├── classes
+│   │   │   │   └── debug
+│   │   │   │       └── transformDebugClassesWithAsm
+│   │   │   │           ├── dirs
+│   │   │   │           │   ├── META-INF
+│   │   │   │           │   │   └── app_debug.kotlin_module
+│   │   │   │           │   ├── com
+│   │   │   │           │   │   └── example
+│   │   │   │           │   │       └── finebyme
+│   │   │   │           │   │           ├── BuildConfig.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCImpl$LazyClassKeyProvider.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCImpl$SwitchingProvider.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$Builder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$FragmentCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$FragmentCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ServiceCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ServiceCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$SingletonCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl$LazyClassKeyProvider.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl$SwitchingProvider.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewWithFragmentCBuilder.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewWithFragmentCImpl.class
+│   │   │   │           │   │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC.class
+│   │   │   │           │   │           ├── FineByMeApplication.class
+│   │   │   │           │   │           ├── FineByMeApplication_ComponentTreeDeps.class
+│   │   │   │           │   │           ├── FineByMeApplication_GeneratedInjector.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ActivityC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ActivityC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ActivityCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ActivityRetainedC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ActivityRetainedC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ActivityRetainedCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$FragmentC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$FragmentC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$FragmentCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ServiceC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ServiceC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ServiceCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$SingletonC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewModelC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewModelC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewModelCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentC$Builder.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentC.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentCBuilderModule.class
+│   │   │   │           │   │           ├── FineByMeApplication_HiltComponents.class
+│   │   │   │           │   │           ├── Hilt_FineByMeApplication$1.class
+│   │   │   │           │   │           ├── Hilt_FineByMeApplication.class
+│   │   │   │           │   │           ├── common
+│   │   │   │           │   │           │   └── enums
+│   │   │   │           │   │           │       └── State.class
+│   │   │   │           │   │           ├── data
+│   │   │   │           │   │           │   ├── datasource
+│   │   │   │           │   │           │   │   ├── UnSplashDataSource$getRandomPhotoList$1.class
+│   │   │   │           │   │           │   │   ├── UnSplashDataSource$getRandomPhotoList$2.class
+│   │   │   │           │   │           │   │   ├── UnSplashDataSource$getSearchPhotoList$1.class
+│   │   │   │           │   │           │   │   ├── UnSplashDataSource$getSearchPhotoList$2.class
+│   │   │   │           │   │           │   │   ├── UnSplashDataSource.class
+│   │   │   │           │   │           │   │   └── UserDataSource.class
+│   │   │   │           │   │           │   ├── db
+│   │   │   │           │   │           │   │   ├── FavoritePhotosDatabase$Companion.class
+│   │   │   │           │   │           │   │   ├── FavoritePhotosDatabase.class
+│   │   │   │           │   │           │   │   ├── FavoritePhotosDatabase_Impl$1.class
+│   │   │   │           │   │           │   │   ├── FavoritePhotosDatabase_Impl.class
+│   │   │   │           │   │           │   │   ├── Photo$Creator.class
+│   │   │   │           │   │           │   │   ├── Photo.class
+│   │   │   │           │   │           │   │   ├── PhotoDao.class
+│   │   │   │           │   │           │   │   ├── PhotoDao_Impl$1.class
+│   │   │   │           │   │           │   │   ├── PhotoDao_Impl$2.class
+│   │   │   │           │   │           │   │   ├── PhotoDao_Impl$3.class
+│   │   │   │           │   │           │   │   └── PhotoDao_Impl.class
+│   │   │   │           │   │           │   ├── model
+│   │   │   │           │   │           │   │   ├── AlternativeSlugs.class
+│   │   │   │           │   │           │   │   ├── SearchPhotoResponse.class
+│   │   │   │           │   │           │   │   ├── UnsplashPhoto.class
+│   │   │   │           │   │           │   │   ├── UnsplashPhotoKt.class
+│   │   │   │           │   │           │   │   └── Urls.class
+│   │   │   │           │   │           │   ├── network
+│   │   │   │           │   │           │   │   ├── RetrofitInstance$okHttpClient$2.class
+│   │   │   │           │   │           │   │   ├── RetrofitInstance$retrofit$2.class
+│   │   │   │           │   │           │   │   ├── RetrofitInstance$retrofitService$2.class
+│   │   │   │           │   │           │   │   ├── RetrofitInstance.class
+│   │   │   │           │   │           │   │   └── RetrofitService.class
+│   │   │   │           │   │           │   └── repository
+│   │   │   │           │   │           │       ├── PhotoRepository.class
+│   │   │   │           │   │           │       └── PhotoRepository_Factory.class
+│   │   │   │           │   │           ├── databinding
+│   │   │   │           │   │           │   ├── ActivityMainBinding.class
+│   │   │   │           │   │           │   ├── ActivityPhotoDetailBinding.class
+│   │   │   │           │   │           │   ├── ActivitySplashBinding.class
+│   │   │   │           │   │           │   ├── FragmentBaseBinding.class
+│   │   │   │           │   │           │   ├── FragmentFavoriteListBinding.class
+│   │   │   │           │   │           │   ├── FragmentPhotoListBinding.class
+│   │   │   │           │   │           │   └── ItemPhotoBinding.class
+│   │   │   │           │   │           ├── di
+│   │   │   │           │   │           │   ├── AppModule.class
+│   │   │   │           │   │           │   ├── AppModule_ProvidePhotoDaoFactory.class
+│   │   │   │           │   │           │   ├── AppModule_ProvidePhotoRepositoryFactory.class
+│   │   │   │           │   │           │   ├── AppModule_ProvideRetrofitServiceFactory$InstanceHolder.class
+│   │   │   │           │   │           │   ├── AppModule_ProvideRetrofitServiceFactory.class
+│   │   │   │           │   │           │   ├── AppModule_ProvideUnsplashDataSourceFactory.class
+│   │   │   │           │   │           │   └── AppModule_ProvideUserDataSourceFactory.class
+│   │   │   │           │   │           ├── ui
+│   │   │   │           │   │           │   ├── base
+│   │   │   │           │   │           │   │   ├── BaseFragment.class
+│   │   │   │           │   │           │   │   └── BaseViewModel.class
+│   │   │   │           │   │           │   ├── favoriteList
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$onViewCreated$1.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$onViewCreated$2.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$sam$androidx_lifecycle_Observer$0.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$1.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$2.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$3.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$4.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$5.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment.class
+│   │   │   │           │   │           │   │   ├── FavoriteListFragment_GeneratedInjector.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel$_photos$2.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel_Factory.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel_HiltModules$BindsModule.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel_HiltModules$KeyModule.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel_HiltModules.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.class
+│   │   │   │           │   │           │   │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory.class
+│   │   │   │           │   │           │   │   └── Hilt_FavoriteListFragment.class
+│   │   │   │           │   │           │   ├── main
+│   │   │   │           │   │           │   │   ├── Hilt_MainActivity$1.class
+│   │   │   │           │   │           │   │   ├── Hilt_MainActivity.class
+│   │   │   │           │   │           │   │   ├── MainActivity$binding$2.class
+│   │   │   │           │   │           │   │   ├── MainActivity$handleOnBackPressed$1$handleOnBackPressed$1.class
+│   │   │   │           │   │           │   │   ├── MainActivity$handleOnBackPressed$1.class
+│   │   │   │           │   │           │   │   ├── MainActivity.class
+│   │   │   │           │   │           │   │   └── MainActivity_GeneratedInjector.class
+│   │   │   │           │   │           │   ├── photoDetail
+│   │   │   │           │   │           │   │   ├── Hilt_PhotoDetailActivity$1.class
+│   │   │   │           │   │           │   │   ├── Hilt_PhotoDetailActivity.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$Companion.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$handleOnBackPressed$1.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$sam$androidx_lifecycle_Observer$0.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$setupObservers$1.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$setupObservers$2.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$setupObservers$3.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$setupObservers$4.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$setupObservers$5.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$1.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$2.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$3.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailActivity_GeneratedInjector.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel$_loadingState$2.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel$downloadImage$1.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel_Factory.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel_HiltModules$BindsModule.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel_HiltModules$KeyModule.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel_HiltModules.class
+│   │   │   │           │   │           │   │   ├── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.class
+│   │   │   │           │   │           │   │   └── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory.class
+│   │   │   │           │   │           │   ├── photoList
+│   │   │   │           │   │           │   │   ├── Hilt_PhotoListFragment.class
+│   │   │   │           │   │           │   │   ├── PhotoAdapter$OnPhotoClickListener.class
+│   │   │   │           │   │           │   │   ├── PhotoAdapter$PhotoViewHolder.class
+│   │   │   │           │   │           │   │   ├── PhotoAdapter.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$sam$androidx_lifecycle_Observer$0.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$setupListeners$1.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$setupListeners$2$2.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$setupObservers$1.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$setupObservers$2.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$1.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$2.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$3.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$4.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$5.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment.class
+│   │   │   │           │   │           │   │   ├── PhotoListFragment_GeneratedInjector.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel$_loadingState$2.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel$_photos$2.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel$fetchPhotos$1.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel$searchPhotos$1.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel_Factory.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel_HiltModules$BindsModule.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel_HiltModules$KeyModule.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel_HiltModules.class
+│   │   │   │           │   │           │   │   ├── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.class
+│   │   │   │           │   │           │   │   └── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory.class
+│   │   │   │           │   │           │   └── splash
+│   │   │   │           │   │           │       ├── SplashActivity$binding$2.class
+│   │   │   │           │   │           │       └── SplashActivity.class
+│   │   │   │           │   │           └── utils
+│   │   │   │           │   │               ├── ImageLoader$loadImage$1.class
+│   │   │   │           │   │               ├── ImageLoader.class
+│   │   │   │           │   │               ├── IntentUtils.class
+│   │   │   │           │   │               ├── LoadingHandler$WhenMappings.class
+│   │   │   │           │   │               ├── LoadingHandler.class
+│   │   │   │           │   │               ├── NetworkUtils$enqueueCall$1.class
+│   │   │   │           │   │               ├── NetworkUtils.class
+│   │   │   │           │   │               └── PhotoDiffCallback.class
+│   │   │   │           │   ├── dagger
+│   │   │   │           │   │   └── hilt
+│   │   │   │           │   │       └── internal
+│   │   │   │           │   │           ├── aggregatedroot
+│   │   │   │           │   │           │   └── codegen
+│   │   │   │           │   │           │       └── _com_example_finebyme_FineByMeApplication.class
+│   │   │   │           │   │           └── processedrootsentinel
+│   │   │   │           │   │               └── codegen
+│   │   │   │           │   │                   └── _com_example_finebyme_FineByMeApplication.class
+│   │   │   │           │   └── hilt_aggregated_deps
+│   │   │   │           │       ├── _com_example_finebyme_FineByMeApplication_GeneratedInjector.class
+│   │   │   │           │       ├── _com_example_finebyme_di_AppModule.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_favoriteList_FavoriteListFragment_GeneratedInjector.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_BindsModule.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_KeyModule.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_main_MainActivity_GeneratedInjector.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_photoDetail_PhotoDetailActivity_GeneratedInjector.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_BindsModule.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_KeyModule.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_photoList_PhotoListFragment_GeneratedInjector.class
+│   │   │   │           │       ├── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_BindsModule.class
+│   │   │   │           │       └── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_KeyModule.class
+│   │   │   │           └── jars
+│   │   │   │               └── 0.jar
+│   │   │   ├── compatible_screen_manifest
+│   │   │   │   └── debug
+│   │   │   │       └── output-metadata.json
+│   │   │   ├── compile_and_runtime_not_namespaced_r_class_jar
+│   │   │   │   └── debug
+│   │   │   │       └── R.jar
+│   │   │   ├── compressed_assets
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── data_binding_base_class_log_artifact
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           └── com.example.finebyme-binding_classes.json
+│   │   │   ├── data_binding_dependency_artifacts
+│   │   │   │   └── debug
+│   │   │   ├── data_binding_layout_info_type_merge
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── activity_main-layout.xml
+│   │   │   │           ├── activity_photo_detail-layout.xml
+│   │   │   │           ├── activity_splash-layout.xml
+│   │   │   │           ├── fragment_base-layout.xml
+│   │   │   │           ├── fragment_favorite_list-layout.xml
+│   │   │   │           ├── fragment_photo_list-layout.xml
+│   │   │   │           └── item_photo-layout.xml
+│   │   │   ├── data_binding_layout_info_type_package
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── activity_main-layout.xml
+│   │   │   │           ├── activity_photo_detail-layout.xml
+│   │   │   │           ├── activity_splash-layout.xml
+│   │   │   │           ├── fragment_base-layout.xml
+│   │   │   │           ├── fragment_favorite_list-layout.xml
+│   │   │   │           ├── fragment_photo_list-layout.xml
+│   │   │   │           └── item_photo-layout.xml
+│   │   │   ├── desugar_graph
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── currentProject
+│   │   │   │           │   ├── dirs_bucket_0
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   ├── dirs_bucket_1
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   ├── dirs_bucket_2
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   ├── dirs_bucket_3
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   ├── jar_4bfacbe16336664a22aa6f18a09e05c6a76a7b9514df955403bd25dfd3efbc65_bucket_0
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   ├── jar_4bfacbe16336664a22aa6f18a09e05c6a76a7b9514df955403bd25dfd3efbc65_bucket_1
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   ├── jar_4bfacbe16336664a22aa6f18a09e05c6a76a7b9514df955403bd25dfd3efbc65_bucket_2
+│   │   │   │           │   │   └── graph.bin
+│   │   │   │           │   └── jar_4bfacbe16336664a22aa6f18a09e05c6a76a7b9514df955403bd25dfd3efbc65_bucket_3
+│   │   │   │           │       └── graph.bin
+│   │   │   │           ├── externalLibs
+│   │   │   │           ├── mixedScopes
+│   │   │   │           └── otherProjects
+│   │   │   ├── dex
+│   │   │   │   └── debug
+│   │   │   │       ├── mergeExtDexDebug
+│   │   │   │       │   ├── classes.dex
+│   │   │   │       │   └── classes2.dex
+│   │   │   │       ├── mergeLibDexDebug
+│   │   │   │       │   ├── 0
+│   │   │   │       │   ├── 1
+│   │   │   │       │   ├── 10
+│   │   │   │       │   ├── 11
+│   │   │   │       │   ├── 12
+│   │   │   │       │   ├── 13
+│   │   │   │       │   ├── 14
+│   │   │   │       │   ├── 15
+│   │   │   │       │   ├── 2
+│   │   │   │       │   ├── 3
+│   │   │   │       │   ├── 4
+│   │   │   │       │   ├── 5
+│   │   │   │       │   ├── 6
+│   │   │   │       │   ├── 7
+│   │   │   │       │   ├── 8
+│   │   │   │       │   └── 9
+│   │   │   │       └── mergeProjectDexDebug
+│   │   │   │           ├── 0
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 1
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 10
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 11
+│   │   │   │           ├── 12
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 13
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 14
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 15
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 2
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 3
+│   │   │   │           ├── 4
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 5
+│   │   │   │           ├── 6
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 7
+│   │   │   │           │   └── classes.dex
+│   │   │   │           ├── 8
+│   │   │   │           └── 9
+│   │   │   ├── dex_archive_input_jar_hashes
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── dex_number_of_buckets_file
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── duplicate_classes_check
+│   │   │   │   └── debug
+│   │   │   ├── external_file_lib_dex_archives
+│   │   │   │   └── debug
+│   │   │   ├── external_libs_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── external_libs_dex_archive_with_artifact_transforms
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── global_synthetics_dex
+│   │   │   │   └── debug
+│   │   │   ├── global_synthetics_external_lib
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── global_synthetics_external_libs_artifact_transform
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── global_synthetics_file_lib
+│   │   │   │   └── debug
+│   │   │   ├── global_synthetics_mixed_scope
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── global_synthetics_project
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── global_synthetics_subproject
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── hilt
+│   │   │   │   └── component_classes
+│   │   │   │       └── debug
+│   │   │   │           ├── com
+│   │   │   │           │   └── example
+│   │   │   │           │       └── finebyme
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCImpl$LazyClassKeyProvider.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCImpl$SwitchingProvider.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$Builder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$FragmentCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$FragmentCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ServiceCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ServiceCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$SingletonCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl$LazyClassKeyProvider.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl$SwitchingProvider.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewWithFragmentCBuilder.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewWithFragmentCImpl.class
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC.class
+│   │   │   │           │           ├── FineByMeApplication_ComponentTreeDeps.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityRetainedC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityRetainedC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityRetainedCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$FragmentC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$FragmentC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$FragmentCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ServiceC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ServiceC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ServiceCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$SingletonC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewModelC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewModelC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewModelCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentC$Builder.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentC.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentCBuilderModule.class
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents.class
+│   │   │   │           │           ├── Hilt_FineByMeApplication$1.class
+│   │   │   │           │           └── Hilt_FineByMeApplication.class
+│   │   │   │           └── dagger
+│   │   │   │               └── hilt
+│   │   │   │                   └── internal
+│   │   │   │                       └── processedrootsentinel
+│   │   │   │                           └── codegen
+│   │   │   │                               └── _com_example_finebyme_FineByMeApplication.class
+│   │   │   ├── incremental
+│   │   │   │   ├── dataBindingGenBaseClassesDebug
+│   │   │   │   │   └── base_builder_log.json
+│   │   │   │   ├── debug
+│   │   │   │   │   ├── mergeDebugResources
+│   │   │   │   │   │   ├── compile-file-map.properties
+│   │   │   │   │   │   ├── merged.dir
+│   │   │   │   │   │   │   ├── values
+│   │   │   │   │   │   │   │   └── values.xml
+│   │   │   │   │   │   │   ├── values-af
+│   │   │   │   │   │   │   │   └── values-af.xml
+│   │   │   │   │   │   │   ├── values-am
+│   │   │   │   │   │   │   │   └── values-am.xml
+│   │   │   │   │   │   │   ├── values-ar
+│   │   │   │   │   │   │   │   └── values-ar.xml
+│   │   │   │   │   │   │   ├── values-as
+│   │   │   │   │   │   │   │   └── values-as.xml
+│   │   │   │   │   │   │   ├── values-az
+│   │   │   │   │   │   │   │   └── values-az.xml
+│   │   │   │   │   │   │   ├── values-b+es+419
+│   │   │   │   │   │   │   │   └── values-b+es+419.xml
+│   │   │   │   │   │   │   ├── values-b+sr+Latn
+│   │   │   │   │   │   │   │   └── values-b+sr+Latn.xml
+│   │   │   │   │   │   │   ├── values-be
+│   │   │   │   │   │   │   │   └── values-be.xml
+│   │   │   │   │   │   │   ├── values-bg
+│   │   │   │   │   │   │   │   └── values-bg.xml
+│   │   │   │   │   │   │   ├── values-bn
+│   │   │   │   │   │   │   │   └── values-bn.xml
+│   │   │   │   │   │   │   ├── values-bs
+│   │   │   │   │   │   │   │   └── values-bs.xml
+│   │   │   │   │   │   │   ├── values-ca
+│   │   │   │   │   │   │   │   └── values-ca.xml
+│   │   │   │   │   │   │   ├── values-cs
+│   │   │   │   │   │   │   │   └── values-cs.xml
+│   │   │   │   │   │   │   ├── values-da
+│   │   │   │   │   │   │   │   └── values-da.xml
+│   │   │   │   │   │   │   ├── values-de
+│   │   │   │   │   │   │   │   └── values-de.xml
+│   │   │   │   │   │   │   ├── values-el
+│   │   │   │   │   │   │   │   └── values-el.xml
+│   │   │   │   │   │   │   ├── values-en-rAU
+│   │   │   │   │   │   │   │   └── values-en-rAU.xml
+│   │   │   │   │   │   │   ├── values-en-rCA
+│   │   │   │   │   │   │   │   └── values-en-rCA.xml
+│   │   │   │   │   │   │   ├── values-en-rGB
+│   │   │   │   │   │   │   │   └── values-en-rGB.xml
+│   │   │   │   │   │   │   ├── values-en-rIN
+│   │   │   │   │   │   │   │   └── values-en-rIN.xml
+│   │   │   │   │   │   │   ├── values-en-rXC
+│   │   │   │   │   │   │   │   └── values-en-rXC.xml
+│   │   │   │   │   │   │   ├── values-es
+│   │   │   │   │   │   │   │   └── values-es.xml
+│   │   │   │   │   │   │   ├── values-es-rUS
+│   │   │   │   │   │   │   │   └── values-es-rUS.xml
+│   │   │   │   │   │   │   ├── values-et
+│   │   │   │   │   │   │   │   └── values-et.xml
+│   │   │   │   │   │   │   ├── values-eu
+│   │   │   │   │   │   │   │   └── values-eu.xml
+│   │   │   │   │   │   │   ├── values-fa
+│   │   │   │   │   │   │   │   └── values-fa.xml
+│   │   │   │   │   │   │   ├── values-fi
+│   │   │   │   │   │   │   │   └── values-fi.xml
+│   │   │   │   │   │   │   ├── values-fr
+│   │   │   │   │   │   │   │   └── values-fr.xml
+│   │   │   │   │   │   │   ├── values-fr-rCA
+│   │   │   │   │   │   │   │   └── values-fr-rCA.xml
+│   │   │   │   │   │   │   ├── values-gl
+│   │   │   │   │   │   │   │   └── values-gl.xml
+│   │   │   │   │   │   │   ├── values-gu
+│   │   │   │   │   │   │   │   └── values-gu.xml
+│   │   │   │   │   │   │   ├── values-h320dp-port-v13
+│   │   │   │   │   │   │   │   └── values-h320dp-port-v13.xml
+│   │   │   │   │   │   │   ├── values-h360dp-land-v13
+│   │   │   │   │   │   │   │   └── values-h360dp-land-v13.xml
+│   │   │   │   │   │   │   ├── values-h480dp-land-v13
+│   │   │   │   │   │   │   │   └── values-h480dp-land-v13.xml
+│   │   │   │   │   │   │   ├── values-h550dp-port-v13
+│   │   │   │   │   │   │   │   └── values-h550dp-port-v13.xml
+│   │   │   │   │   │   │   ├── values-h720dp-v13
+│   │   │   │   │   │   │   │   └── values-h720dp-v13.xml
+│   │   │   │   │   │   │   ├── values-hdpi-v4
+│   │   │   │   │   │   │   │   └── values-hdpi-v4.xml
+│   │   │   │   │   │   │   ├── values-hi
+│   │   │   │   │   │   │   │   └── values-hi.xml
+│   │   │   │   │   │   │   ├── values-hr
+│   │   │   │   │   │   │   │   └── values-hr.xml
+│   │   │   │   │   │   │   ├── values-hu
+│   │   │   │   │   │   │   │   └── values-hu.xml
+│   │   │   │   │   │   │   ├── values-hy
+│   │   │   │   │   │   │   │   └── values-hy.xml
+│   │   │   │   │   │   │   ├── values-in
+│   │   │   │   │   │   │   │   └── values-in.xml
+│   │   │   │   │   │   │   ├── values-is
+│   │   │   │   │   │   │   │   └── values-is.xml
+│   │   │   │   │   │   │   ├── values-it
+│   │   │   │   │   │   │   │   └── values-it.xml
+│   │   │   │   │   │   │   ├── values-iw
+│   │   │   │   │   │   │   │   └── values-iw.xml
+│   │   │   │   │   │   │   ├── values-ja
+│   │   │   │   │   │   │   │   └── values-ja.xml
+│   │   │   │   │   │   │   ├── values-ka
+│   │   │   │   │   │   │   │   └── values-ka.xml
+│   │   │   │   │   │   │   ├── values-kk
+│   │   │   │   │   │   │   │   └── values-kk.xml
+│   │   │   │   │   │   │   ├── values-km
+│   │   │   │   │   │   │   │   └── values-km.xml
+│   │   │   │   │   │   │   ├── values-kn
+│   │   │   │   │   │   │   │   └── values-kn.xml
+│   │   │   │   │   │   │   ├── values-ko
+│   │   │   │   │   │   │   │   └── values-ko.xml
+│   │   │   │   │   │   │   ├── values-ky
+│   │   │   │   │   │   │   │   └── values-ky.xml
+│   │   │   │   │   │   │   ├── values-land
+│   │   │   │   │   │   │   │   └── values-land.xml
+│   │   │   │   │   │   │   ├── values-large-v4
+│   │   │   │   │   │   │   │   └── values-large-v4.xml
+│   │   │   │   │   │   │   ├── values-ldltr-v21
+│   │   │   │   │   │   │   │   └── values-ldltr-v21.xml
+│   │   │   │   │   │   │   ├── values-ldrtl-v17
+│   │   │   │   │   │   │   │   └── values-ldrtl-v17.xml
+│   │   │   │   │   │   │   ├── values-lo
+│   │   │   │   │   │   │   │   └── values-lo.xml
+│   │   │   │   │   │   │   ├── values-lt
+│   │   │   │   │   │   │   │   └── values-lt.xml
+│   │   │   │   │   │   │   ├── values-lv
+│   │   │   │   │   │   │   │   └── values-lv.xml
+│   │   │   │   │   │   │   ├── values-mk
+│   │   │   │   │   │   │   │   └── values-mk.xml
+│   │   │   │   │   │   │   ├── values-ml
+│   │   │   │   │   │   │   │   └── values-ml.xml
+│   │   │   │   │   │   │   ├── values-mn
+│   │   │   │   │   │   │   │   └── values-mn.xml
+│   │   │   │   │   │   │   ├── values-mr
+│   │   │   │   │   │   │   │   └── values-mr.xml
+│   │   │   │   │   │   │   ├── values-ms
+│   │   │   │   │   │   │   │   └── values-ms.xml
+│   │   │   │   │   │   │   ├── values-my
+│   │   │   │   │   │   │   │   └── values-my.xml
+│   │   │   │   │   │   │   ├── values-nb
+│   │   │   │   │   │   │   │   └── values-nb.xml
+│   │   │   │   │   │   │   ├── values-ne
+│   │   │   │   │   │   │   │   └── values-ne.xml
+│   │   │   │   │   │   │   ├── values-night-v8
+│   │   │   │   │   │   │   │   └── values-night-v8.xml
+│   │   │   │   │   │   │   ├── values-nl
+│   │   │   │   │   │   │   │   └── values-nl.xml
+│   │   │   │   │   │   │   ├── values-or
+│   │   │   │   │   │   │   │   └── values-or.xml
+│   │   │   │   │   │   │   ├── values-pa
+│   │   │   │   │   │   │   │   └── values-pa.xml
+│   │   │   │   │   │   │   ├── values-pl
+│   │   │   │   │   │   │   │   └── values-pl.xml
+│   │   │   │   │   │   │   ├── values-port
+│   │   │   │   │   │   │   │   └── values-port.xml
+│   │   │   │   │   │   │   ├── values-pt
+│   │   │   │   │   │   │   │   └── values-pt.xml
+│   │   │   │   │   │   │   ├── values-pt-rBR
+│   │   │   │   │   │   │   │   └── values-pt-rBR.xml
+│   │   │   │   │   │   │   ├── values-pt-rPT
+│   │   │   │   │   │   │   │   └── values-pt-rPT.xml
+│   │   │   │   │   │   │   ├── values-ro
+│   │   │   │   │   │   │   │   └── values-ro.xml
+│   │   │   │   │   │   │   ├── values-ru
+│   │   │   │   │   │   │   │   └── values-ru.xml
+│   │   │   │   │   │   │   ├── values-si
+│   │   │   │   │   │   │   │   └── values-si.xml
+│   │   │   │   │   │   │   ├── values-sk
+│   │   │   │   │   │   │   │   └── values-sk.xml
+│   │   │   │   │   │   │   ├── values-sl
+│   │   │   │   │   │   │   │   └── values-sl.xml
+│   │   │   │   │   │   │   ├── values-small-v4
+│   │   │   │   │   │   │   │   └── values-small-v4.xml
+│   │   │   │   │   │   │   ├── values-sq
+│   │   │   │   │   │   │   │   └── values-sq.xml
+│   │   │   │   │   │   │   ├── values-sr
+│   │   │   │   │   │   │   │   └── values-sr.xml
+│   │   │   │   │   │   │   ├── values-sv
+│   │   │   │   │   │   │   │   └── values-sv.xml
+│   │   │   │   │   │   │   ├── values-sw
+│   │   │   │   │   │   │   │   └── values-sw.xml
+│   │   │   │   │   │   │   ├── values-sw600dp-v13
+│   │   │   │   │   │   │   │   └── values-sw600dp-v13.xml
+│   │   │   │   │   │   │   ├── values-ta
+│   │   │   │   │   │   │   │   └── values-ta.xml
+│   │   │   │   │   │   │   ├── values-te
+│   │   │   │   │   │   │   │   └── values-te.xml
+│   │   │   │   │   │   │   ├── values-th
+│   │   │   │   │   │   │   │   └── values-th.xml
+│   │   │   │   │   │   │   ├── values-tl
+│   │   │   │   │   │   │   │   └── values-tl.xml
+│   │   │   │   │   │   │   ├── values-tr
+│   │   │   │   │   │   │   │   └── values-tr.xml
+│   │   │   │   │   │   │   ├── values-uk
+│   │   │   │   │   │   │   │   └── values-uk.xml
+│   │   │   │   │   │   │   ├── values-ur
+│   │   │   │   │   │   │   │   └── values-ur.xml
+│   │   │   │   │   │   │   ├── values-uz
+│   │   │   │   │   │   │   │   └── values-uz.xml
+│   │   │   │   │   │   │   ├── values-v16
+│   │   │   │   │   │   │   │   └── values-v16.xml
+│   │   │   │   │   │   │   ├── values-v17
+│   │   │   │   │   │   │   │   └── values-v17.xml
+│   │   │   │   │   │   │   ├── values-v18
+│   │   │   │   │   │   │   │   └── values-v18.xml
+│   │   │   │   │   │   │   ├── values-v21
+│   │   │   │   │   │   │   │   └── values-v21.xml
+│   │   │   │   │   │   │   ├── values-v22
+│   │   │   │   │   │   │   │   └── values-v22.xml
+│   │   │   │   │   │   │   ├── values-v23
+│   │   │   │   │   │   │   │   └── values-v23.xml
+│   │   │   │   │   │   │   ├── values-v24
+│   │   │   │   │   │   │   │   └── values-v24.xml
+│   │   │   │   │   │   │   ├── values-v25
+│   │   │   │   │   │   │   │   └── values-v25.xml
+│   │   │   │   │   │   │   ├── values-v26
+│   │   │   │   │   │   │   │   └── values-v26.xml
+│   │   │   │   │   │   │   ├── values-v28
+│   │   │   │   │   │   │   │   └── values-v28.xml
+│   │   │   │   │   │   │   ├── values-v31
+│   │   │   │   │   │   │   │   └── values-v31.xml
+│   │   │   │   │   │   │   ├── values-v34
+│   │   │   │   │   │   │   │   └── values-v34.xml
+│   │   │   │   │   │   │   ├── values-vi
+│   │   │   │   │   │   │   │   └── values-vi.xml
+│   │   │   │   │   │   │   ├── values-w320dp-land-v13
+│   │   │   │   │   │   │   │   └── values-w320dp-land-v13.xml
+│   │   │   │   │   │   │   ├── values-w360dp-port-v13
+│   │   │   │   │   │   │   │   └── values-w360dp-port-v13.xml
+│   │   │   │   │   │   │   ├── values-w400dp-port-v13
+│   │   │   │   │   │   │   │   └── values-w400dp-port-v13.xml
+│   │   │   │   │   │   │   ├── values-w600dp-land-v13
+│   │   │   │   │   │   │   │   └── values-w600dp-land-v13.xml
+│   │   │   │   │   │   │   ├── values-watch-v20
+│   │   │   │   │   │   │   │   └── values-watch-v20.xml
+│   │   │   │   │   │   │   ├── values-watch-v21
+│   │   │   │   │   │   │   │   └── values-watch-v21.xml
+│   │   │   │   │   │   │   ├── values-xlarge-v4
+│   │   │   │   │   │   │   │   └── values-xlarge-v4.xml
+│   │   │   │   │   │   │   ├── values-zh-rCN
+│   │   │   │   │   │   │   │   └── values-zh-rCN.xml
+│   │   │   │   │   │   │   ├── values-zh-rHK
+│   │   │   │   │   │   │   │   └── values-zh-rHK.xml
+│   │   │   │   │   │   │   ├── values-zh-rTW
+│   │   │   │   │   │   │   │   └── values-zh-rTW.xml
+│   │   │   │   │   │   │   └── values-zu
+│   │   │   │   │   │   │       └── values-zu.xml
+│   │   │   │   │   │   ├── merger.xml
+│   │   │   │   │   │   └── stripped.dir
+│   │   │   │   │   │       └── layout
+│   │   │   │   │   │           ├── activity_main.xml
+│   │   │   │   │   │           ├── activity_photo_detail.xml
+│   │   │   │   │   │           ├── activity_splash.xml
+│   │   │   │   │   │           ├── fragment_base.xml
+│   │   │   │   │   │           ├── fragment_favorite_list.xml
+│   │   │   │   │   │           ├── fragment_photo_list.xml
+│   │   │   │   │   │           └── item_photo.xml
+│   │   │   │   │   └── packageDebugResources
+│   │   │   │   │       ├── compile-file-map.properties
+│   │   │   │   │       ├── merged.dir
+│   │   │   │   │       │   ├── values
+│   │   │   │   │       │   │   └── values.xml
+│   │   │   │   │       │   └── values-night-v8
+│   │   │   │   │       │       └── values-night-v8.xml
+│   │   │   │   │       ├── merger.xml
+│   │   │   │   │       └── stripped.dir
+│   │   │   │   │           └── layout
+│   │   │   │   │               ├── activity_main.xml
+│   │   │   │   │               ├── activity_photo_detail.xml
+│   │   │   │   │               ├── activity_splash.xml
+│   │   │   │   │               ├── fragment_base.xml
+│   │   │   │   │               ├── fragment_favorite_list.xml
+│   │   │   │   │               ├── fragment_photo_list.xml
+│   │   │   │   │               └── item_photo.xml
+│   │   │   │   ├── debug-mergeJavaRes
+│   │   │   │   │   ├── merge-state
+│   │   │   │   │   └── zip-cache
+│   │   │   │   │       ├── +cm0d2fRxNvG7u2jJGw9IUam5XM=
+│   │   │   │   │       ├── 1eXXj447j13LzdHSqk1Nf8_vJqQ=
+│   │   │   │   │       ├── 1vOxFiUWzTAwKH0e6C0W1HP7T9s=
+│   │   │   │   │       ├── 4GDu7pRLa4lZBMpGEDkuWq+0agQ=
+│   │   │   │   │       ├── 4MlZJd4Gq_qJKHMAto79p0AWM54=
+│   │   │   │   │       ├── 5LpLDb+Q00TCovklMRGqAifw5Is=
+│   │   │   │   │       ├── 5Y0xGJ8jf4x_dphfO_PSgUyaukA=
+│   │   │   │   │       ├── 6Rkkb50zGKXEGOgktY3j0sPUlqw=
+│   │   │   │   │       ├── 6cZck6M23lIZuaSXyKGZYpaeamE=
+│   │   │   │   │       ├── 7lQosF52qqCodxDH6zkc4SRtXeY=
+│   │   │   │   │       ├── 7lzIqQHvUHOuLq9x4TCWAnsSTpk=
+│   │   │   │   │       ├── 7mh_MRw_G56yhnNE5YKij_Pwm2U=
+│   │   │   │   │       ├── 8U2aXk6xof7xNxVMByZPpiJiWeE=
+│   │   │   │   │       ├── 8q28WHNmPSRAAzb5B2GIKrepZsc=
+│   │   │   │   │       ├── 8tKuaAGmmTyc2cZP83B16NkHCTk=
+│   │   │   │   │       ├── 94iNL4zcmCaWQ7JQcRk4JqJr+Qo=
+│   │   │   │   │       ├── 9TRpvLH8uMh6TqYTTcU_hfNA_9U=
+│   │   │   │   │       ├── Aq8HWwDY5+qPEVKXiSL+s73sMes=
+│   │   │   │   │       ├── B0UQYNPW2aQkpDiiLxoI1PK16uw=
+│   │   │   │   │       ├── B3uskNKb3pgOq_TEsmvPmmLcC1Q=
+│   │   │   │   │       ├── DS+RYd7tcHuhYgOuOsCMkEHlsLM=
+│   │   │   │   │       ├── F+qESG1O30zk2JV6IY51SxQnUSA=
+│   │   │   │   │       ├── F0IBa7ucDW9z5ScfZh4PJnTMdKo=
+│   │   │   │   │       ├── G57pPNFHahYDIwD2vM1h+97GSP4=
+│   │   │   │   │       ├── GOLL2VP2Muv8IkIzcUj7_0Dx5rI=
+│   │   │   │   │       ├── Grn0bNMYpVvMX2I76Aqq8Qp2Cag=
+│   │   │   │   │       ├── Hzfdy9gcXEC616vCeb5V3XYrS6o=
+│   │   │   │   │       ├── I1QikWLU106VmwKPaWGgRIUTeU0=
+│   │   │   │   │       ├── I7Toc+yxObdDg_9_0clyeiAJU3w=
+│   │   │   │   │       ├── IQI+HZleo1SHrTbRjuc+om9X3wM=
+│   │   │   │   │       ├── Inxvzyz_Q6TWKBbFdwhKucSJb0E=
+│   │   │   │   │       ├── J38LjQRWjOhcLcTlAxr1sW0NB08=
+│   │   │   │   │       ├── JRCjxdwnxCmmAhi4HeuMH_Snlys=
+│   │   │   │   │       ├── JT_xPKT1xXWTmQ7rvcGBwZxZYZo=
+│   │   │   │   │       ├── JiDxgUbsRfwu8AQVqkSK1SQI9DY=
+│   │   │   │   │       ├── LQtkdoFUVk7a_6_mLkTGsJuhNi8=
+│   │   │   │   │       ├── LaC7bhOKQJSftIkiUa8Z8ycyAGA=
+│   │   │   │   │       ├── M7EaisJ_aAkKHte_5K_Cqio2kR8=
+│   │   │   │   │       ├── No3Z9SPz4AjD_T5ST3yVSzx4Gv4=
+│   │   │   │   │       ├── O3Qiu_c6Rmus+9DgPLN+9MjtQAU=
+│   │   │   │   │       ├── OqYkGu6JlJhys1nsdBOsjkkcrig=
+│   │   │   │   │       ├── P_QgSOB8djuzekKYUUZmIwUp_AU=
+│   │   │   │   │       ├── Pajwpe06tpReUeIrja9LsAAI66s=
+│   │   │   │   │       ├── PnH9lEZgefgOAexpRVXJ5i3c1Fs=
+│   │   │   │   │       ├── RUCKt2bTNz_o2wZ36UZDirITwdU=
+│   │   │   │   │       ├── RmgrMgq37i688Iancv0A1T8ji4I=
+│   │   │   │   │       ├── SR_G7ZaLYbYpDjy7rDrBwg2Cw1A=
+│   │   │   │   │       ├── UxfHoL2ByScU2cb4f25CyM6yC6M=
+│   │   │   │   │       ├── VsyiCbBn6kOWz6CfuKVtNhjpOwA=
+│   │   │   │   │       ├── Vu2dzYnwdqvUyHhjnw+ZGoUFBQc=
+│   │   │   │   │       ├── WjKOsKPvs4VCuXKe3dg6O8yWgOQ=
+│   │   │   │   │       ├── XpX6vbedlESk05QLJhgvqxhHM0k=
+│   │   │   │   │       ├── YZ2OTcDUt4WSAe50sVlUGK0QiaE=
+│   │   │   │   │       ├── _F4eBy_gl1qYlTM3s4lTTi5rlnU=
+│   │   │   │   │       ├── aHpHGDzeOIiNBZ_e3K5TY_cHEwk=
+│   │   │   │   │       ├── b0OcsgOzLvNUpUHHp7ch4eINiPQ=
+│   │   │   │   │       ├── bA2D4azjN1uJbTf_RfgAleXehnU=
+│   │   │   │   │       ├── bGSRhYz31zV4+64b74btDoRPJ0o=
+│   │   │   │   │       ├── bhCLU_kkQ4HkKHaehr4vVAaPPvM=
+│   │   │   │   │       ├── eFB7v5mQGBnU8CqTmUY0avkmGts=
+│   │   │   │   │       ├── ee0dKBgKREJssBga1Y_bHPy3SHc=
+│   │   │   │   │       ├── f+ryBRR47KCfrtMM7E_UkHIchHc=
+│   │   │   │   │       ├── f2SaC2n0dYztrkZrEGJshfT8PNQ=
+│   │   │   │   │       ├── fGKwD6Lh6gDo5Lj1WJAhlMcbVxU=
+│   │   │   │   │       ├── fH9IDRqySDFKFJg0V2h+YUM1F14=
+│   │   │   │   │       ├── fKZF6+Qc6YqnJuBFVO4ENVQkJAE=
+│   │   │   │   │       ├── friG+8hwe2Ltm+ngQfBszCFM9Us=
+│   │   │   │   │       ├── h4kUKjKhRXlFpywZ2a_2mWZxtAg=
+│   │   │   │   │       ├── hLx3zSBbS5odq9ZjRXJMznwLMag=
+│   │   │   │   │       ├── hmPPHM87vj+Eb2gYTfgKNeZPRzs=
+│   │   │   │   │       ├── hpzn7clT80og4KSgl+miru+CkaI=
+│   │   │   │   │       ├── k8Lxn5z1qTJBNVeLLVEbtVAIJD0=
+│   │   │   │   │       ├── kUHGZH69Y+c+2zG0XzRGmkeFT0w=
+│   │   │   │   │       ├── lFjdK98v3P5xM0ybznL3oPOYzcU=
+│   │   │   │   │       ├── nJ0zVJy+YIrvdkoef9ACLfaqnFk=
+│   │   │   │   │       ├── nPWPUvMmIbPiopIQAOpKs8wVg1Y=
+│   │   │   │   │       ├── nQYkBkxYL88GV7kHC2_VGaHAB60=
+│   │   │   │   │       ├── nb+XvmD9dKWKAbETkQgmkRavjc0=
+│   │   │   │   │       ├── o3T+_7UbWCVeAQXGxDzVGBjvL2s=
+│   │   │   │   │       ├── oXelgj_xxnCoJzgNK2cK_NjYpJ8=
+│   │   │   │   │       ├── oivcIFKAFytdrh1eGoflNXaUgRA=
+│   │   │   │   │       ├── p1uQ_9yZUqPE3S8Maqsb4inOFh8=
+│   │   │   │   │       ├── pR11A7S+xXTMWlGEbwz2VutVSdY=
+│   │   │   │   │       ├── pYHChD97gmqb2+CLbVp1DfNMveQ=
+│   │   │   │   │       ├── qXeHpb8NfSdOnWI+5NG_vRhka8E=
+│   │   │   │   │       ├── reqnC2Ej4PG+ZKvq3qkcxzA2KyQ=
+│   │   │   │   │       ├── srPLmtziLxkwrBTPM3ShFIqHQZY=
+│   │   │   │   │       ├── suEXplk7BncsQv_CC7o88FK5fN0=
+│   │   │   │   │       ├── uD5M1TWf8kIvzuxQRUFOYUWlIrI=
+│   │   │   │   │       ├── uIbfU6zyhnrycMLpa23FXSYTFME=
+│   │   │   │   │       ├── uWF070YENVxUaRdPNiqABETnk9k=
+│   │   │   │   │       ├── v1Vs9xbMuBa3BLlWHACG9rFVeDI=
+│   │   │   │   │       ├── w+sKP33n3gwKj07ayfpp85LF_ww=
+│   │   │   │   │       ├── zCYGfZWFEwYt633HJ61G5ket4oY=
+│   │   │   │   │       ├── zTJr3SlcenULdWU+v+Hwr_xV5JM=
+│   │   │   │   │       └── zV5iKdey7yeENWd4gStCmlJtQ9c=
+│   │   │   │   ├── mergeDebugAssets
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── mergeDebugJniLibFolders
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── mergeDebugShaders
+│   │   │   │   │   └── merger.xml
+│   │   │   │   ├── packageDebug
+│   │   │   │   │   └── tmp
+│   │   │   │   │       └── debug
+│   │   │   │   │           ├── dex-renamer-state.txt
+│   │   │   │   │           └── zip-cache
+│   │   │   │   │               ├── androidResources
+│   │   │   │   │               └── javaResources0
+│   │   │   │   └── transformDebugClassesWithAsm
+│   │   │   ├── java_res
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── META-INF
+│   │   │   │           │   └── app_debug.kotlin_module
+│   │   │   │           ├── com
+│   │   │   │           │   └── example
+│   │   │   │           │       └── finebyme
+│   │   │   │           │           ├── common
+│   │   │   │           │           │   └── enums
+│   │   │   │           │           ├── data
+│   │   │   │           │           │   ├── datasource
+│   │   │   │           │           │   ├── db
+│   │   │   │           │           │   ├── model
+│   │   │   │           │           │   ├── network
+│   │   │   │           │           │   └── repository
+│   │   │   │           │           ├── databinding
+│   │   │   │           │           ├── di
+│   │   │   │           │           ├── ui
+│   │   │   │           │           │   ├── base
+│   │   │   │           │           │   ├── favoriteList
+│   │   │   │           │           │   ├── main
+│   │   │   │           │           │   ├── photoDetail
+│   │   │   │           │           │   ├── photoList
+│   │   │   │           │           │   └── splash
+│   │   │   │           │           └── utils
+│   │   │   │           ├── dagger
+│   │   │   │           │   └── hilt
+│   │   │   │           │       └── internal
+│   │   │   │           │           ├── aggregatedroot
+│   │   │   │           │           │   └── codegen
+│   │   │   │           │           └── processedrootsentinel
+│   │   │   │           │               └── codegen
+│   │   │   │           └── hilt_aggregated_deps
+│   │   │   ├── javac
+│   │   │   │   └── debug
+│   │   │   │       └── classes
+│   │   │   │           ├── com
+│   │   │   │           │   └── example
+│   │   │   │           │       └── finebyme
+│   │   │   │           │           ├── BuildConfig.class
+│   │   │   │           │           ├── FineByMeApplication_GeneratedInjector.class
+│   │   │   │           │           ├── data
+│   │   │   │           │           │   ├── db
+│   │   │   │           │           │   │   ├── FavoritePhotosDatabase_Impl$1.class
+│   │   │   │           │           │   │   ├── FavoritePhotosDatabase_Impl.class
+│   │   │   │           │           │   │   ├── PhotoDao_Impl$1.class
+│   │   │   │           │           │   │   ├── PhotoDao_Impl$2.class
+│   │   │   │           │           │   │   ├── PhotoDao_Impl$3.class
+│   │   │   │           │           │   │   └── PhotoDao_Impl.class
+│   │   │   │           │           │   └── repository
+│   │   │   │           │           │       └── PhotoRepository_Factory.class
+│   │   │   │           │           ├── databinding
+│   │   │   │           │           │   ├── ActivityMainBinding.class
+│   │   │   │           │           │   ├── ActivityPhotoDetailBinding.class
+│   │   │   │           │           │   ├── ActivitySplashBinding.class
+│   │   │   │           │           │   ├── FragmentBaseBinding.class
+│   │   │   │           │           │   ├── FragmentFavoriteListBinding.class
+│   │   │   │           │           │   ├── FragmentPhotoListBinding.class
+│   │   │   │           │           │   └── ItemPhotoBinding.class
+│   │   │   │           │           ├── di
+│   │   │   │           │           │   ├── AppModule_ProvidePhotoDaoFactory.class
+│   │   │   │           │           │   ├── AppModule_ProvidePhotoRepositoryFactory.class
+│   │   │   │           │           │   ├── AppModule_ProvideRetrofitServiceFactory$InstanceHolder.class
+│   │   │   │           │           │   ├── AppModule_ProvideRetrofitServiceFactory.class
+│   │   │   │           │           │   ├── AppModule_ProvideUnsplashDataSourceFactory.class
+│   │   │   │           │           │   └── AppModule_ProvideUserDataSourceFactory.class
+│   │   │   │           │           └── ui
+│   │   │   │           │               ├── favoriteList
+│   │   │   │           │               │   ├── FavoriteListFragment_GeneratedInjector.class
+│   │   │   │           │               │   ├── FavoriteListViewModel_Factory.class
+│   │   │   │           │               │   ├── FavoriteListViewModel_HiltModules$BindsModule.class
+│   │   │   │           │               │   ├── FavoriteListViewModel_HiltModules$KeyModule.class
+│   │   │   │           │               │   ├── FavoriteListViewModel_HiltModules.class
+│   │   │   │           │               │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.class
+│   │   │   │           │               │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory.class
+│   │   │   │           │               │   └── Hilt_FavoriteListFragment.class
+│   │   │   │           │               ├── main
+│   │   │   │           │               │   ├── Hilt_MainActivity$1.class
+│   │   │   │           │               │   ├── Hilt_MainActivity.class
+│   │   │   │           │               │   └── MainActivity_GeneratedInjector.class
+│   │   │   │           │               ├── photoDetail
+│   │   │   │           │               │   ├── Hilt_PhotoDetailActivity$1.class
+│   │   │   │           │               │   ├── Hilt_PhotoDetailActivity.class
+│   │   │   │           │               │   ├── PhotoDetailActivity_GeneratedInjector.class
+│   │   │   │           │               │   ├── PhotoDetailViewModel_Factory.class
+│   │   │   │           │               │   ├── PhotoDetailViewModel_HiltModules$BindsModule.class
+│   │   │   │           │               │   ├── PhotoDetailViewModel_HiltModules$KeyModule.class
+│   │   │   │           │               │   ├── PhotoDetailViewModel_HiltModules.class
+│   │   │   │           │               │   ├── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.class
+│   │   │   │           │               │   └── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory.class
+│   │   │   │           │               └── photoList
+│   │   │   │           │                   ├── Hilt_PhotoListFragment.class
+│   │   │   │           │                   ├── PhotoListFragment_GeneratedInjector.class
+│   │   │   │           │                   ├── PhotoListViewModel_Factory.class
+│   │   │   │           │                   ├── PhotoListViewModel_HiltModules$BindsModule.class
+│   │   │   │           │                   ├── PhotoListViewModel_HiltModules$KeyModule.class
+│   │   │   │           │                   ├── PhotoListViewModel_HiltModules.class
+│   │   │   │           │                   ├── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.class
+│   │   │   │           │                   └── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory.class
+│   │   │   │           ├── dagger
+│   │   │   │           │   └── hilt
+│   │   │   │           │       └── internal
+│   │   │   │           │           └── aggregatedroot
+│   │   │   │           │               └── codegen
+│   │   │   │           │                   └── _com_example_finebyme_FineByMeApplication.class
+│   │   │   │           └── hilt_aggregated_deps
+│   │   │   │               ├── _com_example_finebyme_FineByMeApplication_GeneratedInjector.class
+│   │   │   │               ├── _com_example_finebyme_di_AppModule.class
+│   │   │   │               ├── _com_example_finebyme_ui_favoriteList_FavoriteListFragment_GeneratedInjector.class
+│   │   │   │               ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_BindsModule.class
+│   │   │   │               ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_KeyModule.class
+│   │   │   │               ├── _com_example_finebyme_ui_main_MainActivity_GeneratedInjector.class
+│   │   │   │               ├── _com_example_finebyme_ui_photoDetail_PhotoDetailActivity_GeneratedInjector.class
+│   │   │   │               ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_BindsModule.class
+│   │   │   │               ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_KeyModule.class
+│   │   │   │               ├── _com_example_finebyme_ui_photoList_PhotoListFragment_GeneratedInjector.class
+│   │   │   │               ├── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_BindsModule.class
+│   │   │   │               └── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_KeyModule.class
+│   │   │   ├── local_only_symbol_list
+│   │   │   │   └── debug
+│   │   │   │       └── R-def.txt
+│   │   │   ├── manifest_merge_blame_file
+│   │   │   │   └── debug
+│   │   │   │       └── manifest-merger-blame-debug-report.txt
+│   │   │   ├── merged_java_res
+│   │   │   │   └── debug
+│   │   │   │       └── base.jar
+│   │   │   ├── merged_jni_libs
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── merged_manifest
+│   │   │   │   └── debug
+│   │   │   │       └── AndroidManifest.xml
+│   │   │   ├── merged_manifests
+│   │   │   │   └── debug
+│   │   │   │       ├── AndroidManifest.xml
+│   │   │   │       └── output-metadata.json
+│   │   │   ├── merged_res
+│   │   │   │   └── debug
+│   │   │   │       ├── drawable_bottom_nav_background.xml.flat
+│   │   │   │       ├── drawable_camera.gif.flat
+│   │   │   │       ├── drawable_favorite_button_background.xml.flat
+│   │   │   │       ├── drawable_ic_file_download.xml.flat
+│   │   │   │       ├── drawable_ic_launcher_background.xml.flat
+│   │   │   │       ├── drawable_ic_launcher_foreground.xml.flat
+│   │   │   │       ├── drawable_ic_nav_favorite_normal.xml.flat
+│   │   │   │       ├── drawable_ic_nav_favorite_selected.xml.flat
+│   │   │   │       ├── drawable_ic_nav_home_normal.xml.flat
+│   │   │   │       ├── drawable_ic_nav_home_selected.xml.flat
+│   │   │   │       ├── drawable_ic_search.xml.flat
+│   │   │   │       ├── drawable_loading.gif.flat
+│   │   │   │       ├── drawable_search_textview_rounded_border.xml.flat
+│   │   │   │       ├── drawable_selector_bottom_nav_favorite.xml.flat
+│   │   │   │       ├── drawable_selector_bottom_nav_home.xml.flat
+│   │   │   │       ├── layout_activity_main.xml.flat
+│   │   │   │       ├── layout_activity_photo_detail.xml.flat
+│   │   │   │       ├── layout_activity_splash.xml.flat
+│   │   │   │       ├── layout_fragment_base.xml.flat
+│   │   │   │       ├── layout_fragment_favorite_list.xml.flat
+│   │   │   │       ├── layout_fragment_photo_list.xml.flat
+│   │   │   │       ├── layout_item_photo.xml.flat
+│   │   │   │       ├── menu_bottom_nav_menu.xml.flat
+│   │   │   │       ├── mipmap-anydpi-v26_ic_launcher.xml.flat
+│   │   │   │       ├── mipmap-anydpi-v26_ic_launcher_round.xml.flat
+│   │   │   │       ├── mipmap-hdpi_ic_launcher.webp.flat
+│   │   │   │       ├── mipmap-hdpi_ic_launcher_round.webp.flat
+│   │   │   │       ├── mipmap-mdpi_ic_launcher.webp.flat
+│   │   │   │       ├── mipmap-mdpi_ic_launcher_round.webp.flat
+│   │   │   │       ├── mipmap-xhdpi_ic_launcher.webp.flat
+│   │   │   │       ├── mipmap-xhdpi_ic_launcher_round.webp.flat
+│   │   │   │       ├── mipmap-xxhdpi_ic_launcher.webp.flat
+│   │   │   │       ├── mipmap-xxhdpi_ic_launcher_round.webp.flat
+│   │   │   │       ├── mipmap-xxxhdpi_ic_launcher.webp.flat
+│   │   │   │       ├── mipmap-xxxhdpi_ic_launcher_round.webp.flat
+│   │   │   │       ├── values-af_values-af.arsc.flat
+│   │   │   │       ├── values-am_values-am.arsc.flat
+│   │   │   │       ├── values-ar_values-ar.arsc.flat
+│   │   │   │       ├── values-as_values-as.arsc.flat
+│   │   │   │       ├── values-az_values-az.arsc.flat
+│   │   │   │       ├── values-b+es+419_values-b+es+419.arsc.flat
+│   │   │   │       ├── values-b+sr+Latn_values-b+sr+Latn.arsc.flat
+│   │   │   │       ├── values-be_values-be.arsc.flat
+│   │   │   │       ├── values-bg_values-bg.arsc.flat
+│   │   │   │       ├── values-bn_values-bn.arsc.flat
+│   │   │   │       ├── values-bs_values-bs.arsc.flat
+│   │   │   │       ├── values-ca_values-ca.arsc.flat
+│   │   │   │       ├── values-cs_values-cs.arsc.flat
+│   │   │   │       ├── values-da_values-da.arsc.flat
+│   │   │   │       ├── values-de_values-de.arsc.flat
+│   │   │   │       ├── values-el_values-el.arsc.flat
+│   │   │   │       ├── values-en-rAU_values-en-rAU.arsc.flat
+│   │   │   │       ├── values-en-rCA_values-en-rCA.arsc.flat
+│   │   │   │       ├── values-en-rGB_values-en-rGB.arsc.flat
+│   │   │   │       ├── values-en-rIN_values-en-rIN.arsc.flat
+│   │   │   │       ├── values-en-rXC_values-en-rXC.arsc.flat
+│   │   │   │       ├── values-es-rUS_values-es-rUS.arsc.flat
+│   │   │   │       ├── values-es_values-es.arsc.flat
+│   │   │   │       ├── values-et_values-et.arsc.flat
+│   │   │   │       ├── values-eu_values-eu.arsc.flat
+│   │   │   │       ├── values-fa_values-fa.arsc.flat
+│   │   │   │       ├── values-fi_values-fi.arsc.flat
+│   │   │   │       ├── values-fr-rCA_values-fr-rCA.arsc.flat
+│   │   │   │       ├── values-fr_values-fr.arsc.flat
+│   │   │   │       ├── values-gl_values-gl.arsc.flat
+│   │   │   │       ├── values-gu_values-gu.arsc.flat
+│   │   │   │       ├── values-h320dp-port-v13_values-h320dp-port-v13.arsc.flat
+│   │   │   │       ├── values-h360dp-land-v13_values-h360dp-land-v13.arsc.flat
+│   │   │   │       ├── values-h480dp-land-v13_values-h480dp-land-v13.arsc.flat
+│   │   │   │       ├── values-h550dp-port-v13_values-h550dp-port-v13.arsc.flat
+│   │   │   │       ├── values-h720dp-v13_values-h720dp-v13.arsc.flat
+│   │   │   │       ├── values-hdpi-v4_values-hdpi-v4.arsc.flat
+│   │   │   │       ├── values-hi_values-hi.arsc.flat
+│   │   │   │       ├── values-hr_values-hr.arsc.flat
+│   │   │   │       ├── values-hu_values-hu.arsc.flat
+│   │   │   │       ├── values-hy_values-hy.arsc.flat
+│   │   │   │       ├── values-in_values-in.arsc.flat
+│   │   │   │       ├── values-is_values-is.arsc.flat
+│   │   │   │       ├── values-it_values-it.arsc.flat
+│   │   │   │       ├── values-iw_values-iw.arsc.flat
+│   │   │   │       ├── values-ja_values-ja.arsc.flat
+│   │   │   │       ├── values-ka_values-ka.arsc.flat
+│   │   │   │       ├── values-kk_values-kk.arsc.flat
+│   │   │   │       ├── values-km_values-km.arsc.flat
+│   │   │   │       ├── values-kn_values-kn.arsc.flat
+│   │   │   │       ├── values-ko_values-ko.arsc.flat
+│   │   │   │       ├── values-ky_values-ky.arsc.flat
+│   │   │   │       ├── values-land_values-land.arsc.flat
+│   │   │   │       ├── values-large-v4_values-large-v4.arsc.flat
+│   │   │   │       ├── values-ldltr-v21_values-ldltr-v21.arsc.flat
+│   │   │   │       ├── values-ldrtl-v17_values-ldrtl-v17.arsc.flat
+│   │   │   │       ├── values-lo_values-lo.arsc.flat
+│   │   │   │       ├── values-lt_values-lt.arsc.flat
+│   │   │   │       ├── values-lv_values-lv.arsc.flat
+│   │   │   │       ├── values-mk_values-mk.arsc.flat
+│   │   │   │       ├── values-ml_values-ml.arsc.flat
+│   │   │   │       ├── values-mn_values-mn.arsc.flat
+│   │   │   │       ├── values-mr_values-mr.arsc.flat
+│   │   │   │       ├── values-ms_values-ms.arsc.flat
+│   │   │   │       ├── values-my_values-my.arsc.flat
+│   │   │   │       ├── values-nb_values-nb.arsc.flat
+│   │   │   │       ├── values-ne_values-ne.arsc.flat
+│   │   │   │       ├── values-night-v8_values-night-v8.arsc.flat
+│   │   │   │       ├── values-nl_values-nl.arsc.flat
+│   │   │   │       ├── values-or_values-or.arsc.flat
+│   │   │   │       ├── values-pa_values-pa.arsc.flat
+│   │   │   │       ├── values-pl_values-pl.arsc.flat
+│   │   │   │       ├── values-port_values-port.arsc.flat
+│   │   │   │       ├── values-pt-rBR_values-pt-rBR.arsc.flat
+│   │   │   │       ├── values-pt-rPT_values-pt-rPT.arsc.flat
+│   │   │   │       ├── values-pt_values-pt.arsc.flat
+│   │   │   │       ├── values-ro_values-ro.arsc.flat
+│   │   │   │       ├── values-ru_values-ru.arsc.flat
+│   │   │   │       ├── values-si_values-si.arsc.flat
+│   │   │   │       ├── values-sk_values-sk.arsc.flat
+│   │   │   │       ├── values-sl_values-sl.arsc.flat
+│   │   │   │       ├── values-small-v4_values-small-v4.arsc.flat
+│   │   │   │       ├── values-sq_values-sq.arsc.flat
+│   │   │   │       ├── values-sr_values-sr.arsc.flat
+│   │   │   │       ├── values-sv_values-sv.arsc.flat
+│   │   │   │       ├── values-sw600dp-v13_values-sw600dp-v13.arsc.flat
+│   │   │   │       ├── values-sw_values-sw.arsc.flat
+│   │   │   │       ├── values-ta_values-ta.arsc.flat
+│   │   │   │       ├── values-te_values-te.arsc.flat
+│   │   │   │       ├── values-th_values-th.arsc.flat
+│   │   │   │       ├── values-tl_values-tl.arsc.flat
+│   │   │   │       ├── values-tr_values-tr.arsc.flat
+│   │   │   │       ├── values-uk_values-uk.arsc.flat
+│   │   │   │       ├── values-ur_values-ur.arsc.flat
+│   │   │   │       ├── values-uz_values-uz.arsc.flat
+│   │   │   │       ├── values-v16_values-v16.arsc.flat
+│   │   │   │       ├── values-v17_values-v17.arsc.flat
+│   │   │   │       ├── values-v18_values-v18.arsc.flat
+│   │   │   │       ├── values-v21_values-v21.arsc.flat
+│   │   │   │       ├── values-v22_values-v22.arsc.flat
+│   │   │   │       ├── values-v23_values-v23.arsc.flat
+│   │   │   │       ├── values-v24_values-v24.arsc.flat
+│   │   │   │       ├── values-v25_values-v25.arsc.flat
+│   │   │   │       ├── values-v26_values-v26.arsc.flat
+│   │   │   │       ├── values-v28_values-v28.arsc.flat
+│   │   │   │       ├── values-v31_values-v31.arsc.flat
+│   │   │   │       ├── values-v34_values-v34.arsc.flat
+│   │   │   │       ├── values-vi_values-vi.arsc.flat
+│   │   │   │       ├── values-w320dp-land-v13_values-w320dp-land-v13.arsc.flat
+│   │   │   │       ├── values-w360dp-port-v13_values-w360dp-port-v13.arsc.flat
+│   │   │   │       ├── values-w400dp-port-v13_values-w400dp-port-v13.arsc.flat
+│   │   │   │       ├── values-w600dp-land-v13_values-w600dp-land-v13.arsc.flat
+│   │   │   │       ├── values-watch-v20_values-watch-v20.arsc.flat
+│   │   │   │       ├── values-watch-v21_values-watch-v21.arsc.flat
+│   │   │   │       ├── values-xlarge-v4_values-xlarge-v4.arsc.flat
+│   │   │   │       ├── values-zh-rCN_values-zh-rCN.arsc.flat
+│   │   │   │       ├── values-zh-rHK_values-zh-rHK.arsc.flat
+│   │   │   │       ├── values-zh-rTW_values-zh-rTW.arsc.flat
+│   │   │   │       ├── values-zu_values-zu.arsc.flat
+│   │   │   │       ├── values_values.arsc.flat
+│   │   │   │       ├── xml_backup_rules.xml.flat
+│   │   │   │       └── xml_data_extraction_rules.xml.flat
+│   │   │   ├── merged_res_blame_folder
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── multi-v2
+│   │   │   │           │   ├── debug.json
+│   │   │   │           │   ├── values-af.json
+│   │   │   │           │   ├── values-am.json
+│   │   │   │           │   ├── values-ar.json
+│   │   │   │           │   ├── values-as.json
+│   │   │   │           │   ├── values-az.json
+│   │   │   │           │   ├── values-b+es+419.json
+│   │   │   │           │   ├── values-b+sr+Latn.json
+│   │   │   │           │   ├── values-be.json
+│   │   │   │           │   ├── values-bg.json
+│   │   │   │           │   ├── values-bn.json
+│   │   │   │           │   ├── values-bs.json
+│   │   │   │           │   ├── values-ca.json
+│   │   │   │           │   ├── values-cs.json
+│   │   │   │           │   ├── values-da.json
+│   │   │   │           │   ├── values-de.json
+│   │   │   │           │   ├── values-el.json
+│   │   │   │           │   ├── values-en-rAU.json
+│   │   │   │           │   ├── values-en-rCA.json
+│   │   │   │           │   ├── values-en-rGB.json
+│   │   │   │           │   ├── values-en-rIN.json
+│   │   │   │           │   ├── values-en-rXC.json
+│   │   │   │           │   ├── values-es-rUS.json
+│   │   │   │           │   ├── values-es.json
+│   │   │   │           │   ├── values-et.json
+│   │   │   │           │   ├── values-eu.json
+│   │   │   │           │   ├── values-fa.json
+│   │   │   │           │   ├── values-fi.json
+│   │   │   │           │   ├── values-fr-rCA.json
+│   │   │   │           │   ├── values-fr.json
+│   │   │   │           │   ├── values-gl.json
+│   │   │   │           │   ├── values-gu.json
+│   │   │   │           │   ├── values-h320dp-port-v13.json
+│   │   │   │           │   ├── values-h360dp-land-v13.json
+│   │   │   │           │   ├── values-h480dp-land-v13.json
+│   │   │   │           │   ├── values-h550dp-port-v13.json
+│   │   │   │           │   ├── values-h720dp-v13.json
+│   │   │   │           │   ├── values-hdpi-v4.json
+│   │   │   │           │   ├── values-hi.json
+│   │   │   │           │   ├── values-hr.json
+│   │   │   │           │   ├── values-hu.json
+│   │   │   │           │   ├── values-hy.json
+│   │   │   │           │   ├── values-in.json
+│   │   │   │           │   ├── values-is.json
+│   │   │   │           │   ├── values-it.json
+│   │   │   │           │   ├── values-iw.json
+│   │   │   │           │   ├── values-ja.json
+│   │   │   │           │   ├── values-ka.json
+│   │   │   │           │   ├── values-kk.json
+│   │   │   │           │   ├── values-km.json
+│   │   │   │           │   ├── values-kn.json
+│   │   │   │           │   ├── values-ko.json
+│   │   │   │           │   ├── values-ky.json
+│   │   │   │           │   ├── values-land.json
+│   │   │   │           │   ├── values-large-v4.json
+│   │   │   │           │   ├── values-ldltr-v21.json
+│   │   │   │           │   ├── values-ldrtl-v17.json
+│   │   │   │           │   ├── values-lo.json
+│   │   │   │           │   ├── values-lt.json
+│   │   │   │           │   ├── values-lv.json
+│   │   │   │           │   ├── values-mk.json
+│   │   │   │           │   ├── values-ml.json
+│   │   │   │           │   ├── values-mn.json
+│   │   │   │           │   ├── values-mr.json
+│   │   │   │           │   ├── values-ms.json
+│   │   │   │           │   ├── values-my.json
+│   │   │   │           │   ├── values-nb.json
+│   │   │   │           │   ├── values-ne.json
+│   │   │   │           │   ├── values-night-v8.json
+│   │   │   │           │   ├── values-nl.json
+│   │   │   │           │   ├── values-or.json
+│   │   │   │           │   ├── values-pa.json
+│   │   │   │           │   ├── values-pl.json
+│   │   │   │           │   ├── values-port.json
+│   │   │   │           │   ├── values-pt-rBR.json
+│   │   │   │           │   ├── values-pt-rPT.json
+│   │   │   │           │   ├── values-pt.json
+│   │   │   │           │   ├── values-ro.json
+│   │   │   │           │   ├── values-ru.json
+│   │   │   │           │   ├── values-si.json
+│   │   │   │           │   ├── values-sk.json
+│   │   │   │           │   ├── values-sl.json
+│   │   │   │           │   ├── values-small-v4.json
+│   │   │   │           │   ├── values-sq.json
+│   │   │   │           │   ├── values-sr.json
+│   │   │   │           │   ├── values-sv.json
+│   │   │   │           │   ├── values-sw.json
+│   │   │   │           │   ├── values-sw600dp-v13.json
+│   │   │   │           │   ├── values-ta.json
+│   │   │   │           │   ├── values-te.json
+│   │   │   │           │   ├── values-th.json
+│   │   │   │           │   ├── values-tl.json
+│   │   │   │           │   ├── values-tr.json
+│   │   │   │           │   ├── values-uk.json
+│   │   │   │           │   ├── values-ur.json
+│   │   │   │           │   ├── values-uz.json
+│   │   │   │           │   ├── values-v16.json
+│   │   │   │           │   ├── values-v17.json
+│   │   │   │           │   ├── values-v18.json
+│   │   │   │           │   ├── values-v21.json
+│   │   │   │           │   ├── values-v22.json
+│   │   │   │           │   ├── values-v23.json
+│   │   │   │           │   ├── values-v24.json
+│   │   │   │           │   ├── values-v25.json
+│   │   │   │           │   ├── values-v26.json
+│   │   │   │           │   ├── values-v28.json
+│   │   │   │           │   ├── values-v31.json
+│   │   │   │           │   ├── values-v34.json
+│   │   │   │           │   ├── values-vi.json
+│   │   │   │           │   ├── values-w320dp-land-v13.json
+│   │   │   │           │   ├── values-w360dp-port-v13.json
+│   │   │   │           │   ├── values-w400dp-port-v13.json
+│   │   │   │           │   ├── values-w600dp-land-v13.json
+│   │   │   │           │   ├── values-watch-v20.json
+│   │   │   │           │   ├── values-watch-v21.json
+│   │   │   │           │   ├── values-xlarge-v4.json
+│   │   │   │           │   ├── values-zh-rCN.json
+│   │   │   │           │   ├── values-zh-rHK.json
+│   │   │   │           │   ├── values-zh-rTW.json
+│   │   │   │           │   ├── values-zu.json
+│   │   │   │           │   └── values.json
+│   │   │   │           └── single
+│   │   │   │               ├── debug.json
+│   │   │   │               └── layout.json
+│   │   │   ├── merged_shaders
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── mixed_scope_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── navigation_json
+│   │   │   │   └── debug
+│   │   │   │       └── navigation.json
+│   │   │   ├── packaged_manifests
+│   │   │   │   └── debug
+│   │   │   │       ├── AndroidManifest.xml
+│   │   │   │       └── output-metadata.json
+│   │   │   ├── packaged_res
+│   │   │   │   └── debug
+│   │   │   │       ├── drawable
+│   │   │   │       │   ├── bottom_nav_background.xml
+│   │   │   │       │   ├── camera.gif
+│   │   │   │       │   ├── favorite_button_background.xml
+│   │   │   │       │   ├── ic_file_download.xml
+│   │   │   │       │   ├── ic_launcher_background.xml
+│   │   │   │       │   ├── ic_launcher_foreground.xml
+│   │   │   │       │   ├── ic_nav_favorite_normal.xml
+│   │   │   │       │   ├── ic_nav_favorite_selected.xml
+│   │   │   │       │   ├── ic_nav_home_normal.xml
+│   │   │   │       │   ├── ic_nav_home_selected.xml
+│   │   │   │       │   ├── ic_search.xml
+│   │   │   │       │   ├── loading.gif
+│   │   │   │       │   ├── search_textview_rounded_border.xml
+│   │   │   │       │   ├── selector_bottom_nav_favorite.xml
+│   │   │   │       │   └── selector_bottom_nav_home.xml
+│   │   │   │       ├── layout
+│   │   │   │       │   ├── activity_main.xml
+│   │   │   │       │   ├── activity_photo_detail.xml
+│   │   │   │       │   ├── activity_splash.xml
+│   │   │   │       │   ├── fragment_base.xml
+│   │   │   │       │   ├── fragment_favorite_list.xml
+│   │   │   │       │   ├── fragment_photo_list.xml
+│   │   │   │       │   └── item_photo.xml
+│   │   │   │       ├── menu
+│   │   │   │       │   └── bottom_nav_menu.xml
+│   │   │   │       ├── mipmap-anydpi-v26
+│   │   │   │       │   ├── ic_launcher.xml
+│   │   │   │       │   └── ic_launcher_round.xml
+│   │   │   │       ├── mipmap-hdpi-v4
+│   │   │   │       │   ├── ic_launcher.webp
+│   │   │   │       │   └── ic_launcher_round.webp
+│   │   │   │       ├── mipmap-mdpi-v4
+│   │   │   │       │   ├── ic_launcher.webp
+│   │   │   │       │   └── ic_launcher_round.webp
+│   │   │   │       ├── mipmap-xhdpi-v4
+│   │   │   │       │   ├── ic_launcher.webp
+│   │   │   │       │   └── ic_launcher_round.webp
+│   │   │   │       ├── mipmap-xxhdpi-v4
+│   │   │   │       │   ├── ic_launcher.webp
+│   │   │   │       │   └── ic_launcher_round.webp
+│   │   │   │       ├── mipmap-xxxhdpi-v4
+│   │   │   │       │   ├── ic_launcher.webp
+│   │   │   │       │   └── ic_launcher_round.webp
+│   │   │   │       ├── values
+│   │   │   │       │   └── values.xml
+│   │   │   │       ├── values-night-v8
+│   │   │   │       │   └── values-night-v8.xml
+│   │   │   │       └── xml
+│   │   │   │           ├── backup_rules.xml
+│   │   │   │           └── data_extraction_rules.xml
+│   │   │   ├── processed_res
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── output-metadata.json
+│   │   │   │           └── resources-debug.ap_
+│   │   │   ├── project_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   │           ├── 1260f9464faad3c23f9d85cfccf557f6f6bfec25c8c16d445eafdda0158dfbe8_0.jar
+│   │   │   │           ├── 1260f9464faad3c23f9d85cfccf557f6f6bfec25c8c16d445eafdda0158dfbe8_1.jar
+│   │   │   │           ├── 1260f9464faad3c23f9d85cfccf557f6f6bfec25c8c16d445eafdda0158dfbe8_2.jar
+│   │   │   │           ├── 1260f9464faad3c23f9d85cfccf557f6f6bfec25c8c16d445eafdda0158dfbe8_3.jar
+│   │   │   │           ├── com
+│   │   │   │           │   └── example
+│   │   │   │           │       └── finebyme
+│   │   │   │           │           ├── BuildConfig.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCImpl$LazyClassKeyProvider.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCImpl$SwitchingProvider.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ActivityRetainedCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$Builder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$FragmentCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$FragmentCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ServiceCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ServiceCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$SingletonCImpl$SwitchingProvider.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$SingletonCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl$LazyClassKeyProvider.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl$SwitchingProvider.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewModelCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewWithFragmentCBuilder.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC$ViewWithFragmentCImpl.dex
+│   │   │   │           │           ├── DaggerFineByMeApplication_HiltComponents_SingletonC.dex
+│   │   │   │           │           ├── FineByMeApplication.dex
+│   │   │   │           │           ├── FineByMeApplication_ComponentTreeDeps.dex
+│   │   │   │           │           ├── FineByMeApplication_GeneratedInjector.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityRetainedC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityRetainedC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ActivityRetainedCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$FragmentC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$FragmentC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$FragmentCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ServiceC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ServiceC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ServiceCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$SingletonC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewModelC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewModelC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewModelCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentC$Builder.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentC.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents$ViewWithFragmentCBuilderModule.dex
+│   │   │   │           │           ├── FineByMeApplication_HiltComponents.dex
+│   │   │   │           │           ├── Hilt_FineByMeApplication$1.dex
+│   │   │   │           │           ├── Hilt_FineByMeApplication.dex
+│   │   │   │           │           ├── common
+│   │   │   │           │           │   └── enums
+│   │   │   │           │           │       └── State.dex
+│   │   │   │           │           ├── data
+│   │   │   │           │           │   ├── datasource
+│   │   │   │           │           │   │   ├── UnSplashDataSource$getRandomPhotoList$1.dex
+│   │   │   │           │           │   │   ├── UnSplashDataSource$getRandomPhotoList$2.dex
+│   │   │   │           │           │   │   ├── UnSplashDataSource$getSearchPhotoList$1.dex
+│   │   │   │           │           │   │   ├── UnSplashDataSource$getSearchPhotoList$2.dex
+│   │   │   │           │           │   │   ├── UnSplashDataSource.dex
+│   │   │   │           │           │   │   └── UserDataSource.dex
+│   │   │   │           │           │   ├── db
+│   │   │   │           │           │   │   ├── FavoritePhotosDatabase$Companion.dex
+│   │   │   │           │           │   │   ├── FavoritePhotosDatabase.dex
+│   │   │   │           │           │   │   ├── FavoritePhotosDatabase_Impl$1.dex
+│   │   │   │           │           │   │   ├── FavoritePhotosDatabase_Impl.dex
+│   │   │   │           │           │   │   ├── Photo$Creator.dex
+│   │   │   │           │           │   │   ├── Photo.dex
+│   │   │   │           │           │   │   ├── PhotoDao.dex
+│   │   │   │           │           │   │   ├── PhotoDao_Impl$1.dex
+│   │   │   │           │           │   │   ├── PhotoDao_Impl$2.dex
+│   │   │   │           │           │   │   ├── PhotoDao_Impl$3.dex
+│   │   │   │           │           │   │   └── PhotoDao_Impl.dex
+│   │   │   │           │           │   ├── model
+│   │   │   │           │           │   │   ├── AlternativeSlugs.dex
+│   │   │   │           │           │   │   ├── SearchPhotoResponse.dex
+│   │   │   │           │           │   │   ├── UnsplashPhoto.dex
+│   │   │   │           │           │   │   ├── UnsplashPhotoKt.dex
+│   │   │   │           │           │   │   └── Urls.dex
+│   │   │   │           │           │   ├── network
+│   │   │   │           │           │   │   ├── RetrofitInstance$okHttpClient$2.dex
+│   │   │   │           │           │   │   ├── RetrofitInstance$retrofit$2.dex
+│   │   │   │           │           │   │   ├── RetrofitInstance$retrofitService$2.dex
+│   │   │   │           │           │   │   ├── RetrofitInstance.dex
+│   │   │   │           │           │   │   └── RetrofitService.dex
+│   │   │   │           │           │   └── repository
+│   │   │   │           │           │       ├── PhotoRepository.dex
+│   │   │   │           │           │       └── PhotoRepository_Factory.dex
+│   │   │   │           │           ├── databinding
+│   │   │   │           │           │   ├── ActivityMainBinding.dex
+│   │   │   │           │           │   ├── ActivityPhotoDetailBinding.dex
+│   │   │   │           │           │   ├── ActivitySplashBinding.dex
+│   │   │   │           │           │   ├── FragmentBaseBinding.dex
+│   │   │   │           │           │   ├── FragmentFavoriteListBinding.dex
+│   │   │   │           │           │   ├── FragmentPhotoListBinding.dex
+│   │   │   │           │           │   └── ItemPhotoBinding.dex
+│   │   │   │           │           ├── di
+│   │   │   │           │           │   ├── AppModule.dex
+│   │   │   │           │           │   ├── AppModule_ProvidePhotoDaoFactory.dex
+│   │   │   │           │           │   ├── AppModule_ProvidePhotoRepositoryFactory.dex
+│   │   │   │           │           │   ├── AppModule_ProvideRetrofitServiceFactory$InstanceHolder.dex
+│   │   │   │           │           │   ├── AppModule_ProvideRetrofitServiceFactory.dex
+│   │   │   │           │           │   ├── AppModule_ProvideUnsplashDataSourceFactory.dex
+│   │   │   │           │           │   └── AppModule_ProvideUserDataSourceFactory.dex
+│   │   │   │           │           ├── ui
+│   │   │   │           │           │   ├── base
+│   │   │   │           │           │   │   ├── BaseFragment.dex
+│   │   │   │           │           │   │   └── BaseViewModel.dex
+│   │   │   │           │           │   ├── favoriteList
+│   │   │   │           │           │   │   ├── FavoriteListFragment$onViewCreated$1.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$onViewCreated$2.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$sam$androidx_lifecycle_Observer$0.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$1.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$2.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$3.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$4.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$5.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment.dex
+│   │   │   │           │           │   │   ├── FavoriteListFragment_GeneratedInjector.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel$_photos$2.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel_Factory.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel_HiltModules$BindsModule.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel_HiltModules$KeyModule.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel_HiltModules.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.dex
+│   │   │   │           │           │   │   ├── FavoriteListViewModel_HiltModules_KeyModule_ProvideFactory.dex
+│   │   │   │           │           │   │   └── Hilt_FavoriteListFragment.dex
+│   │   │   │           │           │   ├── main
+│   │   │   │           │           │   │   ├── Hilt_MainActivity$1.dex
+│   │   │   │           │           │   │   ├── Hilt_MainActivity.dex
+│   │   │   │           │           │   │   ├── MainActivity$binding$2.dex
+│   │   │   │           │           │   │   ├── MainActivity$handleOnBackPressed$1$handleOnBackPressed$1.dex
+│   │   │   │           │           │   │   ├── MainActivity$handleOnBackPressed$1.dex
+│   │   │   │           │           │   │   ├── MainActivity.dex
+│   │   │   │           │           │   │   └── MainActivity_GeneratedInjector.dex
+│   │   │   │           │           │   ├── photoDetail
+│   │   │   │           │           │   │   ├── Hilt_PhotoDetailActivity$1.dex
+│   │   │   │           │           │   │   ├── Hilt_PhotoDetailActivity.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$Companion.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$handleOnBackPressed$1.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$sam$androidx_lifecycle_Observer$0.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$setupObservers$1.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$setupObservers$2.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$setupObservers$3.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$setupObservers$4.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$setupObservers$5.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$1.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$2.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$3.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity.dex
+│   │   │   │           │           │   │   ├── PhotoDetailActivity_GeneratedInjector.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel$_loadingState$2.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel$downloadImage$1.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel_Factory.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel_HiltModules$BindsModule.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel_HiltModules$KeyModule.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel_HiltModules.dex
+│   │   │   │           │           │   │   ├── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.dex
+│   │   │   │           │           │   │   └── PhotoDetailViewModel_HiltModules_KeyModule_ProvideFactory.dex
+│   │   │   │           │           │   ├── photoList
+│   │   │   │           │           │   │   ├── Hilt_PhotoListFragment.dex
+│   │   │   │           │           │   │   ├── PhotoAdapter$OnPhotoClickListener.dex
+│   │   │   │           │           │   │   ├── PhotoAdapter$PhotoViewHolder.dex
+│   │   │   │           │           │   │   ├── PhotoAdapter.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$sam$androidx_lifecycle_Observer$0.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$setupListeners$1.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$setupListeners$2$2.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$setupObservers$1.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$setupObservers$2.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$1.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$2.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$3.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$4.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$5.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment.dex
+│   │   │   │           │           │   │   ├── PhotoListFragment_GeneratedInjector.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel$_loadingState$2.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel$_photos$2.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel$fetchPhotos$1.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel$searchPhotos$1.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel_Factory.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel_HiltModules$BindsModule.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel_HiltModules$KeyModule.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel_HiltModules.dex
+│   │   │   │           │           │   │   ├── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory$InstanceHolder.dex
+│   │   │   │           │           │   │   └── PhotoListViewModel_HiltModules_KeyModule_ProvideFactory.dex
+│   │   │   │           │           │   └── splash
+│   │   │   │           │           │       ├── SplashActivity$binding$2.dex
+│   │   │   │           │           │       └── SplashActivity.dex
+│   │   │   │           │           └── utils
+│   │   │   │           │               ├── ImageLoader$loadImage$1.dex
+│   │   │   │           │               ├── ImageLoader.dex
+│   │   │   │           │               ├── IntentUtils.dex
+│   │   │   │           │               ├── LoadingHandler$WhenMappings.dex
+│   │   │   │           │               ├── LoadingHandler.dex
+│   │   │   │           │               ├── NetworkUtils$enqueueCall$1.dex
+│   │   │   │           │               ├── NetworkUtils.dex
+│   │   │   │           │               └── PhotoDiffCallback.dex
+│   │   │   │           ├── dagger
+│   │   │   │           │   └── hilt
+│   │   │   │           │       └── internal
+│   │   │   │           │           ├── aggregatedroot
+│   │   │   │           │           │   └── codegen
+│   │   │   │           │           │       └── _com_example_finebyme_FineByMeApplication.dex
+│   │   │   │           │           └── processedrootsentinel
+│   │   │   │           │               └── codegen
+│   │   │   │           │                   └── _com_example_finebyme_FineByMeApplication.dex
+│   │   │   │           └── hilt_aggregated_deps
+│   │   │   │               ├── _com_example_finebyme_FineByMeApplication_GeneratedInjector.dex
+│   │   │   │               ├── _com_example_finebyme_di_AppModule.dex
+│   │   │   │               ├── _com_example_finebyme_ui_favoriteList_FavoriteListFragment_GeneratedInjector.dex
+│   │   │   │               ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_BindsModule.dex
+│   │   │   │               ├── _com_example_finebyme_ui_favoriteList_FavoriteListViewModel_HiltModules_KeyModule.dex
+│   │   │   │               ├── _com_example_finebyme_ui_main_MainActivity_GeneratedInjector.dex
+│   │   │   │               ├── _com_example_finebyme_ui_photoDetail_PhotoDetailActivity_GeneratedInjector.dex
+│   │   │   │               ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_BindsModule.dex
+│   │   │   │               ├── _com_example_finebyme_ui_photoDetail_PhotoDetailViewModel_HiltModules_KeyModule.dex
+│   │   │   │               ├── _com_example_finebyme_ui_photoList_PhotoListFragment_GeneratedInjector.dex
+│   │   │   │               ├── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_BindsModule.dex
+│   │   │   │               └── _com_example_finebyme_ui_photoList_PhotoListViewModel_HiltModules_KeyModule.dex
+│   │   │   ├── runtime_symbol_list
+│   │   │   │   └── debug
+│   │   │   │       └── R.txt
+│   │   │   ├── signing_config_versions
+│   │   │   │   └── debug
+│   │   │   │       └── signing-config-versions.json
+│   │   │   ├── source_set_path_map
+│   │   │   │   └── debug
+│   │   │   │       └── file-map.txt
+│   │   │   ├── stable_resource_ids_file
+│   │   │   │   └── debug
+│   │   │   │       └── stableIds.txt
+│   │   │   ├── sub_project_dex_archive
+│   │   │   │   └── debug
+│   │   │   │       └── out
+│   │   │   ├── symbol_list_with_package_name
+│   │   │   │   └── debug
+│   │   │   │       └── package-aware-r.txt
+│   │   │   ├── validate_signing_config
+│   │   │   │   └── debug
+│   │   │   └── variant_model
+│   │   │       └── debug
+│   │   │           └── variant_model.json
+│   │   ├── kotlin
+│   │   │   ├── compileDebugKotlin
+│   │   │   │   ├── cacheable
+│   │   │   │   │   ├── caches-jvm
+│   │   │   │   │   │   ├── inputs
+│   │   │   │   │   │   │   ├── source-to-output.tab
+│   │   │   │   │   │   │   ├── source-to-output.tab.keystream
+│   │   │   │   │   │   │   ├── source-to-output.tab.keystream.len
+│   │   │   │   │   │   │   ├── source-to-output.tab.len
+│   │   │   │   │   │   │   ├── source-to-output.tab.values.at
+│   │   │   │   │   │   │   ├── source-to-output.tab_i
+│   │   │   │   │   │   │   └── source-to-output.tab_i.len
+│   │   │   │   │   │   ├── jvm
+│   │   │   │   │   │   │   └── kotlin
+│   │   │   │   │   │   │       ├── class-attributes.tab
+│   │   │   │   │   │   │       ├── class-attributes.tab.keystream
+│   │   │   │   │   │   │       ├── class-attributes.tab.keystream.len
+│   │   │   │   │   │   │       ├── class-attributes.tab.len
+│   │   │   │   │   │   │       ├── class-attributes.tab.values.at
+│   │   │   │   │   │   │       ├── class-attributes.tab_i
+│   │   │   │   │   │   │       ├── class-attributes.tab_i.len
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab.keystream
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab.keystream.len
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab.len
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab.values.at
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab_i
+│   │   │   │   │   │   │       ├── class-fq-name-to-source.tab_i.len
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab.keystream
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab.keystream.len
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab.len
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab.values.at
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab_i
+│   │   │   │   │   │   │       ├── internal-name-to-source.tab_i.len
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab.keystream
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab.keystream.len
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab.len
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab.values.at
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab_i
+│   │   │   │   │   │   │       ├── java-sources-proto-map.tab_i.len
+│   │   │   │   │   │   │       ├── package-parts.tab
+│   │   │   │   │   │   │       ├── package-parts.tab.keystream
+│   │   │   │   │   │   │       ├── package-parts.tab.keystream.len
+│   │   │   │   │   │   │       ├── package-parts.tab.len
+│   │   │   │   │   │   │       ├── package-parts.tab.values.at
+│   │   │   │   │   │   │       ├── package-parts.tab_i
+│   │   │   │   │   │   │       ├── package-parts.tab_i.len
+│   │   │   │   │   │   │       ├── proto.tab
+│   │   │   │   │   │   │       ├── proto.tab.keystream
+│   │   │   │   │   │   │       ├── proto.tab.keystream.len
+│   │   │   │   │   │   │       ├── proto.tab.len
+│   │   │   │   │   │   │       ├── proto.tab.values.at
+│   │   │   │   │   │   │       ├── proto.tab_i
+│   │   │   │   │   │   │       ├── proto.tab_i.len
+│   │   │   │   │   │   │       ├── source-to-classes.tab
+│   │   │   │   │   │   │       ├── source-to-classes.tab.keystream
+│   │   │   │   │   │   │       ├── source-to-classes.tab.keystream.len
+│   │   │   │   │   │   │       ├── source-to-classes.tab.len
+│   │   │   │   │   │   │       ├── source-to-classes.tab.values.at
+│   │   │   │   │   │   │       ├── source-to-classes.tab_i
+│   │   │   │   │   │   │       ├── source-to-classes.tab_i.len
+│   │   │   │   │   │   │       ├── subtypes.tab
+│   │   │   │   │   │   │       ├── subtypes.tab.keystream
+│   │   │   │   │   │   │       ├── subtypes.tab.keystream.len
+│   │   │   │   │   │   │       ├── subtypes.tab.len
+│   │   │   │   │   │   │       ├── subtypes.tab.values.at
+│   │   │   │   │   │   │       ├── subtypes.tab_i
+│   │   │   │   │   │   │       ├── subtypes.tab_i.len
+│   │   │   │   │   │   │       ├── supertypes.tab
+│   │   │   │   │   │   │       ├── supertypes.tab.keystream
+│   │   │   │   │   │   │       ├── supertypes.tab.keystream.len
+│   │   │   │   │   │   │       ├── supertypes.tab.len
+│   │   │   │   │   │   │       ├── supertypes.tab.values.at
+│   │   │   │   │   │   │       ├── supertypes.tab_i
+│   │   │   │   │   │   │       └── supertypes.tab_i.len
+│   │   │   │   │   │   └── lookups
+│   │   │   │   │   │       ├── counters.tab
+│   │   │   │   │   │       ├── file-to-id.tab
+│   │   │   │   │   │       ├── file-to-id.tab.keystream
+│   │   │   │   │   │       ├── file-to-id.tab.keystream.len
+│   │   │   │   │   │       ├── file-to-id.tab.len
+│   │   │   │   │   │       ├── file-to-id.tab.values.at
+│   │   │   │   │   │       ├── file-to-id.tab_i
+│   │   │   │   │   │       ├── file-to-id.tab_i.len
+│   │   │   │   │   │       ├── id-to-file.tab
+│   │   │   │   │   │       ├── id-to-file.tab.keystream
+│   │   │   │   │   │       ├── id-to-file.tab.keystream.len
+│   │   │   │   │   │       ├── id-to-file.tab.len
+│   │   │   │   │   │       ├── id-to-file.tab.values.at
+│   │   │   │   │   │       ├── id-to-file.tab_i
+│   │   │   │   │   │       ├── id-to-file.tab_i.len
+│   │   │   │   │   │       ├── lookups.tab
+│   │   │   │   │   │       ├── lookups.tab.keystream
+│   │   │   │   │   │       ├── lookups.tab.keystream.len
+│   │   │   │   │   │       ├── lookups.tab.len
+│   │   │   │   │   │       ├── lookups.tab.values.at
+│   │   │   │   │   │       ├── lookups.tab_i
+│   │   │   │   │   │       └── lookups.tab_i.len
+│   │   │   │   │   └── last-build.bin
+│   │   │   │   └── local-state
+│   │   │   │       └── build-history.bin
+│   │   │   └── kaptGenerateStubsDebugKotlin
+│   │   │       ├── cacheable
+│   │   │       │   ├── caches-jvm
+│   │   │       │   │   ├── inputs
+│   │   │       │   │   │   ├── source-to-output.tab
+│   │   │       │   │   │   ├── source-to-output.tab.keystream
+│   │   │       │   │   │   ├── source-to-output.tab.keystream.len
+│   │   │       │   │   │   ├── source-to-output.tab.len
+│   │   │       │   │   │   ├── source-to-output.tab.values.at
+│   │   │       │   │   │   ├── source-to-output.tab_i
+│   │   │       │   │   │   └── source-to-output.tab_i.len
+│   │   │       │   │   ├── jvm
+│   │   │       │   │   │   └── kotlin
+│   │   │       │   │   │       ├── class-attributes.tab
+│   │   │       │   │   │       ├── class-attributes.tab.keystream
+│   │   │       │   │   │       ├── class-attributes.tab.keystream.len
+│   │   │       │   │   │       ├── class-attributes.tab.len
+│   │   │       │   │   │       ├── class-attributes.tab.values.at
+│   │   │       │   │   │       ├── class-attributes.tab_i
+│   │   │       │   │   │       ├── class-attributes.tab_i.len
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.keystream
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.keystream.len
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.len
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab.values.at
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab_i
+│   │   │       │   │   │       ├── class-fq-name-to-source.tab_i.len
+│   │   │       │   │   │       ├── internal-name-to-source.tab
+│   │   │       │   │   │       ├── internal-name-to-source.tab.keystream
+│   │   │       │   │   │       ├── internal-name-to-source.tab.keystream.len
+│   │   │       │   │   │       ├── internal-name-to-source.tab.len
+│   │   │       │   │   │       ├── internal-name-to-source.tab.values.at
+│   │   │       │   │   │       ├── internal-name-to-source.tab_i
+│   │   │       │   │   │       ├── internal-name-to-source.tab_i.len
+│   │   │       │   │   │       ├── java-sources-proto-map.tab
+│   │   │       │   │   │       ├── java-sources-proto-map.tab.keystream
+│   │   │       │   │   │       ├── java-sources-proto-map.tab.keystream.len
+│   │   │       │   │   │       ├── java-sources-proto-map.tab.len
+│   │   │       │   │   │       ├── java-sources-proto-map.tab.values.at
+│   │   │       │   │   │       ├── java-sources-proto-map.tab_i
+│   │   │       │   │   │       ├── java-sources-proto-map.tab_i.len
+│   │   │       │   │   │       ├── package-parts.tab
+│   │   │       │   │   │       ├── package-parts.tab.keystream
+│   │   │       │   │   │       ├── package-parts.tab.keystream.len
+│   │   │       │   │   │       ├── package-parts.tab.len
+│   │   │       │   │   │       ├── package-parts.tab.values.at
+│   │   │       │   │   │       ├── package-parts.tab_i
+│   │   │       │   │   │       ├── package-parts.tab_i.len
+│   │   │       │   │   │       ├── proto.tab
+│   │   │       │   │   │       ├── proto.tab.keystream
+│   │   │       │   │   │       ├── proto.tab.keystream.len
+│   │   │       │   │   │       ├── proto.tab.len
+│   │   │       │   │   │       ├── proto.tab.values.at
+│   │   │       │   │   │       ├── proto.tab_i
+│   │   │       │   │   │       ├── proto.tab_i.len
+│   │   │       │   │   │       ├── source-to-classes.tab
+│   │   │       │   │   │       ├── source-to-classes.tab.keystream
+│   │   │       │   │   │       ├── source-to-classes.tab.keystream.len
+│   │   │       │   │   │       ├── source-to-classes.tab.len
+│   │   │       │   │   │       ├── source-to-classes.tab.values.at
+│   │   │       │   │   │       ├── source-to-classes.tab_i
+│   │   │       │   │   │       ├── source-to-classes.tab_i.len
+│   │   │       │   │   │       ├── subtypes.tab
+│   │   │       │   │   │       ├── subtypes.tab.keystream
+│   │   │       │   │   │       ├── subtypes.tab.keystream.len
+│   │   │       │   │   │       ├── subtypes.tab.len
+│   │   │       │   │   │       ├── subtypes.tab.values.at
+│   │   │       │   │   │       ├── subtypes.tab_i
+│   │   │       │   │   │       ├── subtypes.tab_i.len
+│   │   │       │   │   │       ├── supertypes.tab
+│   │   │       │   │   │       ├── supertypes.tab.keystream
+│   │   │       │   │   │       ├── supertypes.tab.keystream.len
+│   │   │       │   │   │       ├── supertypes.tab.len
+│   │   │       │   │   │       ├── supertypes.tab.values.at
+│   │   │       │   │   │       ├── supertypes.tab_i
+│   │   │       │   │   │       └── supertypes.tab_i.len
+│   │   │       │   │   └── lookups
+│   │   │       │   │       ├── counters.tab
+│   │   │       │   │       ├── file-to-id.tab
+│   │   │       │   │       ├── file-to-id.tab.keystream
+│   │   │       │   │       ├── file-to-id.tab.keystream.len
+│   │   │       │   │       ├── file-to-id.tab.len
+│   │   │       │   │       ├── file-to-id.tab.values.at
+│   │   │       │   │       ├── file-to-id.tab_i
+│   │   │       │   │       ├── file-to-id.tab_i.len
+│   │   │       │   │       ├── id-to-file.tab
+│   │   │       │   │       ├── id-to-file.tab.keystream
+│   │   │       │   │       ├── id-to-file.tab.keystream.len
+│   │   │       │   │       ├── id-to-file.tab.len
+│   │   │       │   │       ├── id-to-file.tab.values.at
+│   │   │       │   │       ├── id-to-file.tab_i
+│   │   │       │   │       ├── id-to-file.tab_i.len
+│   │   │       │   │       ├── lookups.tab
+│   │   │       │   │       ├── lookups.tab.keystream
+│   │   │       │   │       ├── lookups.tab.keystream.len
+│   │   │       │   │       ├── lookups.tab.len
+│   │   │       │   │       ├── lookups.tab.values.at
+│   │   │       │   │       ├── lookups.tab_i
+│   │   │       │   │       └── lookups.tab_i.len
+│   │   │       │   └── last-build.bin
+│   │   │       └── local-state
+│   │   │           └── build-history.bin
+│   │   ├── outputs
+│   │   │   ├── apk
+│   │   │   │   └── debug
+│   │   │   │       ├── app-debug.apk
+│   │   │   │       └── output-metadata.json
+│   │   │   └── logs
+│   │   │       └── manifest-merger-debug-report.txt
+│   │   └── tmp
+│   │       ├── compileDebugJavaWithJavac
+│   │       │   └── previous-compilation-data.bin
+│   │       ├── hiltJavaCompileDebug
+│   │       │   └── previous-compilation-data.bin
+│   │       ├── kapt3
+│   │       │   ├── classes
+│   │       │   │   └── debug
+│   │       │   ├── incApCache
+│   │       │   │   └── debug
+│   │       │   │       ├── ap-classpath-entries.bin
+│   │       │   │       ├── apt-cache.bin
+│   │       │   │       ├── classpath-entries.bin
+│   │       │   │       ├── classpath-structure.bin
+│   │       │   │       └── java-cache.bin
+│   │       │   ├── incrementalData
+│   │       │   │   └── debug
+│   │       │   │       ├── META-INF
+│   │       │   │       │   └── app_debug.kotlin_module
+│   │       │   │       └── com
+│   │       │   │           └── example
+│   │       │   │               └── finebyme
+│   │       │   │                   ├── FineByMeApplication.class
+│   │       │   │                   ├── common
+│   │       │   │                   │   └── enums
+│   │       │   │                   │       └── State.class
+│   │       │   │                   ├── data
+│   │       │   │                   │   ├── datasource
+│   │       │   │                   │   │   ├── UnSplashDataSource.class
+│   │       │   │                   │   │   └── UserDataSource.class
+│   │       │   │                   │   ├── db
+│   │       │   │                   │   │   ├── FavoritePhotosDatabase$Companion.class
+│   │       │   │                   │   │   ├── FavoritePhotosDatabase.class
+│   │       │   │                   │   │   ├── Photo$Creator.class
+│   │       │   │                   │   │   ├── Photo.class
+│   │       │   │                   │   │   └── PhotoDao.class
+│   │       │   │                   │   ├── model
+│   │       │   │                   │   │   ├── AlternativeSlugs.class
+│   │       │   │                   │   │   ├── SearchPhotoResponse.class
+│   │       │   │                   │   │   ├── UnsplashPhoto.class
+│   │       │   │                   │   │   ├── UnsplashPhotoKt.class
+│   │       │   │                   │   │   └── Urls.class
+│   │       │   │                   │   ├── network
+│   │       │   │                   │   │   ├── RetrofitInstance.class
+│   │       │   │                   │   │   └── RetrofitService.class
+│   │       │   │                   │   └── repository
+│   │       │   │                   │       └── PhotoRepository.class
+│   │       │   │                   ├── di
+│   │       │   │                   │   └── AppModule.class
+│   │       │   │                   ├── ui
+│   │       │   │                   │   ├── base
+│   │       │   │                   │   │   ├── BaseFragment.class
+│   │       │   │                   │   │   └── BaseViewModel.class
+│   │       │   │                   │   ├── favoriteList
+│   │       │   │                   │   │   ├── FavoriteListFragment.class
+│   │       │   │                   │   │   └── FavoriteListViewModel.class
+│   │       │   │                   │   ├── main
+│   │       │   │                   │   │   └── MainActivity.class
+│   │       │   │                   │   ├── photoDetail
+│   │       │   │                   │   │   ├── PhotoDetailActivity$Companion.class
+│   │       │   │                   │   │   ├── PhotoDetailActivity.class
+│   │       │   │                   │   │   └── PhotoDetailViewModel.class
+│   │       │   │                   │   ├── photoList
+│   │       │   │                   │   │   ├── PhotoAdapter$OnPhotoClickListener.class
+│   │       │   │                   │   │   ├── PhotoAdapter$PhotoViewHolder.class
+│   │       │   │                   │   │   ├── PhotoAdapter.class
+│   │       │   │                   │   │   ├── PhotoListFragment.class
+│   │       │   │                   │   │   └── PhotoListViewModel.class
+│   │       │   │                   │   └── splash
+│   │       │   │                   │       └── SplashActivity.class
+│   │       │   │                   └── utils
+│   │       │   │                       ├── ImageLoader.class
+│   │       │   │                       ├── IntentUtils.class
+│   │       │   │                       ├── LoadingHandler.class
+│   │       │   │                       ├── NetworkUtils.class
+│   │       │   │                       └── PhotoDiffCallback.class
+│   │       │   └── stubs
+│   │       │       └── debug
+│   │       │           ├── com
+│   │       │           │   └── example
+│   │       │           │       └── finebyme
+│   │       │           │           ├── FineByMeApplication.java
+│   │       │           │           ├── FineByMeApplication.kapt_metadata
+│   │       │           │           ├── common
+│   │       │           │           │   └── enums
+│   │       │           │           │       ├── State.java
+│   │       │           │           │       └── State.kapt_metadata
+│   │       │           │           ├── data
+│   │       │           │           │   ├── datasource
+│   │       │           │           │   │   ├── UnSplashDataSource.java
+│   │       │           │           │   │   ├── UnSplashDataSource.kapt_metadata
+│   │       │           │           │   │   ├── UserDataSource.java
+│   │       │           │           │   │   └── UserDataSource.kapt_metadata
+│   │       │           │           │   ├── db
+│   │       │           │           │   │   ├── FavoritePhotosDatabase.java
+│   │       │           │           │   │   ├── FavoritePhotosDatabase.kapt_metadata
+│   │       │           │           │   │   ├── Photo.java
+│   │       │           │           │   │   ├── Photo.kapt_metadata
+│   │       │           │           │   │   ├── PhotoDao.java
+│   │       │           │           │   │   └── PhotoDao.kapt_metadata
+│   │       │           │           │   ├── model
+│   │       │           │           │   │   ├── AlternativeSlugs.java
+│   │       │           │           │   │   ├── AlternativeSlugs.kapt_metadata
+│   │       │           │           │   │   ├── SearchPhotoResponse.java
+│   │       │           │           │   │   ├── SearchPhotoResponse.kapt_metadata
+│   │       │           │           │   │   ├── UnsplashPhoto.java
+│   │       │           │           │   │   ├── UnsplashPhoto.kapt_metadata
+│   │       │           │           │   │   ├── UnsplashPhotoKt.java
+│   │       │           │           │   │   ├── UnsplashPhotoKt.kapt_metadata
+│   │       │           │           │   │   ├── Urls.java
+│   │       │           │           │   │   └── Urls.kapt_metadata
+│   │       │           │           │   ├── network
+│   │       │           │           │   │   ├── RetrofitInstance.java
+│   │       │           │           │   │   ├── RetrofitInstance.kapt_metadata
+│   │       │           │           │   │   ├── RetrofitService.java
+│   │       │           │           │   │   └── RetrofitService.kapt_metadata
+│   │       │           │           │   └── repository
+│   │       │           │           │       ├── PhotoRepository.java
+│   │       │           │           │       └── PhotoRepository.kapt_metadata
+│   │       │           │           ├── di
+│   │       │           │           │   ├── AppModule.java
+│   │       │           │           │   └── AppModule.kapt_metadata
+│   │       │           │           ├── ui
+│   │       │           │           │   ├── base
+│   │       │           │           │   │   ├── BaseFragment.java
+│   │       │           │           │   │   ├── BaseFragment.kapt_metadata
+│   │       │           │           │   │   ├── BaseViewModel.java
+│   │       │           │           │   │   └── BaseViewModel.kapt_metadata
+│   │       │           │           │   ├── favoriteList
+│   │       │           │           │   │   ├── FavoriteListFragment.java
+│   │       │           │           │   │   ├── FavoriteListFragment.kapt_metadata
+│   │       │           │           │   │   ├── FavoriteListViewModel.java
+│   │       │           │           │   │   └── FavoriteListViewModel.kapt_metadata
+│   │       │           │           │   ├── main
+│   │       │           │           │   │   ├── MainActivity.java
+│   │       │           │           │   │   └── MainActivity.kapt_metadata
+│   │       │           │           │   ├── photoDetail
+│   │       │           │           │   │   ├── PhotoDetailActivity.java
+│   │       │           │           │   │   ├── PhotoDetailActivity.kapt_metadata
+│   │       │           │           │   │   ├── PhotoDetailViewModel.java
+│   │       │           │           │   │   └── PhotoDetailViewModel.kapt_metadata
+│   │       │           │           │   ├── photoList
+│   │       │           │           │   │   ├── PhotoAdapter.java
+│   │       │           │           │   │   ├── PhotoAdapter.kapt_metadata
+│   │       │           │           │   │   ├── PhotoListFragment.java
+│   │       │           │           │   │   ├── PhotoListFragment.kapt_metadata
+│   │       │           │           │   │   ├── PhotoListViewModel.java
+│   │       │           │           │   │   └── PhotoListViewModel.kapt_metadata
+│   │       │           │           │   └── splash
+│   │       │           │           │       ├── SplashActivity.java
+│   │       │           │           │       └── SplashActivity.kapt_metadata
+│   │       │           │           └── utils
+│   │       │           │               ├── ImageLoader.java
+│   │       │           │               ├── ImageLoader.kapt_metadata
+│   │       │           │               ├── IntentUtils.java
+│   │       │           │               ├── IntentUtils.kapt_metadata
+│   │       │           │               ├── LoadingHandler.java
+│   │       │           │               ├── LoadingHandler.kapt_metadata
+│   │       │           │               ├── NetworkUtils.java
+│   │       │           │               ├── NetworkUtils.kapt_metadata
+│   │       │           │               ├── PhotoDiffCallback.java
+│   │       │           │               └── PhotoDiffCallback.kapt_metadata
+│   │       │           └── error
+│   │       │               └── NonExistentClass.java
+│   │       └── kotlin-classes
+│   │           └── debug
+│   │               ├── META-INF
+│   │               │   └── app_debug.kotlin_module
+│   │               └── com
+│   │                   └── example
+│   │                       └── finebyme
+│   │                           ├── FineByMeApplication.class
+│   │                           ├── common
+│   │                           │   └── enums
+│   │                           │       └── State.class
+│   │                           ├── data
+│   │                           │   ├── datasource
+│   │                           │   │   ├── UnSplashDataSource$getRandomPhotoList$1.class
+│   │                           │   │   ├── UnSplashDataSource$getRandomPhotoList$2.class
+│   │                           │   │   ├── UnSplashDataSource$getSearchPhotoList$1.class
+│   │                           │   │   ├── UnSplashDataSource$getSearchPhotoList$2.class
+│   │                           │   │   ├── UnSplashDataSource.class
+│   │                           │   │   └── UserDataSource.class
+│   │                           │   ├── db
+│   │                           │   │   ├── FavoritePhotosDatabase$Companion.class
+│   │                           │   │   ├── FavoritePhotosDatabase.class
+│   │                           │   │   ├── Photo$Creator.class
+│   │                           │   │   ├── Photo.class
+│   │                           │   │   └── PhotoDao.class
+│   │                           │   ├── model
+│   │                           │   │   ├── AlternativeSlugs.class
+│   │                           │   │   ├── SearchPhotoResponse.class
+│   │                           │   │   ├── UnsplashPhoto.class
+│   │                           │   │   ├── UnsplashPhotoKt.class
+│   │                           │   │   └── Urls.class
+│   │                           │   ├── network
+│   │                           │   │   ├── RetrofitInstance$okHttpClient$2.class
+│   │                           │   │   ├── RetrofitInstance$retrofit$2.class
+│   │                           │   │   ├── RetrofitInstance$retrofitService$2.class
+│   │                           │   │   ├── RetrofitInstance.class
+│   │                           │   │   └── RetrofitService.class
+│   │                           │   └── repository
+│   │                           │       └── PhotoRepository.class
+│   │                           ├── di
+│   │                           │   └── AppModule.class
+│   │                           ├── ui
+│   │                           │   ├── base
+│   │                           │   │   ├── BaseFragment.class
+│   │                           │   │   └── BaseViewModel.class
+│   │                           │   ├── favoriteList
+│   │                           │   │   ├── FavoriteListFragment$onViewCreated$1.class
+│   │                           │   │   ├── FavoriteListFragment$onViewCreated$2.class
+│   │                           │   │   ├── FavoriteListFragment$sam$androidx_lifecycle_Observer$0.class
+│   │                           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$1.class
+│   │                           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$2.class
+│   │                           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$3.class
+│   │                           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$4.class
+│   │                           │   │   ├── FavoriteListFragment$special$$inlined$viewModels$default$5.class
+│   │                           │   │   ├── FavoriteListFragment.class
+│   │                           │   │   ├── FavoriteListViewModel$_photos$2.class
+│   │                           │   │   └── FavoriteListViewModel.class
+│   │                           │   ├── main
+│   │                           │   │   ├── MainActivity$binding$2.class
+│   │                           │   │   ├── MainActivity$handleOnBackPressed$1$handleOnBackPressed$1.class
+│   │                           │   │   ├── MainActivity$handleOnBackPressed$1.class
+│   │                           │   │   └── MainActivity.class
+│   │                           │   ├── photoDetail
+│   │                           │   │   ├── PhotoDetailActivity$Companion.class
+│   │                           │   │   ├── PhotoDetailActivity$handleOnBackPressed$1.class
+│   │                           │   │   ├── PhotoDetailActivity$sam$androidx_lifecycle_Observer$0.class
+│   │                           │   │   ├── PhotoDetailActivity$setupObservers$1.class
+│   │                           │   │   ├── PhotoDetailActivity$setupObservers$2.class
+│   │                           │   │   ├── PhotoDetailActivity$setupObservers$3.class
+│   │                           │   │   ├── PhotoDetailActivity$setupObservers$4.class
+│   │                           │   │   ├── PhotoDetailActivity$setupObservers$5.class
+│   │                           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$1.class
+│   │                           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$2.class
+│   │                           │   │   ├── PhotoDetailActivity$special$$inlined$viewModels$default$3.class
+│   │                           │   │   ├── PhotoDetailActivity.class
+│   │                           │   │   ├── PhotoDetailViewModel$_loadingState$2.class
+│   │                           │   │   ├── PhotoDetailViewModel$downloadImage$1.class
+│   │                           │   │   └── PhotoDetailViewModel.class
+│   │                           │   ├── photoList
+│   │                           │   │   ├── PhotoAdapter$OnPhotoClickListener.class
+│   │                           │   │   ├── PhotoAdapter$PhotoViewHolder.class
+│   │                           │   │   ├── PhotoAdapter.class
+│   │                           │   │   ├── PhotoListFragment$sam$androidx_lifecycle_Observer$0.class
+│   │                           │   │   ├── PhotoListFragment$setupListeners$1.class
+│   │                           │   │   ├── PhotoListFragment$setupListeners$2$2.class
+│   │                           │   │   ├── PhotoListFragment$setupObservers$1.class
+│   │                           │   │   ├── PhotoListFragment$setupObservers$2.class
+│   │                           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$1.class
+│   │                           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$2.class
+│   │                           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$3.class
+│   │                           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$4.class
+│   │                           │   │   ├── PhotoListFragment$special$$inlined$viewModels$default$5.class
+│   │                           │   │   ├── PhotoListFragment.class
+│   │                           │   │   ├── PhotoListViewModel$_loadingState$2.class
+│   │                           │   │   ├── PhotoListViewModel$_photos$2.class
+│   │                           │   │   ├── PhotoListViewModel$fetchPhotos$1.class
+│   │                           │   │   ├── PhotoListViewModel$searchPhotos$1.class
+│   │                           │   │   └── PhotoListViewModel.class
+│   │                           │   └── splash
+│   │                           │       ├── SplashActivity$binding$2.class
+│   │                           │       └── SplashActivity.class
+│   │                           └── utils
+│   │                               ├── ImageLoader$loadImage$1.class
+│   │                               ├── ImageLoader.class
+│   │                               ├── IntentUtils.class
+│   │                               ├── LoadingHandler$WhenMappings.class
+│   │                               ├── LoadingHandler.class
+│   │                               ├── NetworkUtils$enqueueCall$1.class
+│   │                               ├── NetworkUtils.class
+│   │                               └── PhotoDiffCallback.class
+│   ├── build.gradle.kts
+│   ├── libs
+│   ├── proguard-rules.pro
+│   └── src
+│       ├── androidTest
+│       │   └── java
+│       │       └── com
+│       │           └── example
+│       │               └── finebyme
+│       │                   └── ExampleInstrumentedTest.kt
+│       ├── main
+│       │   ├── AndroidManifest.xml
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── example
+│       │   │           └── finebyme
+│       │   │               ├── common
+│       │   │               │   └── enums
+│       │   │               │       └── State.kt
+│       │   │               ├── data
+│       │   │               │   ├── datasource
+│       │   │               │   │   ├── UnSplashDataSource.kt
+│       │   │               │   │   └── UserDataSource.kt
+│       │   │               │   ├── db
+│       │   │               │   │   ├── FavoritePhotosDatabase.kt
+│       │   │               │   │   ├── Photo.kt
+│       │   │               │   │   └── PhotoDao.kt
+│       │   │               │   ├── model
+│       │   │               │   │   ├── SearchPhotoResponse.kt
+│       │   │               │   │   └── UnsplashPhoto.kt
+│       │   │               │   ├── network
+│       │   │               │   │   ├── RetrofitInstance.kt
+│       │   │               │   │   └── RetrofitService.kt
+│       │   │               │   └── repository
+│       │   │               │       └── PhotoRepository.kt
+│       │   │               ├── di
+│       │   │               │   └── AppViewModelFactory.kt
+│       │   │               ├── ui
+│       │   │               │   ├── base
+│       │   │               │   │   ├── BaseFragment.kt
+│       │   │               │   │   └── BaseViewModel.kt
+│       │   │               │   ├── favoriteList
+│       │   │               │   │   ├── FavoriteListFragment.kt
+│       │   │               │   │   └── FavoriteListViewModel.kt
+│       │   │               │   ├── main
+│       │   │               │   │   └── MainActivity.kt
+│       │   │               │   ├── photoDetail
+│       │   │               │   │   ├── PhotoDetailActivity.kt
+│       │   │               │   │   └── PhotoDetailViewModel.kt
+│       │   │               │   ├── photoList
+│       │   │               │   │   ├── PhotoAdapter.kt
+│       │   │               │   │   ├── PhotoListFragment.kt
+│       │   │               │   │   └── PhotoListViewModel.kt
+│       │   │               │   └── splash
+│       │   │               │       └── SplashActivity.kt
+│       │   │               └── utils
+│       │   │                   ├── ImageLoader.kt
+│       │   │                   ├── IntentUtils.kt
+│       │   │                   ├── LoadingHandler.kt
+│       │   │                   ├── NetworkUtils.kt
+│       │   │                   └── PhotoDiffCallback.kt
+│       │   └── res
+│       │       ├── drawable
+│       │       │   ├── bottom_nav_background.xml
+│       │       │   ├── camera.gif
+│       │       │   ├── favorite_button_background.xml
+│       │       │   ├── ic_file_download.xml
+│       │       │   ├── ic_launcher_background.xml
+│       │       │   ├── ic_launcher_foreground.xml
+│       │       │   ├── ic_nav_favorite_normal.xml
+│       │       │   ├── ic_nav_favorite_selected.xml
+│       │       │   ├── ic_nav_home_normal.xml
+│       │       │   ├── ic_nav_home_selected.xml
+│       │       │   ├── ic_search.xml
+│       │       │   ├── loading.gif
+│       │       │   ├── search_textview_rounded_border.xml
+│       │       │   ├── selector_bottom_nav_favorite.xml
+│       │       │   └── selector_bottom_nav_home.xml
+│       │       ├── layout
+│       │       │   ├── activity_main.xml
+│       │       │   ├── activity_photo_detail.xml
+│       │       │   ├── activity_splash.xml
+│       │       │   ├── fragment_base.xml
+│       │       │   ├── fragment_favorite_list.xml
+│       │       │   ├── fragment_photo_list.xml
+│       │       │   └── item_photo.xml
+│       │       ├── menu
+│       │       │   └── bottom_nav_menu.xml
+│       │       ├── mipmap-anydpi-v26
+│       │       │   ├── ic_launcher.xml
+│       │       │   └── ic_launcher_round.xml
+│       │       ├── mipmap-hdpi
+│       │       │   ├── ic_launcher.webp
+│       │       │   └── ic_launcher_round.webp
+│       │       ├── mipmap-mdpi
+│       │       │   ├── ic_launcher.webp
+│       │       │   └── ic_launcher_round.webp
+│       │       ├── mipmap-xhdpi
+│       │       │   ├── ic_launcher.webp
+│       │       │   └── ic_launcher_round.webp
+│       │       ├── mipmap-xxhdpi
+│       │       │   ├── ic_launcher.webp
+│       │       │   └── ic_launcher_round.webp
+│       │       ├── mipmap-xxxhdpi
+│       │       │   ├── ic_launcher.webp
+│       │       │   └── ic_launcher_round.webp
+│       │       ├── navigation
+│       │       ├── values
+│       │       │   ├── colors.xml
+│       │       │   ├── strings.xml
+│       │       │   ├── style.xml
+│       │       │   └── themes.xml
+│       │       ├── values-land
+│       │       ├── values-night
+│       │       │   └── themes.xml
+│       │       ├── values-v23
+│       │       ├── values-v26
+│       │       ├── values-w1240dp
+│       │       ├── values-w600dp
+│       │       └── xml
+│       │           ├── backup_rules.xml
+│       │           └── data_extraction_rules.xml
+│       └── test
+│           └── java
+│               └── com
+│                   └── example
+│                       └── finebyme
+│                           └── ExampleUnitTest.kt
+├── build
+│   └── kotlin
+│       └── sessions
+├── build.gradle.kts
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── local.properties
+├── main
+└── settings.gradle.kts
+
+674 directories, 1665 files
