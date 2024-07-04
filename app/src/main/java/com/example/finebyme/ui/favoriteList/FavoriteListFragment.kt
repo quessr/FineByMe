@@ -1,21 +1,16 @@
 package com.example.finebyme.ui.favoriteList
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.finebyme.data.datasource.UnSplashDataSource
-import com.example.finebyme.data.datasource.UserDataSource
-import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
@@ -24,15 +19,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
-//    private val favoriteListViewModel: FavoriteListViewModel by viewModels {
-//        val application = requireActivity().application
-//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-//        val retrofitService = RetrofitInstance.retrofitService
-//        val unSplashDataSource = UnSplashDataSource(retrofitService)
-//        val userDataSource = UserDataSource(photoDao)
-//        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
-//        AppViewModelFactory(application, photoRepository)
-//    }
 
     private val favoriteListViewModel: FavoriteListViewModel by viewModels()
 

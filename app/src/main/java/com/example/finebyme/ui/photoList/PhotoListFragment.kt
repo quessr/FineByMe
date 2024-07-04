@@ -4,24 +4,19 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.finebyme.data.datasource.UnSplashDataSource
-import com.example.finebyme.data.datasource.UserDataSource
-import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.model.toPhotoList
-import com.example.finebyme.data.network.RetrofitInstance
-import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 import com.example.finebyme.utils.LoadingHandler
@@ -32,16 +27,6 @@ class PhotoListFragment : Fragment() {
 
     private lateinit var photoAdapter: PhotoAdapter
     private lateinit var loadingHandler: LoadingHandler<FragmentPhotoListBinding>
-
-//    private val photoListViewModel: PhotoListViewModel by viewModels {
-//        val application = requireActivity().application
-//        val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
-//        val retrofitService = RetrofitInstance.retrofitService
-//        val unSplashDataSource = UnSplashDataSource(retrofitService)
-//        val userDataSource = UserDataSource(photoDao)
-//        val photoRepository = PhotoRepository(unSplashDataSource, userDataSource)
-//        AppViewModelFactory(application, photoRepository)
-//    }
 
     private val photoListViewModel: PhotoListViewModel by viewModels()
 

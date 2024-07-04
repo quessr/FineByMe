@@ -1,6 +1,5 @@
 package com.example.finebyme.ui.photoDetail
 
-import android.app.Application
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
@@ -9,7 +8,6 @@ import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,7 +19,6 @@ import com.example.finebyme.R
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.PhotoRepository
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File

@@ -1,6 +1,5 @@
 package com.example.finebyme.ui.favoriteList
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.data.db.Photo
