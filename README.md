@@ -49,7 +49,6 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 ## 🏠 Project Structure
 
 This document describes the structure of the project. For detailed information on each version, please refer to the links below.
-To view the raw project structure, click the link below and switch to the "Code" view.
 
 - [PROJECT_STRUCTURE_BASIC](https://github.com/quessr/fine-by-me/blob/main/docx/PROJECT_STRUCTURE_BASIC.md?plain=1)
 - [PROJECT_STRUCTURE_HILT](https://github.com/quessr/fine-by-me/blob/main/docx/PROJECT_STRUCTURE_HILT.md?plain=1)
@@ -65,6 +64,10 @@ To view the raw project structure, click the link below and switch to the "Code"
 To run this project, you will need to add the following environment variables to your local.properties file
 
 `UNSPLASH_API_KEY`
+
+## 🖼 Unsplash API
+
+이 프로젝트는 [Unsplash API](https://unsplash.com/developers)를 사용하여 사진 검색 및 다운로드 기능을 구현합니다. <br>Unsplash API를 사용하기 위해서는 API 키가 필요하며, API 키는 Unsplash 개발자 포털에서 생성할 수 있습니다.
 
 
 
