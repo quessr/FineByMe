@@ -49,9 +49,10 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 ## 🏠 Project Structure
 
 This document describes the structure of the project. For detailed information on each version, please refer to the links below.
+To view the raw project structure, click the link below and switch to the "Code" view.
 
-- [PROJECT_STRUCTURE_BASIC](./docx/PROJECT_STRUCTURE_BASIC.md)
-- [PROJECT_STRUCTURE_HILT](./docx/PROJECT_STRUCTURE_HILT.md)
+- [PROJECT_STRUCTURE_BASIC](https://raw.githubusercontent.com/quessr/fine-by-me/main/docx/PROJECT_STRUCTURE_BASIC.md)
+- [PROJECT_STRUCTURE_HILT](https://github.com/quessr/fine-by-me/blob/main/docx/PROJECT_STRUCTURE_HILT.md?plain=1)
 
 ## 🛤 Roadmap
 
