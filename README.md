@@ -50,8 +50,8 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 
 This document describes the structure of the project. For detailed information on each version, please refer to the links below.
 
-- [PROJECT_STRUCTURE_BASIC](https://glib-course-964.notion.site/PROJECT_STRUCTURE_BASIC-4e9790dc40174e73bcecbd028e125a97?pvs=4)
-- [PROJECT_STRUCTURE_HILT](https://glib-course-964.notion.site/PROJECT_STRUCTURE_HILT-f76b7742b8a248aebf241f484a332cd5?pvs=4)
+- [PROJECT_STRUCTURE_BASIC](./docx/PROJECT_STRUCTURE_BASIC.md)
+- [PROJECT_STRUCTURE_HILT](./docx/PROJECT_STRUCTURE_HILT.md)
 
 ## 🛤 Roadmap
 
