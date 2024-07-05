@@ -1,9 +1,7 @@
 package com.example.finebyme.data.datasource
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.BuildConfig
-import com.example.finebyme.data.model.SearchPhotoResponse
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.network.RetrofitService
 import com.example.finebyme.utils.NetworkUtils
@@ -13,20 +11,22 @@ class UnSplashDataSource(private val retrofitService: RetrofitService) {
     private val apiKey = BuildConfig.UNSPLASH_API_KEY
 
     // Fetch random photos
-    fun getRandomPhotoList(onResult: (List<UnsplashPhoto>?) -> Unit) {
+    fun getRandomPhotoList(onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
         NetworkUtils.enqueueCall(retrofitService.getRandomPhoto(apiKey, 1000),
             onSuccess = { response ->
                 val photos = response.body()
                 if (!photos.isNullOrEmpty()) {
-                    onResult(photos)
+                    onResult(Result.success(photos))
                 } else {
                     Log.d("RetrofitInstance", "No photos found")
-                    onResult(null)
+                    onResult(Result.success(emptyList()))
                 }
+//                onResult(Result.failure(Exception("Forced exception for testing onFailure")))
             },
             onFailure = { t ->
+                // 에러를 정의하고 에러코드에 따라 처리
                 Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
-                onResult(null)
+                onResult(Result.failure(t))
             })
     }
 

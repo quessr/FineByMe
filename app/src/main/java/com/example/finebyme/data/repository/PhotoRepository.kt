@@ -1,17 +1,15 @@
 package com.example.finebyme.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.data.datasource.UnSplashDataSource
 import com.example.finebyme.data.datasource.UserDataSource
 import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.model.SearchPhotoResponse
 import com.example.finebyme.data.model.UnsplashPhoto
 
 class PhotoRepository(
     private val unsplashDataSource: UnSplashDataSource,
     private val userDataSource: UserDataSource
 ) {
-    fun getRandomPhotoList(onResult: (List<UnsplashPhoto>?) -> Unit) {
+    fun getRandomPhotoList(onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
         unsplashDataSource.getRandomPhotoList(onResult)
     }
 
