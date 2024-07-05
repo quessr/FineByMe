@@ -1,13 +1,17 @@
 package com.example.finebyme.ui.photoList
 
 import android.app.Application
+import android.net.http.HttpException
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.common.enums.State
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.ui.base.BaseViewModel
+import java.io.IOException
+import java.net.UnknownHostException
 
 class PhotoListViewModel(
     application: Application,
@@ -30,16 +34,67 @@ class PhotoListViewModel(
 
     private fun fetchPhotos() {
         _loadingState.postValue(State.LOADING)
-        photoRepository.getRandomPhotoList { photos ->
-            if (photos != null) {
+        photoRepository.getRandomPhotoList { result ->
+            result?.onSuccess { photos ->
                 _photos.postValue(photos)
                 cachedPhotos = photos
                 _loadingState.postValue(State.DONE)
-//                insertFirstPhotoInDb(photos[0])
-            } else {
+            }?.onFailure { throwable ->
+                Log.e("PhotoListViewModel", "Failed to fetch photos: ${throwable.message}")
+                handleFailure(throwable)
                 _photos.postValue(listOf())
                 _loadingState.postValue(State.ERROR)
+            }
+        }
+    }
 
+    private fun handleFailure(throwable: Throwable) {
+        when (throwable) {
+            is IOException -> {
+                Log.e("PhotoListViewModel", "Network error: ${throwable.message}")
+                // Show network error message
+                Toast.makeText(
+                    getApplication<Application>().applicationContext,
+                    "Network error. Please try again.",
+                    Toast.LENGTH_SHORT
+                )
+            }
+
+            is retrofit2.HttpException -> {
+                val message = when (throwable.code()) {
+                    400 -> "Bad Request: The request was unacceptable, often due to missing a required parameter."
+                    401 -> "Unauthorized: Invalid Access Token."
+                    403 -> "Forbidden: Missing permissions to perform request."
+                    404 -> "Not Found: The requested resource doesn’t exist."
+                    500, 503 -> "Server Error: Something went wrong on our end. Please try again later."
+                    else -> "HTTP error: ${throwable.message()}"
+                }
+                Toast.makeText(
+                    getApplication<Application>().applicationContext,
+                    message,
+                    Toast.LENGTH_SHORT
+                )
+                Log.e("PhotoListViewModel", "HTTP error: ${throwable.message}")
+            }
+
+            is UnknownHostException -> {
+                Log.e("PhotoListViewModel", "No internet connection: ${throwable.message}")
+                // Show no internet connection message
+                Toast.makeText(
+                    getApplication<Application>().applicationContext,
+                    "No internet connection. Please check your connection.",
+                    Toast.LENGTH_SHORT
+                )
+            }
+
+            else -> {
+                Log.e("PhotoListViewModel", "Unknown error: ${throwable.message}")
+                // Show generic error message
+                Toast.makeText(
+                    getApplication<Application>().applicationContext,
+                    "An unknown error occurred. Please try again.",
+                    Toast.LENGTH_SHORT
+                )
             }
         }
     }
