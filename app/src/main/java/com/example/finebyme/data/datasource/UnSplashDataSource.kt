@@ -12,20 +12,22 @@ class UnSplashDataSource(private val retrofitService: RetrofitService) {
 
     // Fetch random photos
     fun getRandomPhotoList(onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
+        Log.d("UnSplashDataSource", "API 호출 시작")
         NetworkUtils.enqueueCall(retrofitService.getRandomPhoto(apiKey, 1000),
             onSuccess = { response ->
                 val photos = response.body()
                 if (!photos.isNullOrEmpty()) {
+                    Log.d("UnSplashDataSource", "API 호출 성공: ${photos.size}개의 사진")
                     onResult(Result.success(photos))
                 } else {
-                    Log.d("RetrofitInstance", "No photos found")
+                    Log.d("UnSplashDataSource", "API 호출 성공: 사진 없음")
                     onResult(Result.success(emptyList()))
                 }
 //                onResult(Result.failure(Exception("Forced exception for testing onFailure")))
             },
             onFailure = { t ->
                 // 에러를 정의하고 에러코드에 따라 처리
-                Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
+                Log.e("UnSplashDataSource", "API 호출 실패: ${t.message}")
                 onResult(Result.failure(t))
             })
     }

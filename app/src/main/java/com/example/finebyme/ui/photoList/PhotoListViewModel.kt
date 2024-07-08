@@ -36,8 +36,10 @@ class PhotoListViewModel @Inject constructor(
 
     private fun fetchPhotos() {
         _loadingState.postValue(State.LOADING)
+        Log.d("PhotoListViewModel", "Starting to fetch photos")
         photoRepository.getRandomPhotoList { result ->
             result?.onSuccess { photos ->
+                Log.d("PhotoListViewModel", "Photos fetched successfully")
                 _photos.postValue(photos)
                 cachedPhotos = photos
                 _loadingState.postValue(State.DONE)
