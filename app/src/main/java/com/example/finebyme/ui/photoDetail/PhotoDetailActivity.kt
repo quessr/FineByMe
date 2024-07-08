@@ -135,8 +135,8 @@ class PhotoDetailActivity : AppCompatActivity() {
             updateFavoriteIcon(isFavorite)
         }
 
-        photoDetailViewModel.loadingState.observe(this) { state ->
-            loadingHandler.setLoadingState(state)
+        photoDetailViewModel.loadingState.observe(this) { loadingState ->
+            loadingHandler.setLoadingState(loadingState)
         }
 
         photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
