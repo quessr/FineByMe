@@ -16,7 +16,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.finebyme.R
-import com.example.finebyme.common.enums.State
+import com.example.finebyme.common.enums.LoadingState
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.repository.PhotoRepository
 import java.io.File
@@ -38,8 +38,8 @@ class PhotoDetailViewModel(
     private val _isFavorite = MutableLiveData<Boolean>()
     val isFavorite: LiveData<Boolean> get() = _isFavorite
 
-    private val _loadingState: MutableLiveData<State> by lazy { MutableLiveData() }
-    val loadingState: LiveData<State> get() = _loadingState
+    private val _loadingState: MutableLiveData<LoadingState> by lazy { MutableLiveData() }
+    val loadingState: LiveData<LoadingState> get() = _loadingState
 
     private val _isDownloading = MutableLiveData<Boolean>()
     val isDownloading: LiveData<Boolean> get() = _isDownloading
@@ -52,15 +52,15 @@ class PhotoDetailViewModel(
         getApplication<Application>().applicationContext.getString(R.string.app_name)
 
     init {
-        _loadingState.value = State.LOADING
+        _loadingState.value = LoadingState.LOADING
     }
 
     fun onPhotoLoadCompleted() {
-        _loadingState.value = State.DONE
+        _loadingState.value = LoadingState.DONE
     }
 
     fun onPhotoLoadFail() {
-        _loadingState.value = State.ERROR
+        _loadingState.value = LoadingState.ERROR
     }
 
     fun onEntryScreen(photo: Photo) {

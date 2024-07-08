@@ -6,7 +6,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.finebyme.common.enums.State
+import com.example.finebyme.common.enums.LoadingState
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.ui.base.BaseViewModel
@@ -21,8 +21,8 @@ class PhotoListViewModel(
     private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
     val photos: LiveData<List<UnsplashPhoto>> get() = _photos
 
-    private val _loadingState: MutableLiveData<State> by lazy { MutableLiveData() }
-    val loadingState: LiveData<State> get() = _loadingState
+    private val _loadingState: MutableLiveData<LoadingState> by lazy { MutableLiveData() }
+    val loadingState: LiveData<LoadingState> get() = _loadingState
 
     // 검색 전 사진 목록을 캐싱하기 위한 변수
     private var cachedPhotos: List<UnsplashPhoto> = emptyList()
@@ -33,19 +33,19 @@ class PhotoListViewModel(
 
 
     private fun fetchPhotos() {
-        _loadingState.postValue(State.LOADING)
+        _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Starting to fetch photos")
         photoRepository.getRandomPhotoList { result ->
             result?.onSuccess { photos ->
                 Log.d("PhotoListViewModel", "Photos fetched successfully")
                 _photos.postValue(photos)
                 cachedPhotos = photos
-                _loadingState.postValue(State.DONE)
+                _loadingState.postValue(LoadingState.DONE)
             }?.onFailure { throwable ->
                 Log.e("PhotoListViewModel", "Failed to fetch photos: ${throwable.message}")
                 handleFailure(throwable)
                 _photos.postValue(listOf())
-                _loadingState.postValue(State.ERROR)
+                _loadingState.postValue(LoadingState.ERROR)
             }
         }
     }
@@ -106,22 +106,22 @@ class PhotoListViewModel(
         // 검색어가 비어있을 때 캐시된 사진 목록을 다시 설정
         if (query.isEmpty()) {
             _photos.postValue(cachedPhotos)
-            _loadingState.postValue(State.DONE)
+            _loadingState.postValue(LoadingState.DONE)
             return
         }
 
-        _loadingState.postValue(State.LOADING)
+        _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
         photoRepository.getSearchPhotoList(query) { response ->
             Log.d("PhotoListViewModel", "Received response: $response")
             if (!response.isNullOrEmpty()) {
                 Log.d("PhotoListViewModel", "Search successful: ${response.size} results found")
                 _photos.postValue(response)
-                _loadingState.postValue(State.DONE)
+                _loadingState.postValue(LoadingState.DONE)
             } else {
                 Log.d("PhotoListViewModel", "Search failed or no results found")
                 _photos.postValue(emptyList())
-                _loadingState.postValue(State.ERROR)
+                _loadingState.postValue(LoadingState.ERROR)
             }
         }
     }

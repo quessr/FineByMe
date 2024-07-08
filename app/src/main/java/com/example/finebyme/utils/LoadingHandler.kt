@@ -4,16 +4,16 @@ import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.finebyme.R
-import com.example.finebyme.common.enums.State
+import com.example.finebyme.common.enums.LoadingState
 import com.example.finebyme.databinding.ActivityPhotoDetailBinding
 import com.example.finebyme.databinding.FragmentPhotoListBinding
 
 class LoadingHandler<T>(private val binding: T, private val context: Context) {
-    fun setLoadingState(state: State) {
-        when (state) {
-            State.LOADING -> showLoading()
-            State.DONE -> hideLoading()
-            State.ERROR -> hideLoading()
+    fun setLoadingState(loadingState: LoadingState) {
+        when (loadingState) {
+            LoadingState.LOADING -> showLoading()
+            LoadingState.DONE -> hideLoading()
+            LoadingState.ERROR -> hideLoading()
         }
     }
 

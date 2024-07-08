@@ -1,6 +1,6 @@
 package com.example.finebyme.common.enums
 
-enum class State {
+enum class LoadingState {
     LOADING,
     DONE,
     ERROR

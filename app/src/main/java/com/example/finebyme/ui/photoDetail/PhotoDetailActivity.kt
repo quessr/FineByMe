@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import com.example.finebyme.R
+import com.example.finebyme.common.enums.LoadingState
 import com.example.finebyme.data.datasource.UnSplashDataSource
 import com.example.finebyme.data.datasource.UserDataSource
 import com.example.finebyme.data.db.FavoritePhotosDatabase
@@ -152,8 +153,8 @@ class PhotoDetailActivity : AppCompatActivity() {
             updateFavoriteIcon(isFavorite)
         }
 
-        photoDetailViewModel.loadingState.observe(this) { state ->
-            loadingHandler.setLoadingState(state)
+        photoDetailViewModel.loadingState.observe(this) { loadingState ->
+            loadingHandler.setLoadingState(loadingState)
         }
 
         photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
