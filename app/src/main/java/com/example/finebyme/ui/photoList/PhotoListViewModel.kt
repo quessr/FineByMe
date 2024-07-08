@@ -34,8 +34,10 @@ class PhotoListViewModel(
 
     private fun fetchPhotos() {
         _loadingState.postValue(State.LOADING)
+        Log.d("PhotoListViewModel", "Starting to fetch photos")
         photoRepository.getRandomPhotoList { result ->
             result?.onSuccess { photos ->
+                Log.d("PhotoListViewModel", "Photos fetched successfully")
                 _photos.postValue(photos)
                 cachedPhotos = photos
                 _loadingState.postValue(State.DONE)
@@ -57,7 +59,7 @@ class PhotoListViewModel(
                     getApplication<Application>().applicationContext,
                     "Network error. Please try again.",
                     Toast.LENGTH_SHORT
-                )
+                ).show()
             }
 
             is retrofit2.HttpException -> {
@@ -73,7 +75,7 @@ class PhotoListViewModel(
                     getApplication<Application>().applicationContext,
                     message,
                     Toast.LENGTH_SHORT
-                )
+                ).show()
                 Log.e("PhotoListViewModel", "HTTP error: ${throwable.message}")
             }
 
