@@ -21,6 +21,7 @@ import com.example.finebyme.databinding.FragmentPhotoListBinding
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 import com.example.finebyme.utils.LoadingHandler
 import dagger.hilt.android.AndroidEntryPoint
+import com.example.finebyme.utils.SnackbarUtils
 
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
@@ -71,6 +72,10 @@ class PhotoListFragment : Fragment() {
 
         photoListViewModel.loadingState.observe(viewLifecycleOwner) { loadingState ->
             loadingHandler.setLoadingState(loadingState)
+        }
+
+        photoListViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            SnackbarUtils.showSnackbar(requireContext(), binding.root, errorMessage, true)
         }
     }
 
