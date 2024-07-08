@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.finebyme.common.enums.ErrorType
 import com.example.finebyme.common.enums.LoadingState
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.PhotoRepository
@@ -25,6 +26,9 @@ class PhotoListViewModel @Inject constructor(
 
     private val _loadingState: MutableLiveData<LoadingState> by lazy { MutableLiveData() }
     val loadingState: LiveData<LoadingState> get() = _loadingState
+
+    private val _errorMassage: MutableLiveData<String> by lazy { MutableLiveData() }
+    val errorMessage: LiveData<String> get() = _errorMassage
 
     // 검색 전 사진 목록을 캐싱하기 위한 변수
     private var cachedPhotos: List<UnsplashPhoto> = emptyList()
@@ -53,34 +57,39 @@ class PhotoListViewModel @Inject constructor(
     }
 
     private fun handleFailure(throwable: Throwable) {
-        when (throwable) {
+        val message = when (throwable) {
             is IOException -> {
                 Log.e("PhotoListViewModel", "Network error: ${throwable.message}")
                 // Show network error message
+                ErrorType.NETWORK_ERROR.message
             }
 
             is retrofit2.HttpException -> {
                 val message = when (throwable.code()) {
-                    400 -> "Bad Request: The request was unacceptable, often due to missing a required parameter."
-                    401 -> "Unauthorized: Invalid Access Token."
-                    403 -> "Forbidden: Missing permissions to perform request."
-                    404 -> "Not Found: The requested resource doesn’t exist."
-                    500, 503 -> "Server Error: Something went wrong on our end. Please try again later."
+                    400 -> ErrorType.BAD_REQUEST.message
+                    401 -> ErrorType.UNAUTHORIZED.message
+                    403 -> ErrorType.FORBIDDEN.message
+                    404 -> ErrorType.NOT_FOUND.message
+                    500, 503 -> ErrorType.SERVER_ERROR.message
                     else -> "HTTP error: ${throwable.message()}"
                 }
                 Log.e("PhotoListViewModel", "HTTP error: ${throwable.message}")
+                message
             }
 
             is UnknownHostException -> {
                 Log.e("PhotoListViewModel", "No internet connection: ${throwable.message}")
                 // Show no internet connection message
+                ErrorType.NO_INTERNET.message
             }
 
             else -> {
                 Log.e("PhotoListViewModel", "Unknown error: ${throwable.message}")
                 // Show generic error message
+                ErrorType.UNKNOWN_ERROR.message
             }
         }
+        _errorMassage.postValue(message)
     }
 
     fun searchPhotos(query: String) {
