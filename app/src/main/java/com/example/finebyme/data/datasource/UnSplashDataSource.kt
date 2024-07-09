@@ -33,19 +33,19 @@ class UnSplashDataSource(private val retrofitService: RetrofitService) {
     }
 
     // Search photos by query
-    fun getSearchPhotoList(query: String, onResult: (List<UnsplashPhoto>?) -> Unit) {
+    fun getSearchPhotoList(query: String, onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
         NetworkUtils.enqueueCall(retrofitService.getSearchPhoto(apiKey, query),
             onSuccess = { response ->
                 val photos = response.body()?.results ?: emptyList()
                 if (photos.isNotEmpty()) {
-                    onResult(photos)
+                    onResult(Result.success(photos))
                 } else {
                     Log.d("RetrofitInstance", "No photos found")
-                    onResult(null)
+                    onResult(Result.success(emptyList()))
                 }
             }, onFailure = { t ->
                 Log.e("RetrofitInstance", "Failed to fetch data: ${t.message}")
-                onResult(null)
+                onResult(Result.failure(t))
             })
     }
 }
