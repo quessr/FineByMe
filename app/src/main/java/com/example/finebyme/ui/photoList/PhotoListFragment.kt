@@ -75,7 +75,9 @@ class PhotoListFragment : Fragment() {
         }
 
         photoListViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
+            Log.d("PhotoListFragment", "Received error message: $errorMessage")
             SnackbarUtils.showSnackbar(requireContext(), binding.root, errorMessage, true)
+            hideKeyboard()
         }
     }
 

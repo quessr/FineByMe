@@ -14,7 +14,7 @@ class PhotoRepository @Inject constructor(
         unsplashDataSource.getRandomPhotoList(onResult)
     }
 
-    fun getSearchPhotoList(query: String, onResult: (List<UnsplashPhoto>?) -> Unit) {
+    fun getSearchPhotoList(query: String, onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
         return unsplashDataSource.getSearchPhotoList(query, onResult)
     }
 

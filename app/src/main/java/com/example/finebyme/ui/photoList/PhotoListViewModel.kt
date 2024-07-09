@@ -32,7 +32,6 @@ class PhotoListViewModel @Inject constructor(
         fetchPhotos()
     }
 
-
     private fun fetchPhotos() {
         _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Starting to fetch photos")
@@ -63,17 +62,28 @@ class PhotoListViewModel @Inject constructor(
 
         _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
-        photoRepository.getSearchPhotoList(query) { response ->
-            Log.d("PhotoListViewModel", "Received response: $response")
-            if (!response.isNullOrEmpty()) {
-                Log.d("PhotoListViewModel", "Search successful: ${response.size} results found")
-                _photos.postValue(response)
+        photoRepository.getSearchPhotoList(query) { result ->
+            result?.onSuccess { photos ->
+                Log.d("PhotoListViewModel", "Received response: $photos")
+                _photos.postValue(photos)
                 _loadingState.postValue(LoadingState.DONE)
-            } else {
+            }?.onFailure { throwable ->
                 Log.d("PhotoListViewModel", "Search failed or no results found")
+                val errorMessage = handleFailure(throwable)
+                _errorMassage.postValue(errorMessage)
                 _photos.postValue(emptyList())
                 _loadingState.postValue(LoadingState.ERROR)
             }
+//            Log.d("PhotoListViewModel", "Received response: $response")
+//            if (!response.isNullOrEmpty()) {
+//                Log.d("PhotoListViewModel", "Search successful: ${response.size} results found")
+//                _photos.postValue(response)
+//                _loadingState.postValue(LoadingState.DONE)
+//            } else {
+//                Log.d("PhotoListViewModel", "Search failed or no results found")
+//                _photos.postValue(emptyList())
+//                _loadingState.postValue(LoadingState.ERROR)
+//            }
         }
     }
 }
