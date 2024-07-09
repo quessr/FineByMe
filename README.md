@@ -26,7 +26,7 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 
 <div style="display: flex; column-gap: 20px; overflow-x: auto">
   <img src="https://github.com/quessr/fine-by-me/assets/96334609/c1134714-b48f-42f5-a292-5f11b5f3ad2d" width="200"/>
-  <img src="https://github.com/quessr/fine-by-me/assets/96334609/ee13e259-5273-4a00-887d-2b987f931352" width="200"/>
+  <img src="https://github.com/quessr/fine-by-me/assets/96334609/513a4736-296d-4074-9453-ee90d3f9ca3c" width="200"/>
   <img src="https://github.com/quessr/fine-by-me/assets/96334609/82d8f468-0191-459a-b288-3391f11f7ef6" width="200"/>
   <img src="https://github.com/quessr/fine-by-me/assets/96334609/dccba679-6d39-430d-b8d1-840f0cbd28ff" width="200"/>
 </div> 
