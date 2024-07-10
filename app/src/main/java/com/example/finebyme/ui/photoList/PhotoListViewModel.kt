@@ -16,9 +16,8 @@ import java.io.IOException
 import java.net.UnknownHostException
 
 class PhotoListViewModel(
-    application: Application,
     private val photoRepository: PhotoRepository,
-) : BaseViewModel(application) {
+) : BaseViewModel() {
 
     private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
     val photos: LiveData<List<UnsplashPhoto>> get() = _photos

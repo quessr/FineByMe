@@ -8,9 +8,8 @@ import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.ui.base.BaseViewModel
 
 class FavoriteListViewModel(
-    application: Application,
     private val photoRepository: PhotoRepository
-) : BaseViewModel(application) {
+) : BaseViewModel() {
     private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
     val photos: LiveData<List<Photo>> get() = _photos
 

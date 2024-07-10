@@ -16,12 +16,12 @@ class AppViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(FavoriteListViewModel::class.java) -> {
-                photoRepository?.let { FavoriteListViewModel(application, photoRepository) } as T
+                photoRepository?.let { FavoriteListViewModel(photoRepository) } as T
             }
 
             modelClass.isAssignableFrom(PhotoListViewModel::class.java) -> {
                 photoRepository?.let {
-                    PhotoListViewModel(application, photoRepository)
+                    PhotoListViewModel(photoRepository)
                 } as T
             }
 
