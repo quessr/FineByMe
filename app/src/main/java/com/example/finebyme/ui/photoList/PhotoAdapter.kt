@@ -15,16 +15,7 @@ import com.example.finebyme.utils.PhotoDiffCallback
 class PhotoAdapter(private val viewModel: BaseViewModel) :
     ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(diffUtil) {
 
-//    private var photoList: List<Photo> = listOf()
     private var listener: OnPhotoClickListener? = null
-
-
-//    fun setPhoto(newPhotoList: List<Photo>) {
-//        val diffCallback = PhotoDiffCallback(photoList, newPhotoList)
-//        val diffResult = DiffUtil.calculateDiff(diffCallback)
-//        photoList = newPhotoList
-//        diffResult.dispatchUpdatesTo(this)
-//    }
 
     interface OnPhotoClickListener {
         fun onPhotoClick(photo: Photo)
@@ -71,17 +62,11 @@ class PhotoAdapter(private val viewModel: BaseViewModel) :
         holder.bind(getItem(position), heightInPx)
     }
 
-//    override fun getItemCount(): Int = photoList.size
-
     fun setOnPhotoClickListener(listener: OnPhotoClickListener) {
         this.listener = listener
     }
 
     fun clearData() {
-//        val diffCallback = PhotoDiffCallback(photoList, listOf())
-//        val diffResult = DiffUtil.calculateDiff(diffCallback)
-//        photoList = listOf()
-//        diffResult.dispatchUpdatesTo(this)
         submitList(emptyList())
     }
 
