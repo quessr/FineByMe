@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.databinding.ItemPhotoBinding
@@ -12,18 +13,18 @@ import com.example.finebyme.utils.ImageLoader
 import com.example.finebyme.utils.PhotoDiffCallback
 
 class PhotoAdapter(private val viewModel: BaseViewModel) :
-    RecyclerView.Adapter<PhotoAdapter.PhotoViewHolder>() {
+    ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(diffUtil) {
 
-    private var photoList: List<Photo> = listOf()
+//    private var photoList: List<Photo> = listOf()
     private var listener: OnPhotoClickListener? = null
 
 
-    fun setPhoto(newPhotoList: List<Photo>) {
-        val diffCallback = PhotoDiffCallback(photoList, newPhotoList)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        photoList = newPhotoList
-        diffResult.dispatchUpdatesTo(this)
-    }
+//    fun setPhoto(newPhotoList: List<Photo>) {
+//        val diffCallback = PhotoDiffCallback(photoList, newPhotoList)
+//        val diffResult = DiffUtil.calculateDiff(diffCallback)
+//        photoList = newPhotoList
+//        diffResult.dispatchUpdatesTo(this)
+//    }
 
     interface OnPhotoClickListener {
         fun onPhotoClick(photo: Photo)
@@ -67,19 +68,32 @@ class PhotoAdapter(private val viewModel: BaseViewModel) :
         val heightInPx = (height * scale + 0.5f).toInt()
 
 
-        holder.bind(photoList[position], heightInPx)
+        holder.bind(getItem(position), heightInPx)
     }
 
-    override fun getItemCount(): Int = photoList.size
+//    override fun getItemCount(): Int = photoList.size
 
     fun setOnPhotoClickListener(listener: OnPhotoClickListener) {
         this.listener = listener
     }
 
     fun clearData() {
-        val diffCallback = PhotoDiffCallback(photoList, listOf())
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        photoList = listOf()
-        diffResult.dispatchUpdatesTo(this)
+//        val diffCallback = PhotoDiffCallback(photoList, listOf())
+//        val diffResult = DiffUtil.calculateDiff(diffCallback)
+//        photoList = listOf()
+//        diffResult.dispatchUpdatesTo(this)
+        submitList(emptyList())
+    }
+
+    companion object {
+        private val diffUtil = object : DiffUtil.ItemCallback<Photo>() {
+            override fun areItemsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 }

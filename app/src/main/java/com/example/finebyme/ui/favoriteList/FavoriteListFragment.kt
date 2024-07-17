@@ -64,7 +64,7 @@ class FavoriteListFragment : Fragment() {
         favoriteListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos ->
-            photoAdapter.setPhoto(photos)
+            photoAdapter.submitList(photos)
             binding.tvEmpty.isVisible = photos.isEmpty()
         }
 
