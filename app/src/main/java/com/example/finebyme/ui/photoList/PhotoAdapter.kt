@@ -10,7 +10,6 @@ import com.example.finebyme.data.db.Photo
 import com.example.finebyme.databinding.ItemPhotoBinding
 import com.example.finebyme.ui.base.BaseViewModel
 import com.example.finebyme.utils.ImageLoader
-import com.example.finebyme.utils.PhotoDiffCallback
 
 class PhotoAdapter(private val viewModel: BaseViewModel) :
     ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(diffUtil) {
