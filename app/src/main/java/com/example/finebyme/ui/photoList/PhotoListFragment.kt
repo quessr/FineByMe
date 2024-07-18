@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +34,7 @@ class PhotoListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
     private lateinit var loadingHandler: LoadingHandler<FragmentPhotoListBinding>
 
-    private val photoListViewModel: PhotoListViewModel by viewModels {
+    private val photoListViewModel: PhotoListViewModel by activityViewModels {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
         val retrofitService = RetrofitInstance.retrofitService

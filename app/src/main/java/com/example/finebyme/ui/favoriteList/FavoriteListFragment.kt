@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,7 +24,7 @@ import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 
 class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
-    private val favoriteListViewModel: FavoriteListViewModel by viewModels {
+    private val favoriteListViewModel: FavoriteListViewModel by activityViewModels {
         val application = requireActivity().application
         val photoDao = FavoritePhotosDatabase.getDatabase(application).PhotoDao()
         val retrofitService = RetrofitInstance.retrofitService
