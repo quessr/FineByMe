@@ -1,6 +1,7 @@
 package com.example.finebyme.ui.favoriteList
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,13 @@ class FavoriteListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupRecyclerview()
+        setupObservers()
+        setupListeners()
+
+    }
+
+    private fun setupRecyclerview() {
         photoAdapter = PhotoAdapter(favoriteListViewModel)
         recyclerView = binding.recyclerView
 
@@ -59,22 +67,25 @@ class FavoriteListFragment : Fragment() {
         recyclerView.layoutManager = layoutManager
 
         binding.recyclerView.adapter = photoAdapter
+    }
 
-//        RetrofitInstance.fetchRandomPhoto { photos -> photos?.let { photoAdapter.setPhoto(it) } }
-
+    private fun setupObservers() {
         favoriteListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos ->
+            val titles = photos.joinToString(", ") { it.title }
+            Log.d("fmb Fragment", "Observed photo titles: $titles")
             photoAdapter.submitList(photos)
             binding.tvEmpty.isVisible = photos.isEmpty()
         }
+    }
 
+    private fun setupListeners() {
         photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
             override fun onPhotoClick(photo: Photo) {
                 val intent = newPhotoDetail(requireContext(), photo)
                 startActivity(intent)
             }
-
         })
     }
 
