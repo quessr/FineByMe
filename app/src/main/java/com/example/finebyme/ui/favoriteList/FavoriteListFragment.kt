@@ -2,13 +2,12 @@ package com.example.finebyme.ui.favoriteList
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -19,8 +18,8 @@ import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.repository.PhotoRepository
 import com.example.finebyme.databinding.FragmentFavoriteListBinding
-import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.di.AppViewModelFactory
+import com.example.finebyme.ui.photoList.PhotoAdapter
 import com.example.finebyme.utils.IntentUtils.newPhotoDetail
 
 class FavoriteListFragment : Fragment() {
@@ -63,7 +62,7 @@ class FavoriteListFragment : Fragment() {
         val numberOfColumns = 2
         val layoutManager =
             StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
-        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         recyclerView.layoutManager = layoutManager
 
         binding.recyclerView.adapter = photoAdapter
@@ -75,7 +74,9 @@ class FavoriteListFragment : Fragment() {
         ) { photos ->
             val titles = photos.joinToString(", ") { it.title }
             Log.d("fmb Fragment", "Observed photo titles: $titles")
-            photoAdapter.submitList(photos)
+            photoAdapter.submitList(photos) {
+                recyclerView.scrollToPosition(0)
+            }
             binding.tvEmpty.isVisible = photos.isEmpty()
         }
     }
