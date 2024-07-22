@@ -2,12 +2,12 @@ package com.example.finebyme.ui.favoriteList
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -51,7 +51,7 @@ class FavoriteListFragment : Fragment() {
         val numberOfColumns = 2
         val layoutManager =
             StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
-        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
         recyclerView.layoutManager = layoutManager
 
         binding.recyclerView.adapter = photoAdapter
@@ -63,7 +63,9 @@ class FavoriteListFragment : Fragment() {
         ) { photos ->
             val titles = photos.joinToString(", ") { it.title }
             Log.d("fmb Fragment", "Observed photo titles: $titles")
-            photoAdapter.submitList(photos)
+            photoAdapter.submitList(photos) {
+                recyclerView.scrollToPosition(0)
+            }
             binding.tvEmpty.isVisible = photos.isEmpty()
         }
     }
