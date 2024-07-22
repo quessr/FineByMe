@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavoriteListFragment : Fragment() {
     private lateinit var photoAdapter: PhotoAdapter
 
-    private val favoriteListViewModel: FavoriteListViewModel by viewModels()
+    private val favoriteListViewModel: FavoriteListViewModel by activityViewModels()
 
     private var _binding: FragmentFavoriteListBinding? = null
     private val binding get() = _binding!!
