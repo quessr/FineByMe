@@ -25,20 +25,19 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 <img src="https://github.com/quessr/fine-by-me/assets/96334609/e9c8f2b8-8ba8-49fc-be48-d51d9783392e" width="200"/>-->
 
 <div style="display: flex; column-gap: 20px; overflow-x: auto">
-  <img src="https://github.com/quessr/fine-by-me/assets/96334609/c1134714-b48f-42f5-a292-5f11b5f3ad2d" width="200"/>
-  <img src="https://github.com/quessr/fine-by-me/assets/96334609/513a4736-296d-4074-9453-ee90d3f9ca3c" width="200"/>
+  <img src="https://github.com/user-attachments/assets/655acc3e-10bc-455b-a752-6e7d079002c8" width="200"/>
+  <img src="https://github.com/user-attachments/assets/872e26c7-0643-4738-98cd-eef35102285c" width="200"/>
   <img src="https://github.com/quessr/fine-by-me/assets/96334609/82d8f468-0191-459a-b288-3391f11f7ef6" width="200"/>
-  <img src="https://github.com/quessr/fine-by-me/assets/96334609/dccba679-6d39-430d-b8d1-840f0cbd28ff" width="200"/>
+  <img src="https://github.com/user-attachments/assets/dad2af30-26b2-40f5-be3f-909254220092" width="200"/>
 </div> 
 
 
 ## 🛠 Skills
 
 - **Kotlin:** 메인 프로그래밍 언어
-- **Android Jetpack:** ViewModel, LiveData, Room, Data Binding
+- **Android Jetpack:** ViewModel, LiveData, Room, Data Binding, Navigation
 - **Retrofit:** REST API 통신
 - **Glide:** 이미지 로딩 및 캐싱
-- **Room:** 데이터베이스 관리 및 ORM (객체 관계 매핑)
 - **Hilt:** 의존성 주입
 <!-- **Coroutine:** 비동기 작업 처리 -->
 
