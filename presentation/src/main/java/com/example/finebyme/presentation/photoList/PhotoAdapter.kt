@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.photoList
+package com.example.finebyme.presentation.photoList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.databinding.ItemPhotoBinding
-import com.example.finebyme.ui.base.BaseViewModel
+import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.utils.ImageLoader
 
-class PhotoAdapter(private val viewModel: BaseViewModel) :
+class PhotoAdapter(private val viewModel: com.example.finebyme.presentation.base.BaseViewModel) :
     ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(diffUtil) {
 
     private var listener: OnPhotoClickListener? = null

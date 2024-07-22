@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.splash
+package com.example.finebyme.presentation.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +8,7 @@ import android.os.Looper
 import android.view.View
 import com.example.finebyme.R
 import com.example.finebyme.databinding.ActivitySplashBinding
-import com.example.finebyme.ui.main.MainActivity
+import com.example.finebyme.presentation.main.MainActivity
 import com.example.finebyme.utils.ImageLoader
 
 class SplashActivity : AppCompatActivity() {
@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
 
     private fun navigateToMainActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, com.example.finebyme.presentation.main.MainActivity::class.java)
             startActivity(intent)
 
             finish()

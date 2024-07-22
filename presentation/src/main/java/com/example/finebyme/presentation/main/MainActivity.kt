@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.main
+package com.example.finebyme.presentation.main
 
 import android.app.AlertDialog
 import android.os.Bundle

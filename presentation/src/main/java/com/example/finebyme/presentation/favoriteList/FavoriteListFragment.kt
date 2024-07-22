@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.favoriteList
+package com.example.finebyme.presentation.favoriteList
 
 import android.os.Bundle
 import android.util.Log

@@ -11,7 +11,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import com.example.finebyme.ui.photoDetail.PhotoDetailViewModel
+import com.example.finebyme.presentation.photoDetail.PhotoDetailViewModel
 
 object ImageLoader {
     fun loadImage(
@@ -20,7 +20,7 @@ object ImageLoader {
         imageView: ImageView,
         centerCrop: Boolean = true,
         crossFade: Boolean = true,
-        photoDetailViewModel: PhotoDetailViewModel? = null,
+        photoDetailViewModel: com.example.finebyme.presentation.photoDetail.PhotoDetailViewModel? = null,
     ) {
         var glideRequest = Glide.with(context)
             .load(url)

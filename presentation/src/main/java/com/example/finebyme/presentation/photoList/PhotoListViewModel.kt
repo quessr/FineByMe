@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.photoList
+package com.example.finebyme.presentation.photoList
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.finebyme.common.enums.LoadingState
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.data.repository.PhotoRepository
-import com.example.finebyme.ui.base.BaseViewModel
+import com.example.finebyme.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.example.finebyme.utils.ErrorHandler.handleFailure
@@ -14,7 +14,7 @@ import com.example.finebyme.utils.ErrorHandler.handleFailure
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
     private val photoRepository: PhotoRepository,
-) : BaseViewModel() {
+) : com.example.finebyme.presentation.base.BaseViewModel() {
 
     private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
     val photos: LiveData<List<UnsplashPhoto>> get() = _photos

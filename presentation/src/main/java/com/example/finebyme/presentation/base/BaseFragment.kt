@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.base
+package com.example.finebyme.presentation.base
 
 import android.os.Bundle
 import android.view.LayoutInflater

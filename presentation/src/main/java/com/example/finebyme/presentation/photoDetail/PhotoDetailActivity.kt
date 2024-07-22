@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.photoDetail
+package com.example.finebyme.presentation.photoDetail
 
 import android.content.pm.PackageManager
 import android.os.Build

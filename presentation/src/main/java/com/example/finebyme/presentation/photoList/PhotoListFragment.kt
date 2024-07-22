@@ -1,4 +1,4 @@
-package com.example.finebyme.ui.photoList
+package com.example.finebyme.presentation.photoList
 
 import android.os.Bundle
 import android.text.Editable
