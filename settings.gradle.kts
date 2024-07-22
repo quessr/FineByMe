@@ -15,4 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "FineByMe"
 include(":app")
- 
+include(":data")
+include(":domain")
+include(":presentation")
