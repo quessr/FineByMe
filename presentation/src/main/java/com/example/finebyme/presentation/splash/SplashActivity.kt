@@ -1,15 +1,14 @@
 package com.example.finebyme.presentation.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
-import com.example.finebyme.R
-import com.example.finebyme.databinding.ActivitySplashBinding
-import com.example.finebyme.presentation.main.MainActivity
-import com.example.finebyme.utils.ImageLoader
+import androidx.appcompat.app.AppCompatActivity
+import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.databinding.ActivitySplashBinding
+import com.example.finebyme.presentation.utils.ImageLoader
 
 class SplashActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }

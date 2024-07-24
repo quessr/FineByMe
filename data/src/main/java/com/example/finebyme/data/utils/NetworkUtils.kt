@@ -1,4 +1,4 @@
-package com.example.finebyme.utils
+package com.example.finebyme.data.utils
 
 import android.util.Log
 import retrofit2.Call

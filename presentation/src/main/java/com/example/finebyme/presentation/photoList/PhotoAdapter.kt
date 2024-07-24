@@ -6,10 +6,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.finebyme.data.db.Photo
-import com.example.finebyme.databinding.ItemPhotoBinding
-import com.example.finebyme.presentation.base.BaseViewModel
-import com.example.finebyme.utils.ImageLoader
+import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.presentation.databinding.ItemPhotoBinding
+import com.example.finebyme.presentation.utils.ImageLoader
 
 class PhotoAdapter(private val viewModel: com.example.finebyme.presentation.base.BaseViewModel) :
     ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(diffUtil) {

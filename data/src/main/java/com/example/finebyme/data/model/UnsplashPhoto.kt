@@ -1,8 +1,6 @@
 package com.example.finebyme.data.model
 
 import android.content.Context
-import com.example.finebyme.R
-import com.example.finebyme.data.db.Photo
 import com.squareup.moshi.Json
 
 data class UnsplashPhoto(
@@ -21,17 +19,17 @@ data class AlternativeSlugs(
     @Json(name = "ko") val ko: String
 )
 
-fun UnsplashPhoto.toPhoto(context: Context): Photo {
-    return Photo(
+fun UnsplashPhoto.toPhoto(context: Context): com.example.finebyme.data.db.Photo {
+    return com.example.finebyme.data.db.Photo(
         id = id,
-        title = title?.ko ?: context.getString(R.string.photo_no_title),
-        description = description ?: context.getString(R.string.photo_no_description),
+        title = title?.ko ?: "aaa",//context.getString(R.string.photo_no_title),
+        description = description ?: "bbb",//context.getString(R.string.photo_no_description),
         fullUrl = urls.full,
         thumbUrl = urls.thumb
     )
 }
 
 // List<UnsplashPhoto>를 List<Photo>로 변환하는 함수
-fun List<UnsplashPhoto>.toPhotoList(context: Context): List<Photo> {
+fun List<UnsplashPhoto>.toPhotoList(context: Context): List<com.example.finebyme.data.db.Photo> {
     return this.map { it.toPhoto(context) }
 }

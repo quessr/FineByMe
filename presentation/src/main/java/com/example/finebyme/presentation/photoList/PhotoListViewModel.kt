@@ -3,21 +3,24 @@ package com.example.finebyme.presentation.photoList
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.finebyme.common.enums.LoadingState
-import com.example.finebyme.data.model.UnsplashPhoto
-import com.example.finebyme.data.repository.PhotoRepository
+import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.domain.usecase.GetRandomPhotoListUseCase
+import com.example.finebyme.domain.usecase.GetSearchPhotoListUseCase
 import com.example.finebyme.presentation.base.BaseViewModel
+import com.example.finebyme.presentation.common.enums.LoadingState
+import com.example.finebyme.presentation.utils.ErrorHandler.handleFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.example.finebyme.utils.ErrorHandler.handleFailure
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
-    private val photoRepository: PhotoRepository,
-) : com.example.finebyme.presentation.base.BaseViewModel() {
+//    private val photoRepository: PhotoRepository,
+    private val getRandomPhotoListUseCase: GetRandomPhotoListUseCase,
+    private val getSearchPhotoListUseCase: GetSearchPhotoListUseCase
+) : BaseViewModel() {
 
-    private val _photos: MutableLiveData<List<UnsplashPhoto>> by lazy { MutableLiveData() }
-    val photos: LiveData<List<UnsplashPhoto>> get() = _photos
+    private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
+    val photos: LiveData<List<Photo>> get() = _photos
 
     private val _loadingState: MutableLiveData<LoadingState> by lazy { MutableLiveData() }
     val loadingState: LiveData<LoadingState> get() = _loadingState
@@ -26,7 +29,7 @@ class PhotoListViewModel @Inject constructor(
     val errorMessage: LiveData<String> get() = _errorMassage
 
     // 검색 전 사진 목록을 캐싱하기 위한 변수
-    private var cachedPhotos: List<UnsplashPhoto> = emptyList()
+    private var cachedPhotos: List<Photo> = emptyList()
 
     init {
         fetchPhotos()
@@ -35,7 +38,18 @@ class PhotoListViewModel @Inject constructor(
     private fun fetchPhotos() {
         _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Starting to fetch photos")
-        photoRepository.getRandomPhotoList { result ->
+//        getRandomPhotoListUseCase.execute { result ->
+//            Log.d("PhotoListViewModel", "Starting to fetch photos $result, ${result?.size}")
+//            _photos.postValue(result)
+//            if (result != null) {
+//                cachedPhotos = result
+//            }
+//            _loadingState.postValue(LoadingState.DONE)
+//
+//
+//        }
+
+        getRandomPhotoListUseCase.execute { result ->
             result?.onSuccess { photos ->
                 Log.d("PhotoListViewModel", "Photos fetched successfully")
                 _photos.postValue(photos)
@@ -62,28 +76,20 @@ class PhotoListViewModel @Inject constructor(
 
         _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
-        photoRepository.getSearchPhotoList(query) { result ->
-            result?.onSuccess { photos ->
-                Log.d("PhotoListViewModel", "Received response: $photos")
-                _photos.postValue(photos)
-                _loadingState.postValue(LoadingState.DONE)
-            }?.onFailure { throwable ->
-                Log.d("PhotoListViewModel", "Search failed or no results found")
-                val errorMessage = handleFailure(throwable)
-                _errorMassage.postValue(errorMessage)
-                _photos.postValue(emptyList())
-                _loadingState.postValue(LoadingState.ERROR)
-            }
-//            Log.d("PhotoListViewModel", "Received response: $response")
-//            if (!response.isNullOrEmpty()) {
-//                Log.d("PhotoListViewModel", "Search successful: ${response.size} results found")
-//                _photos.postValue(response)
+        getSearchPhotoListUseCase.execute(query) { result -> }
+
+//        photoRepository.getSearchPhotoList(query) { result ->
+//            result?.onSuccess { photos ->
+//                Log.d("PhotoListViewModel", "Received response: $photos")
+//                _photos.postValue(photos)
 //                _loadingState.postValue(LoadingState.DONE)
-//            } else {
+//            }?.onFailure { throwable ->
 //                Log.d("PhotoListViewModel", "Search failed or no results found")
+//                val errorMessage = handleFailure(throwable)
+//                _errorMassage.postValue(errorMessage)
 //                _photos.postValue(emptyList())
 //                _loadingState.postValue(LoadingState.ERROR)
 //            }
-        }
+//        }
     }
 }

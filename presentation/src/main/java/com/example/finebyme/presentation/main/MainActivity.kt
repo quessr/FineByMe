@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import com.example.finebyme.R
-import com.example.finebyme.databinding.ActivityMainBinding
+import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

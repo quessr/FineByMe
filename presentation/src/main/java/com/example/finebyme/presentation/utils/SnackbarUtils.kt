@@ -1,11 +1,11 @@
-package com.example.finebyme.utils
+package com.example.finebyme.presentation.utils
 
 import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import com.example.finebyme.R
+import com.example.finebyme.presentation.R
 import com.google.android.material.snackbar.Snackbar
 
 object SnackbarUtils {

@@ -15,10 +15,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.example.finebyme.R
-import com.example.finebyme.common.enums.LoadingState
-import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.repository.PhotoRepository
+import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.domain.repositoryInterface.PhotoRepository
+import com.example.finebyme.domain.usecase.CheckFavoritePhotoUseCase
+import com.example.finebyme.domain.usecase.SetFavoritePhotoUseCase
+import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.common.enums.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
@@ -33,7 +35,9 @@ import javax.inject.Inject
 @HiltViewModel
 class PhotoDetailViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val photoRepository: PhotoRepository
+    private val setFavoritePhotoUseCase: SetFavoritePhotoUseCase,
+    private val checkFavoritePhotoUseCase: CheckFavoritePhotoUseCase
+    // private val photoRepository: PhotoRepository
 ) : ViewModel() {
 
     private val _transformedPhoto = MutableLiveData<Photo>()
@@ -75,15 +79,18 @@ class PhotoDetailViewModel @Inject constructor(
     }
 
     fun isPhotoFavorite(id: String): Boolean {
-        return photoRepository.isPhotoFavorite(id)
+//        return photoRepository.isPhotoFavorite(id)
+        return checkFavoritePhotoUseCase.execute(id)
     }
 
     fun toggleFavorite(photo: Photo) {
         if (isPhotoFavorite(photo.id)) {
-            photoRepository.removePhotoFromFavorites(photo)
+//            photoRepository.removePhotoFromFavorites(photo)
+            setFavoritePhotoUseCase.execute(photo, false)
             _isFavorite.value = false
         } else {
-            photoRepository.addPhotoToFavorites(photo)
+//            photoRepository.addPhotoToFavorites(photo)
+            setFavoritePhotoUseCase.execute(photo, true)
             _isFavorite.value = true
         }
     }

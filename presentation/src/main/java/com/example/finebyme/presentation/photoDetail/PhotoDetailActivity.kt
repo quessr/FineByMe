@@ -13,11 +13,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import com.example.finebyme.R
-import com.example.finebyme.data.db.Photo
-import com.example.finebyme.databinding.ActivityPhotoDetailBinding
-import com.example.finebyme.utils.ImageLoader
-import com.example.finebyme.utils.LoadingHandler
+
+import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.databinding.ActivityPhotoDetailBinding
+import com.example.finebyme.presentation.utils.ImageLoader
+import com.example.finebyme.presentation.utils.LoadingHandler
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -127,17 +128,17 @@ class PhotoDetailActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
-            setupPhotoDetails(transformedPhoto)
-        }
-
-        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
-            updateFavoriteIcon(isFavorite)
-        }
-
-        photoDetailViewModel.loadingState.observe(this) { loadingState ->
-            loadingHandler.setLoadingState(loadingState)
-        }
+//        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
+//            setupPhotoDetails(transformedPhoto)
+//        }
+//
+//        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
+//            updateFavoriteIcon(isFavorite)
+//        }
+//
+//        photoDetailViewModel.loadingState.observe(this) { loadingState ->
+//            loadingHandler.setLoadingState(loadingState)
+//        }
 
         photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
             if (isDownloading) {

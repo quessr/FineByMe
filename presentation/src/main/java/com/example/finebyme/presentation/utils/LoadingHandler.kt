@@ -1,12 +1,12 @@
-package com.example.finebyme.utils
+package com.example.finebyme.presentation.utils
 
 import android.content.Context
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.example.finebyme.R
-import com.example.finebyme.common.enums.LoadingState
-import com.example.finebyme.databinding.ActivityPhotoDetailBinding
-import com.example.finebyme.databinding.FragmentPhotoListBinding
+import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.common.enums.LoadingState
+import com.example.finebyme.presentation.databinding.ActivityPhotoDetailBinding
+import com.example.finebyme.presentation.databinding.FragmentPhotoListBinding
 
 class LoadingHandler<T>(private val binding: T, private val context: Context) {
     fun setLoadingState(loadingState: LoadingState) {

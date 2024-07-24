@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.finebyme.R
+import com.example.finebyme.presentation.R
 
 class BaseFragment : Fragment() {
     override fun onCreateView(

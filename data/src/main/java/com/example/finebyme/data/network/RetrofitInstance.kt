@@ -1,9 +1,5 @@
 package com.example.finebyme.data.network
 
-import android.util.Log
-import com.example.finebyme.BuildConfig
-import com.example.finebyme.data.model.UnsplashPhoto
-import com.example.finebyme.utils.NetworkUtils.enqueueCall
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient

@@ -6,16 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.finebyme.data.db.Photo
-import com.example.finebyme.databinding.FragmentFavoriteListBinding
-import com.example.finebyme.ui.photoList.PhotoAdapter
-import com.example.finebyme.utils.IntentUtils.newPhotoDetail
+import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.presentation.databinding.FragmentFavoriteListBinding
+import com.example.finebyme.presentation.photoList.PhotoAdapter
+import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

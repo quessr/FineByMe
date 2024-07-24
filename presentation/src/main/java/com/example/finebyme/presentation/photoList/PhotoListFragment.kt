@@ -12,18 +12,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.AndroidViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.finebyme.data.db.Photo
-import com.example.finebyme.data.model.toPhotoList
-import com.example.finebyme.databinding.FragmentPhotoListBinding
-import com.example.finebyme.utils.IntentUtils.newPhotoDetail
-import com.example.finebyme.utils.LoadingHandler
+import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.presentation.databinding.FragmentPhotoListBinding
+import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
+import com.example.finebyme.presentation.utils.LoadingHandler
+import com.example.finebyme.presentation.utils.SnackbarUtils
 import dagger.hilt.android.AndroidEntryPoint
-import com.example.finebyme.utils.SnackbarUtils
 
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
@@ -69,7 +66,8 @@ class PhotoListFragment : Fragment() {
         photoListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos ->
-            photoAdapter.submitList(photos.toPhotoList(requireContext()))
+            // photoAdapter.submitList(photos.toPhotoList(requireContext()))
+            photoAdapter.submitList(photos)
         }
 
         photoListViewModel.loadingState.observe(viewLifecycleOwner) { loadingState ->
