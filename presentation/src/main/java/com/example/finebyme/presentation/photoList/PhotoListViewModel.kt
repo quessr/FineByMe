@@ -8,7 +8,6 @@ import com.example.finebyme.domain.usecase.GetRandomPhotoListUseCase
 import com.example.finebyme.domain.usecase.GetSearchPhotoListUseCase
 import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.presentation.common.enums.LoadingState
-import com.example.finebyme.presentation.utils.ErrorHandler.handleFailure
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -57,7 +56,7 @@ class PhotoListViewModel @Inject constructor(
                 _loadingState.postValue(LoadingState.DONE)
             }?.onFailure { throwable ->
                 Log.e("PhotoListViewModel", "Failed to fetch photos: ${throwable.message}")
-                val errorMessage = handleFailure(throwable)
+                val errorMessage = throwable.message ?: "Unknown error"
                 _errorMassage.postValue(errorMessage)
                 _photos.postValue(listOf())
                 _loadingState.postValue(LoadingState.ERROR)
@@ -76,20 +75,20 @@ class PhotoListViewModel @Inject constructor(
 
         _loadingState.postValue(LoadingState.LOADING)
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
-        getSearchPhotoListUseCase.execute(query) { result -> }
+//        getSearchPhotoListUseCase.execute(query) { result -> }
 
-//        photoRepository.getSearchPhotoList(query) { result ->
-//            result?.onSuccess { photos ->
-//                Log.d("PhotoListViewModel", "Received response: $photos")
-//                _photos.postValue(photos)
-//                _loadingState.postValue(LoadingState.DONE)
-//            }?.onFailure { throwable ->
-//                Log.d("PhotoListViewModel", "Search failed or no results found")
-//                val errorMessage = handleFailure(throwable)
-//                _errorMassage.postValue(errorMessage)
-//                _photos.postValue(emptyList())
-//                _loadingState.postValue(LoadingState.ERROR)
-//            }
-//        }
+        getSearchPhotoListUseCase.execute(query) { result ->
+            result?.onSuccess { photos ->
+                Log.d("PhotoListViewModel", "Received response: $photos")
+                _photos.postValue(photos)
+                _loadingState.postValue(LoadingState.DONE)
+            }?.onFailure { throwable ->
+                Log.d("PhotoListViewModel", "Search failed or no results found")
+                val errorMessage = throwable.message
+                _errorMassage.postValue(errorMessage)
+                _photos.postValue(emptyList())
+                _loadingState.postValue(LoadingState.ERROR)
+            }
+        }
     }
 }
