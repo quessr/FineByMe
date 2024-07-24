@@ -1,4 +1,4 @@
-package com.example.finebyme.presentation.common.enums
+package com.example.finebyme.data.common.enums
 
 enum class ErrorType(val message: String) {
     NETWORK_ERROR("Network error. Please try again."),
