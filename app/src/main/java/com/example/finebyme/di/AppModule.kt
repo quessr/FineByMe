@@ -8,6 +8,7 @@ import com.example.finebyme.data.db.PhotoDao
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.network.RetrofitService
 import com.example.finebyme.data.repository.PhotoRepositoryFake
+import com.example.finebyme.data.repository.PhotoRepositoryImpl
 import com.example.finebyme.domain.repositoryInterface.PhotoRepository
 import dagger.Module
 import dagger.Provides
@@ -43,21 +44,21 @@ object AppModule {
         return UserDataSource(photoDao)
     }
 
-//    @Provides
-//    @Singleton
-//    fun providePhotoRepository(
-//        remoteDataSource: UnSplashDataSource,
-//        localDataSource: UserDataSource
-//    ): PhotoRepository {
-//        return PhotoRepository(
-//            remoteDataSource,
-//            localDataSource
-//        )
-//    }
-
     @Provides
     @Singleton
-    fun providePhotoRepository(): PhotoRepository {
-        return PhotoRepositoryFake();
+    fun providePhotoRepository(
+        remoteDataSource: UnSplashDataSource,
+        localDataSource: UserDataSource
+    ): PhotoRepository {
+        return PhotoRepositoryImpl(
+            remoteDataSource,
+            localDataSource
+        )
     }
+
+//    @Provides
+//    @Singleton
+//    fun providePhotoRepository(): PhotoRepository {
+//        return PhotoRepositoryFake();
+//    }
 }
