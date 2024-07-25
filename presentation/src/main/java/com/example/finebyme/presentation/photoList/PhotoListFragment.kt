@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.domain.interaction.OnPhotoClickListener
 import com.example.finebyme.presentation.databinding.FragmentPhotoListBinding
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
 import com.example.finebyme.presentation.utils.LoadingHandler
@@ -82,7 +83,7 @@ class PhotoListFragment : Fragment() {
     }
 
     private fun setupListeners() {
-        photoAdapter.setOnPhotoClickListener(object : PhotoAdapter.OnPhotoClickListener {
+        photoAdapter.setOnPhotoClickListener(object : OnPhotoClickListener {
             override fun onPhotoClick(photo: Photo) {
                 val intent = newPhotoDetail(requireContext(), photo)
                 startActivity(intent)

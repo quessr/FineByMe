@@ -1,5 +1,6 @@
 package com.example.finebyme.presentation.photoList
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,21 +8,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.domain.interaction.OnPhotoClickListener
+import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.presentation.databinding.ItemPhotoBinding
 import com.example.finebyme.presentation.utils.ImageLoader
 
-class PhotoAdapter(private val viewModel: com.example.finebyme.presentation.base.BaseViewModel) :
+class PhotoAdapter(
+    private val viewModel: BaseViewModel,
+) :
     ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(diffUtil) {
 
-    private var listener: OnPhotoClickListener? = null
-
-    interface OnPhotoClickListener {
-        fun onPhotoClick(photo: Photo)
+    private var onPhotoClickListener: OnPhotoClickListener? = null
+//
+    fun setOnPhotoClickListener(listener: OnPhotoClickListener) {
+        this.onPhotoClickListener = listener
     }
+
+//    interface OnPhotoClickListener {
+//        fun onPhotoClick(photo: Photo)
+//    }
 
     class PhotoViewHolder(
         private val binding: ItemPhotoBinding,
-        private val listener: OnPhotoClickListener?
+        private val onPhotoClickListener: OnPhotoClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(photo: Photo, height: Int) {
@@ -39,14 +48,15 @@ class PhotoAdapter(private val viewModel: com.example.finebyme.presentation.base
 
             // 사진 클릭 이벤트 설정
             binding.imageViewPhoto.setOnClickListener {
-                listener?.onPhotoClick(photo)
+                Log.d("PhotoAdapter","imageViewPhoto.setOnClickListener")
+                onPhotoClickListener.onPhotoClick(photo)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
         val binding = ItemPhotoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PhotoViewHolder(binding, listener)
+        return PhotoViewHolder(binding, onPhotoClickListener!!)
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
@@ -58,10 +68,6 @@ class PhotoAdapter(private val viewModel: com.example.finebyme.presentation.base
 
 
         holder.bind(getItem(position), heightInPx)
-    }
-
-    fun setOnPhotoClickListener(listener: OnPhotoClickListener) {
-        this.listener = listener
     }
 
     fun clearData() {
