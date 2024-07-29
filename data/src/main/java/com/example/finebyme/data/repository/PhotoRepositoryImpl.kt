@@ -14,7 +14,6 @@ open class PhotoRepositoryImpl @Inject constructor(
 
 
     override fun getRandomPhotoList(onResult: (Result<List<Photo>>) -> Unit) {
-//         unsplashDataSource.getRandomPhotoList(onResult)
         unsplashDataSource.getRandomPhotoList { result ->
             result?.onSuccess { unsplashPhotos ->
                 val photos = PhotoMapper.mapToPhotoList(unsplashPhotos)
@@ -37,46 +36,21 @@ open class PhotoRepositoryImpl @Inject constructor(
     }
 
     override fun getFavoritePhotoList(): List<Photo> {
-        return emptyList()
+        val dataPhotos = userDataSource.getAllPhotos()
+        return PhotoMapper.mapToDomainPhotoList(dataPhotos)
     }
 
     override fun addPhotoToFavorites(photo: Photo) {
+        val dataPhoto = PhotoMapper.mapToDataPhoto(photo)
+        userDataSource.insertPhoto(dataPhoto)
     }
 
     override fun removePhotoFromFavorites(photo: Photo) {
+        val dataPhoto = PhotoMapper.mapToDataPhoto(photo)
+        userDataSource.deletePhoto(dataPhoto)
     }
 
     override fun isPhotoFavorite(photoId: String): Boolean {
-        return true
+        return userDataSource.isPhotoFavorite(photoId)
     }
-
-
-//    fun getRandomPhotoList(onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
-//        unsplashDataSource.getRandomPhotoList(onResult)
-//    }
-//
-//    fun getSearchPhotoList(query: String, onResult: (Result<List<UnsplashPhoto>>?) -> Unit) {
-//        return unsplashDataSource.getSearchPhotoList(query, onResult)
-//    }
-
-//    fun getFavoritePhotoList(): List<Photo> {
-//        return userDataSource.getAllPhotos()
-//    }
-//
-//    fun getFavoritePhoto(id: String): Photo {
-//        return userDataSource.getPhoto(id)
-//    }
-//
-//    fun addPhotoToFavorites(photo: Photo) {
-//        userDataSource.insertPhoto(photo)
-//    }
-//
-//    fun removePhotoFromFavorites(photo: Photo) {
-//        userDataSource.deletePhoto(photo)
-//    }
-
-    //    fun isPhotoFavorite(photoId: String): Boolean {
-//        return userDataSource.isPhotoFavorite(photoId)
-//    }
-
 }

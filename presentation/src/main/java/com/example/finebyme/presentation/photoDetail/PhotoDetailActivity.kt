@@ -128,17 +128,17 @@ class PhotoDetailActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-//        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
-//            setupPhotoDetails(transformedPhoto)
-//        }
-//
-//        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
-//            updateFavoriteIcon(isFavorite)
-//        }
-//
-//        photoDetailViewModel.loadingState.observe(this) { loadingState ->
-//            loadingHandler.setLoadingState(loadingState)
-//        }
+        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
+            setupPhotoDetails(transformedPhoto)
+        }
+
+        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
+            updateFavoriteIcon(isFavorite)
+        }
+
+        photoDetailViewModel.loadingState.observe(this) { loadingState ->
+            loadingHandler.setLoadingState(loadingState)
+        }
 
         photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
             if (isDownloading) {
