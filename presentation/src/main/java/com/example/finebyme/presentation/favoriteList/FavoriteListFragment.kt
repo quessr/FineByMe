@@ -1,6 +1,7 @@
 package com.example.finebyme.presentation.favoriteList
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,14 +21,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoriteListFragment : Fragment() {
+
     private lateinit var photoAdapter: PhotoAdapter
-
     private val favoriteListViewModel: FavoriteListViewModel by activityViewModels()
-
+    private var recyclerViewState: Parcelable? = null
     private var _binding: FragmentFavoriteListBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private var isPass = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,10 +53,11 @@ class FavoriteListFragment : Fragment() {
 
         val numberOfColumns = 2
         val layoutManager =
-            StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL)
-        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
-        recyclerView.layoutManager = layoutManager
+            StaggeredGridLayoutManager(numberOfColumns, LinearLayoutManager.VERTICAL).apply {
+                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS
+            }
 
+        recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = photoAdapter
     }
 
@@ -62,10 +65,13 @@ class FavoriteListFragment : Fragment() {
         favoriteListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos ->
-            val titles = photos.joinToString(", ") { it.title }
-            Log.d("fmb Fragment", "Observed photo titles: $titles")
             photoAdapter.submitList(photos) {
-                recyclerView.scrollToPosition(0)
+                if (recyclerViewState != null) {
+                    recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
+                }
+                else {
+                    recyclerView.scrollToPosition(0)
+                }
             }
             binding.tvEmpty.isVisible = photos.isEmpty()
         }
@@ -80,6 +86,11 @@ class FavoriteListFragment : Fragment() {
         })
     }
 
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        recyclerView.layoutManager?.onRestoreInstanceState(recyclerViewState)
+    }
+
     override fun onResume() {
         super.onResume()
         if (isPass) {
@@ -87,6 +98,11 @@ class FavoriteListFragment : Fragment() {
             return
         }
         favoriteListViewModel.onResumeScreen()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        recyclerViewState = recyclerView.layoutManager?.onSaveInstanceState()
     }
 
     override fun onDestroyView() {
