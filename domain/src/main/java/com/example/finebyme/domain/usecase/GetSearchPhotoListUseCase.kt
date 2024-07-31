@@ -5,7 +5,7 @@ import com.example.finebyme.domain.repositoryInterface.PhotoRepository
 import javax.inject.Inject
 
 class GetSearchPhotoListUseCase @Inject constructor(private val photoRepository: PhotoRepository) {
-    fun execute(query: String, onResult: (Result<List<Photo>>) -> Unit) {
-        photoRepository.getSearchPhotoList(query, onResult)
+    suspend fun execute(query: String): Result<List<Photo>> {
+        return photoRepository.getSearchPhotoList(query)
     }
 }

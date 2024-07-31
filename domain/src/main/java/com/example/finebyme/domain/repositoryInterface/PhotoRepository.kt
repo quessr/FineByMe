@@ -3,8 +3,8 @@ package com.example.finebyme.domain.repositoryInterface
 import com.example.finebyme.domain.entity.Photo
 
 interface PhotoRepository {
-    fun getRandomPhotoList(onResult: (Result<List<Photo>>) -> Unit)
-    fun getSearchPhotoList(query: String, onResult: (Result<List<Photo>>) -> Unit)
+    suspend fun getRandomPhotoList(): Result<List<Photo>>
+    suspend fun getSearchPhotoList(query: String): Result<List<Photo>>
 
     fun getFavoritePhotoList(): List<Photo>
     fun addPhotoToFavorites(photo: Photo)

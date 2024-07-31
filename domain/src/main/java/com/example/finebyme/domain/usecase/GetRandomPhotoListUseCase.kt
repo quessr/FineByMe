@@ -8,12 +8,8 @@ class GetRandomPhotoListUseCase @Inject constructor (private val photoRepository
 //    fun execute(onResult: (List<Photo>?) -> Unit) {
 //        photoRepository.getRandomPhotoList(onResult)
 //    }
-
-    // 사용자는 랜덤 포토 리스트를 원한다.
-    // 성공하면 Photo 타입의 리스트를 반환하고,
-    // 실패하면 실패메시지를 전달받는다.
-    fun execute(onResult: (Result<List<Photo>>) -> Unit) {
-        photoRepository.getRandomPhotoList(onResult)
+    
+    suspend fun execute() :Result<List<Photo>> {
+        return photoRepository.getRandomPhotoList()
     }
-
 }

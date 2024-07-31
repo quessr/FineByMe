@@ -7,14 +7,14 @@ import retrofit2.http.Query
 
 interface RetrofitService {
     @GET("/photos/random/")
-    fun getRandomPhoto(
+    suspend fun getRandomPhoto(
         @Query("client_id") clientId: String,
         @Query("count") count: Int
-    ): retrofit2.Call<List<UnsplashPhoto>>
+    ): List<UnsplashPhoto>
 
     @GET("/search/photos/")
-    fun getSearchPhoto(
+    suspend fun getSearchPhoto(
         @Query("client_id") clientId: String,
         @Query("query") query: String
-    ): retrofit2.Call<SearchPhotoResponse>
+    ): SearchPhotoResponse
 }
