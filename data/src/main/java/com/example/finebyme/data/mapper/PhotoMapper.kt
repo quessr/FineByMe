@@ -46,5 +46,4 @@ object PhotoMapper {
 
     fun mapToDataPhotoList(domainPhotoList: List<Photo>): List<com.example.finebyme.data.db.Photo> =
         domainPhotoList.map { mapToDataPhoto(it) }
-
 }

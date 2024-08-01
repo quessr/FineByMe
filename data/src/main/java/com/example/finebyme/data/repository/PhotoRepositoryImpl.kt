@@ -10,7 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-open class PhotoRepositoryImpl @Inject constructor(
+class PhotoRepositoryImpl @Inject constructor(
     private val unsplashDataSource: UnSplashDataSource,
     private val userDataSource: UserDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -26,21 +26,7 @@ open class PhotoRepositoryImpl @Inject constructor(
                 Result.failure(e)
             }
         }
-
-
     }
-
-
-//    override fun getRandomPhotoList(onResult: (Result<List<Photo>>) -> Unit) {
-//        unsplashDataSource.getRandomPhotoList { result ->
-//            result?.onSuccess { unsplashPhotos ->
-//                val photos = PhotoMapper.mapToPhotoList(unsplashPhotos)
-//                onResult(Result.success(photos))
-//            }?.onFailure { throwable ->
-//                onResult(Result.failure(throwable))
-//            }
-//        }
-//    }
 
     override suspend fun getSearchPhotoList(query: String): Result<List<Photo>> {
         return withContext(ioDispatcher) {
@@ -52,17 +38,6 @@ open class PhotoRepositoryImpl @Inject constructor(
             }
         }
     }
-
-//    override fun getSearchPhotoList(query: String, onResult: (Result<List<Photo>>) -> Unit) {
-//        unsplashDataSource.getSearchPhotoList(query) { result ->
-//            result?.onSuccess { unsplashPhtos ->
-//                val photos = PhotoMapper.mapToPhotoList(unsplashPhtos)
-//                onResult(Result.success(photos))
-//            }?.onFailure { throwable ->
-//                onResult(Result.failure(throwable))
-//            }
-//        }
-//    }
 
     override fun getFavoritePhotoList(): List<Photo> {
         val dataPhotos = userDataSource.getAllPhotos()

@@ -8,7 +8,7 @@ class GetRandomPhotoListUseCase @Inject constructor (private val photoRepository
 //    fun execute(onResult: (List<Photo>?) -> Unit) {
 //        photoRepository.getRandomPhotoList(onResult)
 //    }
-    
+
     suspend fun execute() :Result<List<Photo>> {
         return photoRepository.getRandomPhotoList()
     }
