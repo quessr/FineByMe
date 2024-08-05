@@ -1,5 +1,5 @@
 ```
-main
+app
 ├── AndroidManifest.xml
 ├── java
 │   └── com
