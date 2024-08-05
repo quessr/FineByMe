@@ -9,6 +9,7 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 - **사진 즐겨찾기:** 마음에 드는 사진을 즐겨찾기에 추가하여 쉽게 관리할 수 있습니다.
 - **사진 다운로드:** 즐겨찾기한 사진을 기기에 다운로드할 수 있습니다.
 - **즐겨찾기 관리:** 즐겨찾기한 사진을 삭제하거나 갤러리에서 확인할 수 있습니다.
+- **핀터레스트 스타일 레이아웃:** 핀터레스트 스타일의 레이아웃을 적용하여 사진을 시각적으로 즐길 수 있습니다.
 
 ## 📸 Screenshots
 
@@ -39,23 +40,24 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 - **Retrofit:** REST API 통신
 - **Glide:** 이미지 로딩 및 캐싱
 - **Hilt:** 의존성 주입
-<!-- **Coroutine:** 비동기 작업 처리 -->
+- **Coroutine:** 비동기 작업 처리
 
 ## 🏛 Architecture
 - **MVVM Pattern:** Model-View-ViewModel 아키텍처 패턴 사용
 - **Repository Pattern:** 데이터 관리를 위한 Repository 패턴 사용
+- **Clean Architecture:** 코드의 유지보수성과 확장성을 높이기 위한 Clean Architecture 아키텍처 패턴 사용
 
 ## 🏠 Project Structure
 
 This document describes the structure of the project. For detailed information on each version, please refer to the links below.
 
-- [PROJECT_STRUCTURE_BASIC](https://github.com/quessr/fine-by-me/blob/main/docx/PROJECT_STRUCTURE_BASIC.md?plain=1)
+- [PROJECT_STRUCTURE_MAIN](./docx/PROJECT_STRUCTURE_MAIN.md)
 - [PROJECT_STRUCTURE_HILT](https://github.com/quessr/fine-by-me/blob/main/docx/PROJECT_STRUCTURE_HILT.md?plain=1)
+- [PROJECT_STRUCTURE_CLEAN_ARCHITECTURE](./docx/PROJECT_STRUCTURE_CLEAN_ARCHITECTURE.md)
 
 ## 🛤 Roadmap
 
-- **Coroutines:** 비동기 작업 처리를 위해 Coroutines를 사용할 예정입니다.
-- **Clean Architecture:** 코드의 유지보수성과 확장성을 높이기 위해 Clean Architecture를 적용할 예정입니다.
+- **핀터레스트 레이아웃 라이브러리:** 프로젝트에서 사용한 핀터레스트 레이아웃을 라이브러리로 만들어 Jitpack에 배포할 예정입니다.
 
 
 ## 🔧 Environment Variables
@@ -67,6 +69,3 @@ To run this project, you will need to add the following environment variables to
 ## 🖼 Unsplash API
 
 이 프로젝트는 [Unsplash API](https://unsplash.com/developers)를 사용하여 사진 검색 및 다운로드 기능을 구현합니다. <br>Unsplash API를 사용하기 위해서는 API 키가 필요하며, API 키는 Unsplash 개발자 포털에서 생성할 수 있습니다.
-
-
-
