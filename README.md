@@ -52,7 +52,6 @@ Fine By Me는 사용자가 즐겨찾기한 사진을 저장하고 관리할 수 
 This document describes the structure of the project. For detailed information on each version, please refer to the links below.
 
 - [PROJECT_STRUCTURE_MAIN](./docx/PROJECT_STRUCTURE_MAIN.md)
-- [PROJECT_STRUCTURE_HILT](https://github.com/quessr/fine-by-me/blob/main/docx/PROJECT_STRUCTURE_HILT.md?plain=1)
 - [PROJECT_STRUCTURE_CLEAN_ARCHITECTURE](./docx/PROJECT_STRUCTURE_CLEAN_ARCHITECTURE.md)
 
 ## 🛤 Roadmap
