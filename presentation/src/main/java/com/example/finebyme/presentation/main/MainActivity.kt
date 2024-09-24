@@ -1,9 +1,12 @@
 package com.example.finebyme.presentation.main
 
 import android.app.AlertDialog
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -17,12 +20,18 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var navController: NavController
     private lateinit var navHostFragment: NavHostFragment
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setupNavigation()
         handleOnBackPressed()
+
+        val cursor = contentResolver.query(Uri.parse("content://com.fbm.contentprovider/favorite"), null, null, null)
+
+        Log.d("MainActivity", "cursor ${cursor?.count}")
+
     }
 
     private fun setupNavigation() {

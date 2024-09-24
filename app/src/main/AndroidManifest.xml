@@ -11,6 +11,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+<!--    <permission-->
+<!--        android:name="com.fbm.contentprovider.READ_DATABASE"-->
+<!--        android:protectionLevel="normal" />-->
+
     <application
         android:name=".FineByMeApplication"
         android:allowBackup="true"
@@ -37,6 +41,11 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:windowSoftInputMode="adjustPan" />
+
+        <provider
+            android:name=".data.db.FavoriteProvider"
+            android:authorities="com.fbm.contentprovider.FavoriteProvider"
+            android:exported="true" />
     </application>
 
 </manifest>
