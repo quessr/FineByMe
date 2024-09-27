@@ -11,9 +11,10 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-<!--    <permission-->
-<!--        android:name="com.fbm.contentprovider.READ_DATABASE"-->
-<!--        android:protectionLevel="normal" />-->
+    <!-- Content Provider를 통해 데이터베이스 접근을 허용하는 권한 설정 -->
+    <permission
+        android:name="com.fbm.contentprovider.READ_DATABASE"
+        android:protectionLevel="normal" />
 
     <application
         android:name=".FineByMeApplication"
@@ -44,7 +45,7 @@
 
         <provider
             android:name=".data.db.FavoriteProvider"
-            android:authorities="com.fbm.contentprovider.FavoriteProvider"
+            android:authorities="com.fbm.contentprovider"
             android:exported="true" />
     </application>
 

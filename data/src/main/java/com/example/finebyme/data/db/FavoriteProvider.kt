@@ -130,7 +130,7 @@ class FavoriteProvider : ContentProvider() {
 
         val uriMatcher = UriMatcher(UriMatcher.NO_MATCH).apply {
             addURI(AUTHORITY, BASE_PATH, FAVORITES)
-            addURI(AUTHORITY, "$BASE_PATH/#", FAVORITE_ID)
+            addURI(AUTHORITY, "$BASE_PATH/*", FAVORITE_ID)
         }
     }
 }
