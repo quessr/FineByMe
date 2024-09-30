@@ -69,6 +69,9 @@ Fine By Me의 Content Provider를 사용하여 favorite_photos_database에 접�
 ```
 이 설정을 통해, 다른 애플리케이션에서도 favorite_photos_database에 접근하여 즐겨찾기한 사진을 조회할 수 있습니다.
 
+만약 `contentResolver`를 사용하여 Fine By Me의 즐겨찾기한 사진 정보를 가져오는 코드 예시가 필요하다면, [이 프로젝트](https://github.com/quessr/ContentProvider)의 코드를 참고하여 구현 방법을 확인할 수 있습니다.
+
+
 ## 🖼 Unsplash API
 
 이 프로젝트는 [Unsplash API](https://unsplash.com/developers)를 사용하여 사진 검색 및 다운로드 기능을 구현합니다. <br>Unsplash API를 사용하기 위해서는 API 키가 필요하며, API 키는 Unsplash 개발자 포털에서 생성할 수 있습니다.
