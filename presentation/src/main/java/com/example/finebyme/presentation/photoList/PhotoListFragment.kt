@@ -58,6 +58,7 @@ import coil.compose.AsyncImage
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.databinding.FragmentPhotoListBinding
+import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
 import com.example.finebyme.presentation.utils.LoadingHandler
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,7 +76,11 @@ class PhotoListFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                PhotoListScreen(photoListViewModel)
+                PhotoListScreen(viewModel = photoListViewModel,
+                    onPhotoCLick = { photo ->
+                        val intent = newPhotoDetail(requireContext(), photo)
+                        startActivity(intent)
+                    })
             }
         }
     }
@@ -83,7 +88,6 @@ class PhotoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-//        setupListeners()
     }
 
     override fun onDestroyView() {
@@ -109,17 +113,12 @@ class PhotoListFragment : Fragment() {
         }
     }
 
-//    private fun setupListeners() {
-//        photoAdapter.setOnPhotoClickListener(object : OnPhotoClickListener {
-//            override fun onPhotoClick(photo: Photo) {
-//                val intent = newPhotoDetail(requireContext(), photo)
-//                startActivity(intent)
-//            }
-//        })
-
 
     @Composable
-    fun PhotoListScreen(viewModel: PhotoListViewModel) {
+    fun PhotoListScreen(
+        viewModel: PhotoListViewModel,
+        onPhotoCLick: (Photo) -> Unit
+    ) {
         var searchText by rememberSaveable { mutableStateOf("") }
         val focusManager = LocalFocusManager.current
 
@@ -148,14 +147,14 @@ class PhotoListFragment : Fragment() {
                 }
             )
 
-            PhotoListScreenContent(photos = photos, onPhotoCLick = {})
+            PhotoListScreenContent(photos = photos, onPhotoCLick = onPhotoCLick)
         }
     }
 
     @Composable
     fun PhotoListScreenContent(
         photos: List<Photo>,
-        onPhotoCLick: (Photo) -> Unit = {}
+        onPhotoCLick: (Photo) -> Unit
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
