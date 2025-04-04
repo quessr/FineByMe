@@ -54,7 +54,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.RecyclerView
 import coil.compose.AsyncImage
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
@@ -70,18 +69,10 @@ class PhotoListFragment : Fragment() {
 
     private val photoListViewModel: PhotoListViewModel by activityViewModels()
 
-//    private var _binding: FragmentPhotoListBinding? = null
-//    private val binding get() = _binding!!
-    private lateinit var recyclerView: RecyclerView
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-//        _binding = FragmentPhotoListBinding.inflate(inflater)
-//        loadingHandler = LoadingHandler(binding, requireContext())
-//        return binding.root
-
         return ComposeView(requireContext()).apply {
             setContent {
                 PhotoListScreen(photoListViewModel)
@@ -91,35 +82,19 @@ class PhotoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setupRecyclerView()
         setupObservers()
 //        setupListeners()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-//        _binding = null
         photoAdapter.clearData()
     }
-
-//    private fun setupRecyclerView() {
-//        photoAdapter = PhotoAdapter(photoListViewModel)
-//        recyclerView = binding.recyclerView
-//
-//        val layoutManager =
-//            StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL).apply {
-//                gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-//            }
-//        recyclerView.layoutManager = layoutManager
-//        binding.recyclerView.adapter = photoAdapter
-//    }
 
     private fun setupObservers() {
         photoListViewModel.photos.observe(
             viewLifecycleOwner
         ) { photos ->
-            // photoAdapter.submitList(photos.toPhotoList(requireContext()))
-//            photoAdapter.submitList(photos)
         }
 
         photoListViewModel.loadingState.observe(viewLifecycleOwner) { loadingState ->
@@ -328,7 +303,6 @@ class PhotoListFragment : Fragment() {
             onPhotoCLick = {}
         )
     }
-
 
     private val dummyPhoto = Photo(
         id = "dummy123",
