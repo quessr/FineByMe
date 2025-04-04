@@ -1,5 +1,6 @@
 package com.example.finebyme.presentation.photoList
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,6 +46,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -55,18 +57,19 @@ import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import coil.compose.AsyncImage
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.request.ImageRequest
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
-import com.example.finebyme.presentation.databinding.FragmentPhotoListBinding
+import com.example.finebyme.presentation.common.enums.LoadingState
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
-import com.example.finebyme.presentation.utils.LoadingHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
 
     private lateinit var photoAdapter: PhotoAdapter
-    private lateinit var loadingHandler: LoadingHandler<FragmentPhotoListBinding>
 
     private val photoListViewModel: PhotoListViewModel by activityViewModels()
 
@@ -101,11 +104,6 @@ class PhotoListFragment : Fragment() {
         ) { photos ->
         }
 
-        photoListViewModel.loadingState.observe(viewLifecycleOwner) { loadingState ->
-            //TODO
-//            loadingHandler.setLoadingState(loadingState)
-        }
-
         photoListViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
             Log.d("PhotoListFragment", "Received error message: $errorMessage")
 //            SnackbarUtils.showSnackbar(requireContext(), binding.root, errorMessage, true)
@@ -119,6 +117,8 @@ class PhotoListFragment : Fragment() {
         viewModel: PhotoListViewModel,
         onPhotoCLick: (Photo) -> Unit
     ) {
+        val photos by viewModel.photos.observeAsState(emptyList())
+        val isLoading by viewModel.loadingState.observeAsState(initial = LoadingState.LOADING)
         var searchText by rememberSaveable { mutableStateOf("") }
         val focusManager = LocalFocusManager.current
 
@@ -127,8 +127,6 @@ class PhotoListFragment : Fragment() {
                 .fillMaxSize()
                 .background(Color.Black)
         ) {
-            val photos by viewModel.photos.observeAsState(emptyList())
-
             SearchBar(
                 searchText = searchText,
                 onTextChange = {
@@ -147,7 +145,11 @@ class PhotoListFragment : Fragment() {
                 }
             )
 
-            PhotoListScreenContent(photos = photos, onPhotoCLick = onPhotoCLick)
+            if (isLoading == LoadingState.LOADING) {
+                PhotoListLoading()
+            } else {
+                PhotoListScreenContent(photos = photos, onPhotoCLick = onPhotoCLick)
+            }
         }
     }
 
@@ -276,6 +278,28 @@ class PhotoListFragment : Fragment() {
                 )
             }
 
+        }
+    }
+
+    @Composable
+    fun PhotoListLoading() {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(R.drawable.loading)
+                    .decoderFactory(
+                        if (Build.VERSION.SDK_INT >= 28) {
+                            ImageDecoderDecoder.Factory()
+                        } else {
+                            GifDecoder.Factory()
+                        }
+                    ).build(),
+                contentDescription = "로딩 중",
+                modifier = Modifier.size(50.dp)
+            )
         }
     }
 
