@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -22,14 +21,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Scaffold
@@ -47,9 +42,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -67,6 +60,7 @@ import coil.decode.ImageDecoderDecoder
 import coil.request.ImageRequest
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.common.component.PhotoGrid
 import com.example.finebyme.presentation.common.enums.LoadingState
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,7 +94,7 @@ class PhotoListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        photoAdapter.clearData()
+//        photoAdapter.clearData()
     }
 
     private fun setupObservers() {
@@ -178,52 +172,11 @@ class PhotoListFragment : Fragment() {
                 if (isLoading == LoadingState.LOADING) {
                     PhotoListLoading()
                 } else {
-                    PhotoListScreenContent(photos = photos, onPhotoCLick = onPhotoCLick)
+                    PhotoGrid(photos = photos, onClick = onPhotoCLick)
                 }
             }
         }
 
-    }
-
-    @Composable
-    fun PhotoListScreenContent(
-        photos: List<Photo>,
-        onPhotoCLick: (Photo) -> Unit
-    ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black),
-            content = {
-                items(photos) { photo ->
-                    PhotoItem(photo = photo, onClick = { onPhotoCLick(photo) })
-                }
-            }
-        )
-    }
-
-    @Composable
-    fun PhotoItem(
-        photo: Photo,
-        onClick: () -> Unit
-    ) {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(4.dp)
-                .clickable { onClick() },
-        ) {
-            AsyncImage(
-                model = photo.thumbUrl,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f)
-                    .clip(RoundedCornerShape(8.dp))
-            )
-        }
     }
 
     @Composable
@@ -351,11 +304,11 @@ class PhotoListFragment : Fragment() {
     @Preview(showBackground = true)
     @Composable
     fun PhotoListScreenPreview() {
-        PhotoListScreenContent(
+        PhotoGrid(
             photos = List(10) { index ->
                 dummyPhoto.copy(id = index.toString())
             },
-            onPhotoCLick = {}
+            onClick = {}
         )
     }
 
