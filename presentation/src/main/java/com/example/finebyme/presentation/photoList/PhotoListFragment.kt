@@ -32,8 +32,13 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -119,38 +124,65 @@ class PhotoListFragment : Fragment() {
     ) {
         val photos by viewModel.photos.observeAsState(emptyList())
         val isLoading by viewModel.loadingState.observeAsState(initial = LoadingState.LOADING)
+        val errorMessage by viewModel.errorMessage.observeAsState()
+        val snackbarHostState = remember { SnackbarHostState() }
         var searchText by rememberSaveable { mutableStateOf("") }
         val focusManager = LocalFocusManager.current
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black)
-        ) {
-            SearchBar(
-                searchText = searchText,
-                onTextChange = {
-                    searchText = it
-                    photoListViewModel.searchPhotos(it)
-                },
-                onSearch = {
-                    Log.d("Search", "Search submitted: $searchText")
-                    viewModel.searchPhotos(searchText)
-                    focusManager.clearFocus()
-                },
-                onCancle = {
-                    searchText = ""
-                    photoListViewModel.searchPhotos("")
-                    focusManager.clearFocus()
-                }
-            )
-
-            if (isLoading == LoadingState.LOADING) {
-                PhotoListLoading()
-            } else {
-                PhotoListScreenContent(photos = photos, onPhotoCLick = onPhotoCLick)
+        LaunchedEffect(errorMessage) {
+            errorMessage?.let {
+                snackbarHostState.showSnackbar(it)
             }
         }
+
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            snackbarHost = {
+                SnackbarHost(
+                    hostState = snackbarHostState,
+                    modifier = Modifier.padding(bottom = 50.dp)
+                ) { data ->
+                    val isError = true
+                    Snackbar(
+                        snackbarData = data,
+                        containerColor = if (isError) Color(0xFFD32F2F) else Color(0xFF323232),
+                        contentColor = Color.White
+                    )
+                }
+            },
+        ) { paddingValues ->
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues)
+                    .fillMaxSize()
+                    .background(Color.Black)
+            ) {
+                SearchBar(
+                    searchText = searchText,
+                    onTextChange = {
+                        searchText = it
+                        photoListViewModel.searchPhotos(it)
+                    },
+                    onSearch = {
+                        Log.d("Search", "Search submitted: $searchText")
+                        viewModel.searchPhotos(searchText)
+                        focusManager.clearFocus()
+                    },
+                    onCancle = {
+                        searchText = ""
+                        photoListViewModel.searchPhotos("")
+                        focusManager.clearFocus()
+                    }
+                )
+
+                if (isLoading == LoadingState.LOADING) {
+                    PhotoListLoading()
+                } else {
+                    PhotoListScreenContent(photos = photos, onPhotoCLick = onPhotoCLick)
+                }
+            }
+        }
+
     }
 
     @Composable
