@@ -10,15 +10,41 @@ import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-
+import coil.compose.AsyncImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.common.component.Loading
 import com.example.finebyme.presentation.databinding.ActivityPhotoDetailBinding
-import com.example.finebyme.presentation.utils.ImageLoader
-import com.example.finebyme.presentation.utils.LoadingHandler
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,13 +67,13 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
 
-    private lateinit var loadingHandler: LoadingHandler<ActivityPhotoDetailBinding>
+//    private lateinit var loadingHandler: LoadingHandler<ActivityPhotoDetailBinding>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        loadingHandler = LoadingHandler(binding, this)
+//        loadingHandler = LoadingHandler(binding, this)
 
         photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
@@ -67,19 +93,22 @@ class PhotoDetailActivity : AppCompatActivity() {
         setupObservers()
         // TODO: setupListener()
         handleOnBackPressed()
+
     }
 
     private fun setupUI() {
-        val isFavorite = photo?.let { photoDetailViewModel.isPhotoFavorite(it.id) }
-        isFavorite?.let { updateFavoriteIcon(it) }
 
-        binding.ivFavorite.setOnClickListener {
-            photo?.let { photoDetailViewModel.toggleFavorite(it) }
+        binding.composeView.setContent {
+            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
         }
 
-        binding.chipDownload.setOnClickListener {
-            requestPermissionDownload()
-        }
+//        binding.ivFavorite.setOnClickListener {
+//            photo?.let { photoDetailViewModel.toggleFavorite(it) }
+//        }
+//
+//        binding.chipDownload.setOnClickListener {
+//            requestPermissionDownload()
+//        }
     }
 
     private fun requestPermissionDownload() {
@@ -122,8 +151,8 @@ class PhotoDetailActivity : AppCompatActivity() {
     }
 
     private fun startDownload() {
-        binding.progressBar.isVisible = true
-        binding.tvDownloading.isVisible = true
+//        binding.progressBar.isVisible = true
+//        binding.tvDownloading.isVisible = true
         photo?.let { photoDetailViewModel.downloadImage(it) }
     }
 
@@ -132,23 +161,24 @@ class PhotoDetailActivity : AppCompatActivity() {
             setupPhotoDetails(transformedPhoto)
         }
 
-        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
-            updateFavoriteIcon(isFavorite)
-        }
+//        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
+//            updateFavoriteIcon(isFavorite)
+//        }
 
-        photoDetailViewModel.loadingState.observe(this) { loadingState ->
-            loadingHandler.setLoadingState(loadingState)
-        }
+//        photoDetailViewModel.loadingState.observe(this) { loadingState ->
+////            loadingHandler.setLoadingState(loadingState)
+//            Log.d("PhotoDetail", "loadingState = $loadingState")
+//        }
 
-        photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
-            if (isDownloading) {
-                binding.progressBar.isVisible = true
-                binding.tvDownloading.isVisible = true
-            } else {
-                binding.progressBar.isVisible = false
-                binding.tvDownloading.isVisible = false
-            }
-        }
+//        photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
+//            if (isDownloading) {
+//                binding.progressBar.isVisible = true
+//                binding.tvDownloading.isVisible = true
+//            } else {
+//                binding.progressBar.isVisible = false
+//                binding.tvDownloading.isVisible = false
+//            }
+//        }
 
         photoDetailViewModel.downloadState.observe(this) { message ->
             showSnackbar(message)
@@ -157,15 +187,15 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private fun setupPhotoDetails(photo: Photo) {
         photo.let {
-
-            binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-
-            ImageLoader.loadImage(
-                context = this,
-                url = photo.fullUrl,
-                imageView = binding.ivPhoto,
-                photoDetailViewModel = photoDetailViewModel
-            )
+//
+//            binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+//
+//            ImageLoader.loadImage(
+//                context = this,
+//                url = photo.fullUrl,
+//                imageView = binding.ivPhoto,
+//                photoDetailViewModel = photoDetailViewModel
+//            )
 
             binding.tvTitle.text = it.title
             binding.tvDescription.text = it.description
@@ -174,14 +204,14 @@ class PhotoDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateFavoriteIcon(isFavorite: Boolean) {
-        if (isFavorite) {
-            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
-
-        } else {
-            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
-        }
-    }
+//    private fun updateFavoriteIcon(isFavorite: Boolean) {
+//        if (isFavorite) {
+//            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
+//
+//        } else {
+//            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
+//        }
+//    }
 
     private fun showSnackbar(message: String) {
         val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
@@ -204,5 +234,97 @@ class PhotoDetailActivity : AppCompatActivity() {
                 finish() // 기본 동작으로 MainActivity로 돌아가기
             }
         })
+    }
+
+    @Composable
+    fun PhotoDetailScreen(viewModel: PhotoDetailViewModel, photo: Photo) {
+        val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
+
+        PhotoImage(
+            photoUrl = photo.thumbUrl,
+            isFavorite = isFavorite,
+            isDownloading = viewModel.isDownloading.observeAsState(false).value,
+            onDownloadClick = { requestPermissionDownload() },
+            onFavoriteClick = { viewModel.toggleFavorite(photo) }
+        )
+    }
+
+    @Composable
+    fun PhotoImage(
+        photoUrl: String,
+        onDownloadClick: () -> Unit,
+        onFavoriteClick: () -> Unit,
+        isFavorite: Boolean,
+        isDownloading: Boolean
+    ) {
+        val painter = rememberAsyncImagePainter(model = photoUrl)
+        val state = painter.state
+
+        Box(modifier = Modifier.fillMaxWidth()) {
+            Image(
+                painter = painter,
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
+                contentScale = ContentScale.Crop
+            )
+
+            if (state is AsyncImagePainter.State.Loading) {
+                Loading()
+            }
+
+            IconButton(
+                onClick = onFavoriteClick,
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 16.dp, bottom = 72.dp)
+                    .background(
+                        color = Color.Black.copy(alpha = 0.4f),
+                        shape = CircleShape
+                    )
+                    .size(52.dp)
+                    .border(width = 1.dp, color = Color.Gray, shape = CircleShape)
+            ) {
+                Icon(
+                    painter = painterResource(
+                        id = if (isFavorite) R.drawable.ic_nav_favorite_selected
+                        else R.drawable.ic_nav_favorite_normal
+                    ),
+                    contentDescription = "Favorite",
+                    tint = Color.White
+                )
+            }
+
+            if (!isDownloading) {
+                AssistChip(
+                    onClick = onDownloadClick,
+                    label = { Text("다운로드", color = Color.White) },
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .padding(end = 16.dp, bottom = 16.dp),
+                    colors = AssistChipDefaults.assistChipColors(
+                        containerColor = Color.Black.copy(alpha = 0.4f)
+                    ),
+                    trailingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_file_download),
+                            contentDescription = "download",
+                            tint = Color.White,
+                            modifier = Modifier.size(18.dp)
+                        )
+                    },
+                    shape = RoundedCornerShape(16.dp),
+                    border = BorderStroke(1.dp, Color.Gray)
+                )
+            } else {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .size(32.dp),
+                    color = Color.White
+                )
+            }
+        }
     }
 }

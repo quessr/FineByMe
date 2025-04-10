@@ -1,110 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.photoDetail.PhotoDetailActivity"
-    android:background="#2F2D2D">
-    <ImageView
-        android:id="@+id/iv_photo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    android:background="#2F2D2D"
+    tools:context=".presentation.photoDetail.PhotoDetailActivity">
+
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1:1" />
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_photo"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintDimensionRatio="1:1"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ProgressBar
         android:id="@+id/progressBar"
-        app:layout_constraintTop_toTopOf="@+id/iv_photo"
-        app:layout_constraintStart_toStartOf="@+id/iv_photo"
-        app:layout_constraintEnd_toEndOf="@+id/iv_photo"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="20dp"
         android:indeterminateTint="@color/white"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/composeView"
+        app:layout_constraintEnd_toEndOf="@+id/composeView"
+        app:layout_constraintStart_toStartOf="@+id/composeView"
+        app:layout_constraintTop_toTopOf="@+id/composeView" />
+
     <TextView
         android:id="@+id/tv_downloading"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar"
-        app:layout_constraintStart_toStartOf="@+id/iv_photo"
-        app:layout_constraintEnd_toEndOf="@id/iv_photo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/downloading_message"
+        android:textColor="@color/white"
         android:textSize="16dp"
         android:textStyle="bold"
-        android:textColor="@color/white"
-        android:visibility="gone"/>
-
-    <ImageView
-        android:id="@+id/iv_loading"
-        app:layout_constraintTop_toTopOf="@+id/iv_photo"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
-        app:layout_constraintStart_toStartOf="@+id/iv_photo"
-        app:layout_constraintEnd_toEndOf="@+id/iv_photo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
         android:visibility="gone"
-        android:alpha="1.0"/>
+        app:layout_constraintEnd_toEndOf="@id/composeView"
+        app:layout_constraintStart_toStartOf="@+id/composeView"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_loading"-->
+<!--        android:layout_width="60dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:alpha="1.0"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/composeView"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/composeView"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/composeView"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/composeView" />-->
 
     <ImageView
         android:id="@+id/iv_favorite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/chip_download"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
-        android:layout_marginVertical="8dp"
-        android:layout_marginHorizontal="16dp"
         android:layout_width="52dp"
         android:layout_height="52dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        android:background="@drawable/favorite_button_background"
         android:paddingHorizontal="12dp"
         android:paddingVertical="12dp"
-        android:background="@drawable/favorite_button_background"
         android:src="@drawable/ic_nav_favorite_normal"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/composeView"
+        app:layout_constraintBottom_toTopOf="@+id/chip_download"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_download"
         style="@style/CustomChipStyle"
         android:layout_width="wrap_content"
         android:layout_height="54dp"
-        app:chipSurfaceColor="#66000000"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_photo"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginHorizontal="8dp"
         android:layout_marginVertical="8dp"
         android:text="@string/download"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:chipSurfaceColor="#66000000"
+        app:layout_constraintBottom_toBottomOf="@+id/composeView"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/iv_photo"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginVertical="20dp">
+        android:layout_marginVertical="20dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/composeView">
+
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="한-무리의-사람들이-건물-앞에서-길을-건너고-있다"
             android:layout_marginBottom="20dp"
+            android:textColor="#fff"
             android:textSize="24dp"
             android:textStyle="bold"
-            android:textColor="#fff"/>
+            tools:text="한-무리의-사람들이-건물-앞에서-길을-건너고-있다" />
+
         <TextView
             android:id="@+id/tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#fff"
             android:textSize="18dp"
             android:textStyle="bold"
-            android:textColor="#fff"
-            tools:text="a group of people crossing a street in front of a building"/>
+            tools:text="a group of people crossing a street in front of a building" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
