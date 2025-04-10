@@ -1,6 +1,5 @@
 package com.example.finebyme.presentation.photoList
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -44,7 +43,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -54,12 +52,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import coil.compose.AsyncImage
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.request.ImageRequest
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.common.component.Loading
 import com.example.finebyme.presentation.common.component.PhotoGrid
 import com.example.finebyme.presentation.common.enums.LoadingState
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
@@ -170,7 +165,7 @@ class PhotoListFragment : Fragment() {
                 )
 
                 if (isLoading == LoadingState.LOADING) {
-                    PhotoListLoading()
+                    Loading()
                 } else {
                     PhotoGrid(photos = photos, onClick = onPhotoCLick)
                 }
@@ -263,28 +258,6 @@ class PhotoListFragment : Fragment() {
                 )
             }
 
-        }
-    }
-
-    @Composable
-    fun PhotoListLoading() {
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(R.drawable.loading)
-                    .decoderFactory(
-                        if (Build.VERSION.SDK_INT >= 28) {
-                            ImageDecoderDecoder.Factory()
-                        } else {
-                            GifDecoder.Factory()
-                        }
-                    ).build(),
-                contentDescription = "로딩 중",
-                modifier = Modifier.size(50.dp)
-            )
         }
     }
 
