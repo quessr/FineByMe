@@ -1,13 +1,16 @@
 package com.example.finebyme.presentation.photoDetail
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
@@ -34,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
@@ -61,7 +65,6 @@ class PhotoDetailActivity : AppCompatActivity() {
         private const val REQUEST_CODE_LEGACY = 100
     }
 
-    private lateinit var binding: ActivityPhotoDetailBinding
     private var photo: Photo? = null
 
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
@@ -69,8 +72,10 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPhotoDetailBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+
+        setContent {
+            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
+        }
 
         photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
@@ -82,7 +87,6 @@ class PhotoDetailActivity : AppCompatActivity() {
         if (photo != null) {
             // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
             photoDetailViewModel.onEntryScreen(photo!!)
-            setupUI()
         } else {
             finish()
         }
@@ -91,13 +95,6 @@ class PhotoDetailActivity : AppCompatActivity() {
         // TODO: setupListener()
         handleOnBackPressed()
 
-    }
-
-    private fun setupUI() {
-
-        binding.composeView.setContent {
-            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
-        }
     }
 
     private fun requestPermissionDownload() {
@@ -129,11 +126,11 @@ class PhotoDetailActivity : AppCompatActivity() {
         when (requestCode) {
             100, 200 -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showSnackbar(R.string.permission_granted.toString())
+//                    showSnackbar(R.string.permission_granted.toString())
                     startDownload()
                 } else {
                     finish()
-                    showSnackbar(R.string.permission_granted.toString())
+//                    showSnackbar(R.string.permission_granted.toString())
                 }
             }
         }
@@ -148,35 +145,35 @@ class PhotoDetailActivity : AppCompatActivity() {
             setupPhotoDetails(transformedPhoto)
         }
 
-        photoDetailViewModel.downloadState.observe(this) { message ->
-            showSnackbar(message)
-        }
+//        photoDetailViewModel.downloadState.observe(this) { message ->
+//            showSnackbar(message)
+//        }
     }
 
     private fun setupPhotoDetails(photo: Photo) {
         photo.let {
 
-            binding.tvTitle.text = it.title
-            binding.tvDescription.text = it.description
+//            binding.tvTitle.text = it.title
+//            binding.tvDescription.text = it.description
 
             Log.d("@@@@@@", " photo id : ${photo.id}")
         }
     }
 
-    private fun showSnackbar(message: String) {
-        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
-        val snackbarView: View = snackbar.view
-
-        // 상단 중앙으로 이동
-        val params = snackbarView.layoutParams as FrameLayout.LayoutParams
-        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-        snackbarView.layoutParams = params
-
-        val color = ContextCompat.getColor(this, R.color.black_40)
-        snackbar.setBackgroundTint(color)
-
-        snackbar.show()
-    }
+//    private fun showSnackbar(message: String) {
+//        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+//        val snackbarView: View = snackbar.view
+//
+//        // 상단 중앙으로 이동
+//        val params = snackbarView.layoutParams as FrameLayout.LayoutParams
+//        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+//        snackbarView.layoutParams = params
+//
+//        val color = ContextCompat.getColor(this, R.color.black_40)
+//        snackbar.setBackgroundTint(color)
+//
+//        snackbar.show()
+//    }
 
     private fun handleOnBackPressed() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
