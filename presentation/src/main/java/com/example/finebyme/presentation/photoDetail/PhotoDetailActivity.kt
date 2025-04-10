@@ -38,7 +38,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.example.finebyme.domain.entity.Photo
@@ -67,13 +66,11 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
 
-//    private lateinit var loadingHandler: LoadingHandler<ActivityPhotoDetailBinding>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPhotoDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        loadingHandler = LoadingHandler(binding, this)
 
         photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
@@ -101,14 +98,6 @@ class PhotoDetailActivity : AppCompatActivity() {
         binding.composeView.setContent {
             PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
         }
-
-//        binding.ivFavorite.setOnClickListener {
-//            photo?.let { photoDetailViewModel.toggleFavorite(it) }
-//        }
-//
-//        binding.chipDownload.setOnClickListener {
-//            requestPermissionDownload()
-//        }
     }
 
     private fun requestPermissionDownload() {
@@ -151,8 +140,6 @@ class PhotoDetailActivity : AppCompatActivity() {
     }
 
     private fun startDownload() {
-//        binding.progressBar.isVisible = true
-//        binding.tvDownloading.isVisible = true
         photo?.let { photoDetailViewModel.downloadImage(it) }
     }
 
@@ -161,25 +148,6 @@ class PhotoDetailActivity : AppCompatActivity() {
             setupPhotoDetails(transformedPhoto)
         }
 
-//        photoDetailViewModel.isFavorite.observe(this) { isFavorite ->
-//            updateFavoriteIcon(isFavorite)
-//        }
-
-//        photoDetailViewModel.loadingState.observe(this) { loadingState ->
-////            loadingHandler.setLoadingState(loadingState)
-//            Log.d("PhotoDetail", "loadingState = $loadingState")
-//        }
-
-//        photoDetailViewModel.isDownloading.observe(this) { isDownloading ->
-//            if (isDownloading) {
-//                binding.progressBar.isVisible = true
-//                binding.tvDownloading.isVisible = true
-//            } else {
-//                binding.progressBar.isVisible = false
-//                binding.tvDownloading.isVisible = false
-//            }
-//        }
-
         photoDetailViewModel.downloadState.observe(this) { message ->
             showSnackbar(message)
         }
@@ -187,15 +155,6 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     private fun setupPhotoDetails(photo: Photo) {
         photo.let {
-//
-//            binding.ivPhoto.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-//
-//            ImageLoader.loadImage(
-//                context = this,
-//                url = photo.fullUrl,
-//                imageView = binding.ivPhoto,
-//                photoDetailViewModel = photoDetailViewModel
-//            )
 
             binding.tvTitle.text = it.title
             binding.tvDescription.text = it.description
@@ -203,15 +162,6 @@ class PhotoDetailActivity : AppCompatActivity() {
             Log.d("@@@@@@", " photo id : ${photo.id}")
         }
     }
-
-//    private fun updateFavoriteIcon(isFavorite: Boolean) {
-//        if (isFavorite) {
-//            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_selected)
-//
-//        } else {
-//            binding.ivFavorite.setImageResource(R.drawable.ic_nav_favorite_normal)
-//        }
-//    }
 
     private fun showSnackbar(message: String) {
         val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
