@@ -1,11 +1,15 @@
 package com.example.finebyme.presentation.photoDetail
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -26,10 +30,15 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -117,43 +126,38 @@ class PhotoDetailActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            100, 200 -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    showSnackbar(R.string.permission_granted.toString())
-                    startDownload()
-                } else {
-                    finish()
-//                    showSnackbar(R.string.permission_granted.toString())
+
+        if (requestCode == REQUEST_CODE_TIRAMISU) {
+            val granted =
+                grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
+
+            if (granted) {
+                startDownload()
+            } else {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, IMAGE_PERMISSION)) {
+                    showPermissionDeniedDialog()
                 }
             }
         }
     }
 
+    private fun showPermissionDeniedDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("권한이 필요합니다")
+            .setMessage("이미지 다운로드를 위해 저장소 접근 권한이 필요합니다. 설정에서 권한을 허용해주세요.")
+            .setPositiveButton("설정으로 이동") { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", packageName, null)
+                }
+                startActivity(intent)
+            }
+            .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
     private fun startDownload() {
         photo?.let { photoDetailViewModel.downloadImage(it) }
     }
-
-//    private fun setupObservers() {
-//        photoDetailViewModel.downloadState.observe(this) { message ->
-//            showSnackbar(message)
-//        }
-//    }
-
-//    private fun showSnackbar(message: String) {
-//        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
-//        val snackbarView: View = snackbar.view
-//
-//        // 상단 중앙으로 이동
-//        val params = snackbarView.layoutParams as FrameLayout.LayoutParams
-//        params.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
-//        snackbarView.layoutParams = params
-//
-//        val color = ContextCompat.getColor(this, R.color.black_40)
-//        snackbar.setBackgroundTint(color)
-//
-//        snackbar.show()
-//    }
 
     private fun handleOnBackPressed() {
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
@@ -168,9 +172,28 @@ class PhotoDetailActivity : AppCompatActivity() {
         val transformedPhoto by viewModel.transformedPhoto.observeAsState()
         val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
         val isDownlaoding by viewModel.isDownloading.observeAsState(initial = false)
+        val downloadState by viewModel.downloadState.observeAsState()
+
+        val snackbarHostState = remember { SnackbarHostState() }
+
+        LaunchedEffect(downloadState) {
+            downloadState?.let { message ->
+                snackbarHostState.showSnackbar(
+                    message = message,
+                    withDismissAction = true,
+                    duration = SnackbarDuration.Short
+                )
+            }
+        }
 
         transformedPhoto.let { transformed ->
-            Scaffold() { padding ->
+            Scaffold(
+                snackbarHost = {
+                    SnackbarHost(
+                        hostState = snackbarHostState,
+                    )
+                }
+            ) { padding ->
                 Column(
                     modifier = Modifier
                         .padding(padding)
@@ -241,54 +264,54 @@ class PhotoDetailActivity : AppCompatActivity() {
                 )
             }
 
-            if (!isDownloading) {
-                AssistChip(
-                    onClick = onDownloadClick,
-                    label = { Text("다운로드", color = Color.White) },
-                    modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 16.dp, bottom = 16.dp),
-                    colors = AssistChipDefaults.assistChipColors(
-                        containerColor = Color.Black.copy(alpha = 0.4f)
-                    ),
-                    trailingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_file_download),
-                            contentDescription = "download",
-                            tint = Color.White,
-                            modifier = Modifier.size(18.dp)
-                        )
-                    },
-                    shape = RoundedCornerShape(16.dp),
-                    border = BorderStroke(1.dp, Color.Gray)
-                )
-            } else {
+            AssistChip(
+                onClick = onDownloadClick,
+                label = { Text("다운로드", color = Color.White) },
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(end = 16.dp, bottom = 16.dp),
+                colors = AssistChipDefaults.assistChipColors(
+                    containerColor = Color.Black.copy(alpha = 0.4f)
+                ),
+                trailingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_file_download),
+                        contentDescription = "download",
+                        tint = Color.White,
+                        modifier = Modifier.size(18.dp)
+                    )
+                },
+                shape = RoundedCornerShape(16.dp),
+                border = BorderStroke(1.dp, Color.Gray)
+            )
+
+            if (isDownloading) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .align(Alignment.Center)
                         .size(32.dp),
-                    color = Color.White
+                    color = Color.White,
                 )
             }
         }
     }
+}
 
-    @Composable
-    fun PhotoDetailTextSection(photoTitle: String, photoDescription: String) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(
-                text = photoTitle,
-                color = Color.White,
-                fontSize = 24.sp,
-                modifier = Modifier.padding(bottom = 20.dp),
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = photoDescription,
-                color = Color.White,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
+@Composable
+fun PhotoDetailTextSection(photoTitle: String, photoDescription: String) {
+    Column(modifier = Modifier.padding(20.dp)) {
+        Text(
+            text = photoTitle,
+            color = Color.White,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(bottom = 20.dp),
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = photoDescription,
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold
+        )
     }
 }
