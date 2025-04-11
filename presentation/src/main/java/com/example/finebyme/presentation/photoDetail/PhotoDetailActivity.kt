@@ -1,14 +1,8 @@
 package com.example.finebyme.presentation.photoDetail
 
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Log
-import android.view.Gravity
-import android.view.View
-import android.widget.FrameLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -18,7 +12,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,6 +25,7 @@ import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,9 +34,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImagePainter
@@ -47,8 +45,6 @@ import coil.compose.rememberAsyncImagePainter
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.common.component.Loading
-import com.example.finebyme.presentation.databinding.ActivityPhotoDetailBinding
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -91,8 +87,6 @@ class PhotoDetailActivity : AppCompatActivity() {
             finish()
         }
 
-        setupObservers()
-        // TODO: setupListener()
         handleOnBackPressed()
 
     }
@@ -140,25 +134,11 @@ class PhotoDetailActivity : AppCompatActivity() {
         photo?.let { photoDetailViewModel.downloadImage(it) }
     }
 
-    private fun setupObservers() {
-        photoDetailViewModel.transformedPhoto.observe(this) { transformedPhoto ->
-            setupPhotoDetails(transformedPhoto)
-        }
-
+//    private fun setupObservers() {
 //        photoDetailViewModel.downloadState.observe(this) { message ->
 //            showSnackbar(message)
 //        }
-    }
-
-    private fun setupPhotoDetails(photo: Photo) {
-        photo.let {
-
-//            binding.tvTitle.text = it.title
-//            binding.tvDescription.text = it.description
-
-            Log.d("@@@@@@", " photo id : ${photo.id}")
-        }
-    }
+//    }
 
 //    private fun showSnackbar(message: String) {
 //        val snackbar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
@@ -185,15 +165,33 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     @Composable
     fun PhotoDetailScreen(viewModel: PhotoDetailViewModel, photo: Photo) {
+        val transformedPhoto by viewModel.transformedPhoto.observeAsState()
         val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
+        val isDownlaoding by viewModel.isDownloading.observeAsState(initial = false)
 
-        PhotoImage(
-            photoUrl = photo.thumbUrl,
-            isFavorite = isFavorite,
-            isDownloading = viewModel.isDownloading.observeAsState(false).value,
-            onDownloadClick = { requestPermissionDownload() },
-            onFavoriteClick = { viewModel.toggleFavorite(photo) }
-        )
+        transformedPhoto.let { transformed ->
+            Scaffold() { padding ->
+                Column(
+                    modifier = Modifier
+                        .padding(padding)
+                        .fillMaxSize()
+                        .background((Color(0xFF2F2D2D)))
+                ) {
+                    PhotoImage(
+                        photoUrl = photo.thumbUrl,
+                        isFavorite = isFavorite,
+                        isDownloading = isDownlaoding,
+                        onDownloadClick = { requestPermissionDownload() },
+                        onFavoriteClick = { viewModel.toggleFavorite(photo) }
+                    )
+
+                    PhotoDetailTextSection(
+                        photoTitle = transformed!!.title,
+                        photoDescription = transformed.description ?: "상세 설명이 없습니다."
+                    )
+                }
+            }
+        }
     }
 
     @Composable
@@ -272,6 +270,25 @@ class PhotoDetailActivity : AppCompatActivity() {
                     color = Color.White
                 )
             }
+        }
+    }
+
+    @Composable
+    fun PhotoDetailTextSection(photoTitle: String, photoDescription: String) {
+        Column(modifier = Modifier.padding(20.dp)) {
+            Text(
+                text = photoTitle,
+                color = Color.White,
+                fontSize = 24.sp,
+                modifier = Modifier.padding(bottom = 20.dp),
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = photoDescription,
+                color = Color.White,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
     }
 }
