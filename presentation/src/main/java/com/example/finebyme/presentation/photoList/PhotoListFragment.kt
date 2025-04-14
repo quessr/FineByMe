@@ -54,7 +54,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
-import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.presentation.common.component.Loading
 import com.example.finebyme.presentation.common.component.PhotoStaggeredGrid
 import com.example.finebyme.presentation.common.enums.LoadingState
@@ -145,7 +144,6 @@ class PhotoListFragment : Fragment() {
                 } else {
                     PhotoStaggeredGrid(
                         photos = photos,
-                        viewModel = BaseViewModel(),
                         onPhotoClick = onPhotoCLick
                     )
                 }

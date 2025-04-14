@@ -3,6 +3,7 @@ package com.example.finebyme.presentation.photoList
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.domain.usecase.GetRandomPhotoListUseCase
@@ -18,7 +19,7 @@ class PhotoListViewModel @Inject constructor(
 //    private val photoRepository: PhotoRepository,
     private val getRandomPhotoListUseCase: GetRandomPhotoListUseCase,
     private val getSearchPhotoListUseCase: GetSearchPhotoListUseCase
-) : BaseViewModel() {
+) : ViewModel() {
 
     private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
     val photos: LiveData<List<Photo>> get() = _photos

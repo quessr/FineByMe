@@ -60,14 +60,14 @@ class PhotoAdapter(
     }
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
-        val height = viewModel.getPhotoHeight(position)
+//        val height = viewModel.getPhotoHeight(position)
 
         // dp를 px로 변환
         val scale = holder.itemView.context.resources.displayMetrics.density
-        val heightInPx = (height * scale + 0.5f).toInt()
+//        val heightInPx = (height * scale + 0.5f).toInt()
 
 
-        holder.bind(getItem(position), heightInPx)
+//        holder.bind(getItem(position), heightInPx)
     }
 
     fun clearData() {

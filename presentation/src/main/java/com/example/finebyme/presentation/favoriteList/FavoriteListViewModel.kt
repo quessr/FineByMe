@@ -2,6 +2,7 @@ package com.example.finebyme.presentation.favoriteList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.domain.repositoryInterface.PhotoRepository
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class FavoriteListViewModel @Inject constructor(
 //    private val photoRepository: PhotoRepository
     private val getFavoritePhotoListUseCase: GetFavoritePhotoListUseCase
-) : BaseViewModel() {
+) : ViewModel() {
     private val _photos: MutableLiveData<List<Photo>> by lazy { MutableLiveData() }
     val photos: LiveData<List<Photo>> get() = _photos
 
