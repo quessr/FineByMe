@@ -1,15 +1,11 @@
 package com.example.finebyme.presentation.photoDetail
 
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -43,17 +39,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.common.component.Loading
+import com.example.finebyme.presentation.utils.PermissionDialogUtils
+import com.example.finebyme.presentation.utils.PermissionUtils
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -61,26 +58,14 @@ class PhotoDetailActivity : AppCompatActivity() {
 
     companion object {
         private const val ARG_PHOTO = "photo"
-        private val IMAGE_PERMISSION = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            android.Manifest.permission.READ_MEDIA_IMAGES
-        } else {
-            android.Manifest.permission.READ_EXTERNAL_STORAGE
-        }
-        private const val REQUEST_CODE_TIRAMISU = 200
-        private const val REQUEST_CODE_LEGACY = 100
     }
 
     private var photo: Photo? = null
-
     private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setContent {
-            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
-        }
 
         photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
@@ -96,67 +81,12 @@ class PhotoDetailActivity : AppCompatActivity() {
             finish()
         }
 
+        setContent {
+            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
+        }
+
         handleOnBackPressed()
 
-    }
-
-    private fun requestPermissionDownload() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            checkPermissionsAndStartMotion(arrayOf(IMAGE_PERMISSION), REQUEST_CODE_TIRAMISU)
-        } else {
-            checkPermissionsAndStartMotion(arrayOf(IMAGE_PERMISSION), REQUEST_CODE_LEGACY)
-        }
-    }
-
-    private fun checkPermissionsAndStartMotion(permissions: Array<String>, requestCode: Int) {
-        val permissionResults = permissions.map {
-            ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
-        }
-
-        if (permissionResults.all { it }) {
-            startDownload()
-        } else {
-            ActivityCompat.requestPermissions(this, permissions, requestCode)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == REQUEST_CODE_TIRAMISU) {
-            val granted =
-                grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED
-
-            if (granted) {
-                startDownload()
-            } else {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, IMAGE_PERMISSION)) {
-                    showPermissionDeniedDialog()
-                }
-            }
-        }
-    }
-
-    private fun showPermissionDeniedDialog() {
-        AlertDialog.Builder(this)
-            .setTitle("권한이 필요합니다")
-            .setMessage("이미지 다운로드를 위해 저장소 접근 권한이 필요합니다. 설정에서 권한을 허용해주세요.")
-            .setPositiveButton("설정으로 이동") { _, _ ->
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.fromParts("package", packageName, null)
-                }
-                startActivity(intent)
-            }
-            .setNegativeButton("취소") { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
-
-    private fun startDownload() {
-        photo?.let { photoDetailViewModel.downloadImage(it) }
     }
 
     private fun handleOnBackPressed() {
@@ -173,6 +103,8 @@ class PhotoDetailActivity : AppCompatActivity() {
         val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
         val isDownlaoding by viewModel.isDownloading.observeAsState(initial = false)
         val downloadState by viewModel.downloadState.observeAsState()
+        val context = LocalContext.current
+        val activity = context as? Activity
 
         val snackbarHostState = remember { SnackbarHostState() }
 
@@ -204,8 +136,20 @@ class PhotoDetailActivity : AppCompatActivity() {
                         photoUrl = photo.thumbUrl,
                         isFavorite = isFavorite,
                         isDownloading = isDownlaoding,
-                        onDownloadClick = { requestPermissionDownload() },
-                        onFavoriteClick = { viewModel.toggleFavorite(photo) }
+                        onFavoriteClick = { viewModel.toggleFavorite(photo) },
+                        onDownloadClick = {
+                            activity?.let {
+                                PermissionUtils.checkAndRequestImagePermission(
+                                    activity = it,
+                                    onGranted = { viewModel.downloadImage(photo) },
+                                    onDenied = {
+                                        PermissionDialogUtils.showPermissionDeniedDialog(
+                                            context
+                                        )
+                                    }
+                                )
+                            }
+                        },
                     )
 
                     PhotoDetailTextSection(
