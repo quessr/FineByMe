@@ -11,7 +11,9 @@ object PhotoMapper {
                 title = title?.ko ?: "",
                 description = description,
                 fullUrl = urls.full,
-                thumbUrl = urls.thumb
+                thumbUrl = urls.thumb,
+                width = width,
+                height = height
             )
         }
 
@@ -25,7 +27,9 @@ object PhotoMapper {
                 title = title,
                 description = description,
                 fullUrl = fullUrl,
-                thumbUrl = thumbUrl
+                thumbUrl = thumbUrl,
+                width = width,
+                height = height
             )
         }
 
@@ -40,7 +44,9 @@ object PhotoMapper {
                 description = description,
                 fullUrl = fullUrl,
                 thumbUrl = thumbUrl,
-                inputAt = System.currentTimeMillis() // 필요한 경우 적절한 값을 설정
+                inputAt = System.currentTimeMillis(), // 필요한 경우 적절한 값을 설정
+                width = width,
+                height = height
             )
         }
 

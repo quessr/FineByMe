@@ -8,6 +8,8 @@ data class UnsplashPhoto(
     @Json(name = "alternative_slugs") val title: AlternativeSlugs?,
     @Json(name = "description") val description: String?,
     @Json(name = "urls") val urls: Urls,
+    @Json(name = "width") val width: Int,
+    @Json(name = "height") val height: Int,
 )
 
 data class Urls(
@@ -25,7 +27,9 @@ fun UnsplashPhoto.toPhoto(context: Context): com.example.finebyme.data.db.Photo 
         title = title?.ko ?: "aaa",//context.getString(R.string.photo_no_title),
         description = description ?: "bbb",//context.getString(R.string.photo_no_description),
         fullUrl = urls.full,
-        thumbUrl = urls.thumb
+        thumbUrl = urls.thumb,
+        width = width,
+        height = height
     )
 }
 
