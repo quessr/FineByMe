@@ -64,7 +64,9 @@ class FavoriteProvider : ContentProvider() {
             title = values?.getAsString("title") ?: "",
             description = values?.getAsString("description"),
             fullUrl = values?.getAsString("fullUrl") ?: "",
-            thumbUrl = values?.getAsString("thumbUrl") ?: ""
+            thumbUrl = values?.getAsString("thumbUrl") ?: "",
+            width = values?.getAsInteger("width") ?: 0,
+            height = values?.getAsInteger("height") ?: 0
         )
 
         val id = runBlocking { database.PhotoDao().insert(photo) }
@@ -105,7 +107,9 @@ class FavoriteProvider : ContentProvider() {
             title = values?.getAsString("title") ?: "",
             description = values?.getAsString("description"),
             fullUrl = values?.getAsString("fullUrl") ?: "",
-            thumbUrl = values?.getAsString("thumbUrl") ?: ""
+            thumbUrl = values?.getAsString("thumbUrl") ?: "",
+            width = values?.getAsInteger("width") ?: 0,
+            height = values?.getAsInteger("height") ?: 0
         )
 
         return when (uriMatcher.match(uri)) {
