@@ -2,6 +2,7 @@ package com.example.finebyme.presentation.common.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -17,11 +18,11 @@ import com.example.finebyme.domain.entity.Photo
 @Composable
 fun PhotoItem(
     photo: Photo,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(4.dp)
             .clickable { onClick() },
     ) {
@@ -30,8 +31,7 @@ fun PhotoItem(
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
+                .fillMaxSize()
                 .clip(RoundedCornerShape(8.dp))
         )
     }

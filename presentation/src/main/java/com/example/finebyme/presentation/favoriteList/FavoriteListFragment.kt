@@ -11,7 +11,9 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.presentation.common.component.PhotoGrid
+import com.example.finebyme.presentation.common.component.PhotoStaggeredGrid
 import com.example.finebyme.presentation.databinding.FragmentFavoriteListBinding
 import com.example.finebyme.presentation.photoList.PhotoAdapter
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
@@ -20,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FavoriteListFragment : Fragment() {
 
-    private lateinit var photoAdapter: PhotoAdapter
+    //    private lateinit var photoAdapter: PhotoAdapter
     private val favoriteListViewModel: FavoriteListViewModel by activityViewModels()
     private var recyclerViewState: Parcelable? = null
     private var _binding: FragmentFavoriteListBinding? = null
@@ -37,9 +39,10 @@ class FavoriteListFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 val photos by favoriteListViewModel.photos.observeAsState(emptyList())
-                PhotoGrid(
+                PhotoStaggeredGrid(
                     photos = photos,
-                    onClick = { photo ->
+                    viewModel = BaseViewModel(),
+                    onPhotoClick = { photo ->
                         val intent = newPhotoDetail(requireContext(), photo)
                         startActivity(intent)
                     }
@@ -71,7 +74,7 @@ class FavoriteListFragment : Fragment() {
 //        recyclerView.layoutManager = layoutManager
 //        binding.recyclerView.adapter = photoAdapter
 //    }
-//
+
 //    private fun setupObservers() {
 //        favoriteListViewModel.photos.observe(
 //            viewLifecycleOwner

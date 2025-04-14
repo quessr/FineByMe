@@ -54,8 +54,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
+import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.presentation.common.component.Loading
 import com.example.finebyme.presentation.common.component.PhotoGrid
+import com.example.finebyme.presentation.common.component.PhotoStaggeredGrid
 import com.example.finebyme.presentation.common.enums.LoadingState
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
 import dagger.hilt.android.AndroidEntryPoint
@@ -63,7 +65,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
 
-    private lateinit var photoAdapter: PhotoAdapter
+//    private lateinit var photoAdapter: PhotoAdapter
 
     private val photoListViewModel: PhotoListViewModel by activityViewModels()
 
@@ -167,7 +169,11 @@ class PhotoListFragment : Fragment() {
                 if (isLoading == LoadingState.LOADING) {
                     Loading()
                 } else {
-                    PhotoGrid(photos = photos, onClick = onPhotoCLick)
+                    PhotoStaggeredGrid(
+                        photos = photos,
+                        viewModel = BaseViewModel(),
+                        onPhotoClick = onPhotoCLick
+                    )
                 }
             }
         }
@@ -273,25 +279,6 @@ class PhotoListFragment : Fragment() {
             onCancle = { text = "" }
         )
     }
-
-    @Preview(showBackground = true)
-    @Composable
-    fun PhotoListScreenPreview() {
-        PhotoGrid(
-            photos = List(10) { index ->
-                dummyPhoto.copy(id = index.toString())
-            },
-            onClick = {}
-        )
-    }
-
-    private val dummyPhoto = Photo(
-        id = "dummy123",
-        title = "test",
-        description = "test",
-        thumbUrl = "",
-        fullUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQE0crYeA-DTedLWvvdp0rHG0vf4BAVioYC0g&s"
-    )
 }
 
 
