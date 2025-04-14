@@ -10,4 +10,11 @@ data class Photo(
     val description: String?,
     val fullUrl: String,
     val thumbUrl: String,
+    val width: Int,
+    val height: Int
 ) : Parcelable
+
+fun Photo.calculateHeight(itemWidth: Int): Int {
+    val aspectRatio = height.toFloat() / width
+    return (itemWidth * aspectRatio).toInt()
+}

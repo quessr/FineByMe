@@ -12,16 +12,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import com.example.finebyme.domain.entity.Photo
-import com.example.finebyme.presentation.base.BaseViewModel
+import com.example.finebyme.domain.entity.calculateHeight
 
 @Composable
 fun PhotoStaggeredGrid(
     photos: List<Photo>,
-    viewModel: BaseViewModel,
     onPhotoClick: (Photo) -> Unit
 ) {
+    val density = LocalDensity.current
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val itemSpacing = 4.dp * 3
+    val itemWidthDp = (screenWidth - itemSpacing) / 2
+
+    val itemWidthPx = with(density) { itemWidthDp.toPx() }.toInt()
+
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
@@ -29,14 +37,14 @@ fun PhotoStaggeredGrid(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalItemSpacing = 4.dp
     ) {
-        itemsIndexed(photos) { index, photo ->
-            val height = viewModel.getPhotoHeight(index).dp
+        itemsIndexed(photos) { _, photo ->
+            val heightPx = photo.calculateHeight(itemWidthPx)
 
             PhotoItem(
                 photo = photo,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(height)
+                    .height(with(density) { heightPx.toDp() })
                     .clip(RoundedCornerShape(8.dp)),
                 onClick = { onPhotoClick(photo) }
             )
