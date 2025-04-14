@@ -56,7 +56,6 @@ import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.base.BaseViewModel
 import com.example.finebyme.presentation.common.component.Loading
-import com.example.finebyme.presentation.common.component.PhotoGrid
 import com.example.finebyme.presentation.common.component.PhotoStaggeredGrid
 import com.example.finebyme.presentation.common.enums.LoadingState
 import com.example.finebyme.presentation.utils.IntentUtils.newPhotoDetail
@@ -64,8 +63,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
-
-//    private lateinit var photoAdapter: PhotoAdapter
 
     private val photoListViewModel: PhotoListViewModel by activityViewModels()
 
@@ -81,29 +78,6 @@ class PhotoListFragment : Fragment() {
                         startActivity(intent)
                     })
             }
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        setupObservers()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-//        photoAdapter.clearData()
-    }
-
-    private fun setupObservers() {
-        photoListViewModel.photos.observe(
-            viewLifecycleOwner
-        ) { photos ->
-        }
-
-        photoListViewModel.errorMessage.observe(viewLifecycleOwner) { errorMessage ->
-            Log.d("PhotoListFragment", "Received error message: $errorMessage")
-//            SnackbarUtils.showSnackbar(requireContext(), binding.root, errorMessage, true)
-//            hideKeyboard()
         }
     }
 
