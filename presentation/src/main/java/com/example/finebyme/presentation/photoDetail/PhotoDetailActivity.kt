@@ -13,9 +13,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -39,7 +39,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -47,6 +49,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.example.finebyme.domain.entity.Photo
+import com.example.finebyme.domain.entity.calculateHeight
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.common.component.Loading
 import com.example.finebyme.presentation.utils.PermissionDialogUtils
@@ -108,6 +111,9 @@ class PhotoDetailActivity : AppCompatActivity() {
 
         val snackbarHostState = remember { SnackbarHostState() }
 
+        val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+        val itemWidthPx = with(LocalDensity.current) { screenWidth.toPx() }.toInt()
+
         LaunchedEffect(downloadState) {
             downloadState?.let { message ->
                 snackbarHostState.showSnackbar(
@@ -134,6 +140,7 @@ class PhotoDetailActivity : AppCompatActivity() {
                 ) {
                     PhotoImage(
                         photoUrl = photo.thumbUrl,
+                        itemWidth = itemWidthPx,
                         isFavorite = isFavorite,
                         isDownloading = isDownlaoding,
                         onFavoriteClick = { viewModel.toggleFavorite(photo) },
@@ -164,6 +171,7 @@ class PhotoDetailActivity : AppCompatActivity() {
     @Composable
     fun PhotoImage(
         photoUrl: String,
+        itemWidth: Int,
         onDownloadClick: () -> Unit,
         onFavoriteClick: () -> Unit,
         isFavorite: Boolean,
@@ -172,13 +180,19 @@ class PhotoDetailActivity : AppCompatActivity() {
         val painter = rememberAsyncImagePainter(model = photoUrl)
         val state = painter.state
 
-        Box(modifier = Modifier.fillMaxWidth()) {
+        val heightPx = photo?.calculateHeight(itemWidth)
+        val heightDp = with(LocalDensity.current) { heightPx?.toDp() }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(heightDp!!)
+        ) {
             Image(
                 painter = painter,
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f),
+                    .fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
