@@ -56,220 +56,220 @@ import com.example.finebyme.presentation.utils.PermissionDialogUtils
 import com.example.finebyme.presentation.utils.PermissionUtils
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
-class PhotoDetailActivity : AppCompatActivity() {
+//@AndroidEntryPoint
+//class PhotoDetailActivity : AppCompatActivity() {
+//
+//    companion object {
+//        private const val ARG_PHOTO = "photo"
+//    }
+//
+//    private var photo: Photo? = null
+//    private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
+//
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//        photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
+//        } else {
+//            @Suppress("DEPRECATION")
+//            intent.getParcelableExtra(ARG_PHOTO)
+//        }
+//
+//        if (photo != null) {
+//            // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
+//            photoDetailViewModel.onEntryScreen(photo!!)
+//        } else {
+//            finish()
+//        }
+//
+//        setContent {
+//            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
+//        }
+//
+//        handleOnBackPressed()
+//
+//    }
+//
+//    private fun handleOnBackPressed() {
+//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                finish() // 기본 동작으로 MainActivity로 돌아가기
+//            }
+//        })
+//    }
+//
+//    @Composable
+//    fun PhotoDetailScreen(viewModel: PhotoDetailViewModel, photo: Photo) {
+//        val transformedPhoto by viewModel.transformedPhoto.observeAsState()
+//        val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
+//        val isDownlaoding by viewModel.isDownloading.observeAsState(initial = false)
+//        val downloadState by viewModel.downloadState.observeAsState()
+//        val context = LocalContext.current
+//        val activity = context as? Activity
+//
+//        val snackbarHostState = remember { SnackbarHostState() }
+//
+//        val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+//        val itemWidthPx = with(LocalDensity.current) { screenWidth.toPx() }.toInt()
+//
+//        LaunchedEffect(downloadState) {
+//            downloadState?.let { message ->
+//                snackbarHostState.showSnackbar(
+//                    message = message,
+//                    withDismissAction = true,
+//                    duration = SnackbarDuration.Short
+//                )
+//            }
+//        }
+//
+//        transformedPhoto.let { transformed ->
+//            Scaffold(
+//                snackbarHost = {
+//                    SnackbarHost(
+//                        hostState = snackbarHostState,
+//                    )
+//                }
+//            ) { padding ->
+//                Column(
+//                    modifier = Modifier
+//                        .padding(padding)
+//                        .fillMaxSize()
+//                        .background((Color(0xFF2F2D2D)))
+//                ) {
+//                    PhotoImage(
+//                        photoUrl = photo.thumbUrl,
+//                        itemWidth = itemWidthPx,
+//                        isFavorite = isFavorite,
+//                        isDownloading = isDownlaoding,
+//                        onFavoriteClick = { viewModel.toggleFavorite(photo) },
+//                        onDownloadClick = {
+//                            activity?.let {
+//                                PermissionUtils.checkAndRequestImagePermission(
+//                                    activity = it,
+//                                    onGranted = { viewModel.downloadImage(photo) },
+//                                    onDenied = {
+//                                        PermissionDialogUtils.showPermissionDeniedDialog(
+//                                            context
+//                                        )
+//                                    }
+//                                )
+//                            }
+//                        },
+//                    )
+//
+//                    PhotoDetailTextSection(
+//                        photoTitle = transformed!!.title,
+//                        photoDescription = transformed.description ?: "상세 설명이 없습니다."
+//                    )
+//                }
+//            }
+//        }
+//    }
+//
+//    @Composable
+//    fun PhotoImage(
+//        photoUrl: String,
+//        itemWidth: Int,
+//        onDownloadClick: () -> Unit,
+//        onFavoriteClick: () -> Unit,
+//        isFavorite: Boolean,
+//        isDownloading: Boolean
+//    ) {
+//        val painter = rememberAsyncImagePainter(model = photoUrl)
+//        val state = painter.state
+//
+//        val heightPx = photo?.calculateHeight(itemWidth)
+//        val heightDp = with(LocalDensity.current) { heightPx?.toDp() }
+//
+//        Box(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .height(heightDp!!)
+//        ) {
+//            Image(
+//                painter = painter,
+//                contentDescription = null,
+//                modifier = Modifier
+//                    .fillMaxSize(),
+//                contentScale = ContentScale.Crop
+//            )
+//
+//            if (state is AsyncImagePainter.State.Loading) {
+//                Loading()
+//            }
+//
+//            IconButton(
+//                onClick = onFavoriteClick,
+//                modifier = Modifier
+//                    .align(Alignment.BottomEnd)
+//                    .padding(end = 16.dp, bottom = 72.dp)
+//                    .background(
+//                        color = Color.Black.copy(alpha = 0.4f),
+//                        shape = CircleShape
+//                    )
+//                    .size(52.dp)
+//                    .border(width = 1.dp, color = Color.Gray, shape = CircleShape)
+//            ) {
+//                Icon(
+//                    painter = painterResource(
+//                        id = if (isFavorite) R.drawable.ic_nav_favorite_selected
+//                        else R.drawable.ic_nav_favorite_normal
+//                    ),
+//                    contentDescription = "Favorite",
+//                    tint = Color.White
+//                )
+//            }
+//
+//            AssistChip(
+//                onClick = onDownloadClick,
+//                label = { Text("다운로드", color = Color.White) },
+//                modifier = Modifier
+//                    .align(Alignment.BottomEnd)
+//                    .padding(end = 16.dp, bottom = 16.dp),
+//                colors = AssistChipDefaults.assistChipColors(
+//                    containerColor = Color.Black.copy(alpha = 0.4f)
+//                ),
+//                trailingIcon = {
+//                    Icon(
+//                        painter = painterResource(id = R.drawable.ic_file_download),
+//                        contentDescription = "download",
+//                        tint = Color.White,
+//                        modifier = Modifier.size(18.dp)
+//                    )
+//                },
+//                shape = RoundedCornerShape(16.dp),
+//                border = BorderStroke(1.dp, Color.Gray)
+//            )
+//
+//            if (isDownloading) {
+//                CircularProgressIndicator(
+//                    modifier = Modifier
+//                        .align(Alignment.Center)
+//                        .size(32.dp),
+//                    color = Color.White,
+//                )
+//            }
+//        }
+//    }
+//}
 
-    companion object {
-        private const val ARG_PHOTO = "photo"
-    }
-
-    private var photo: Photo? = null
-    private val photoDetailViewModel: PhotoDetailViewModel by viewModels()
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        photo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            intent.getParcelableExtra(ARG_PHOTO, Photo::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            intent.getParcelableExtra(ARG_PHOTO)
-        }
-
-        if (photo != null) {
-            // ViewModel에 Photo 객체를 전달하여 photo title 데이터 변환
-            photoDetailViewModel.onEntryScreen(photo!!)
-        } else {
-            finish()
-        }
-
-        setContent {
-            PhotoDetailScreen(viewModel = photoDetailViewModel, photo = photo!!)
-        }
-
-        handleOnBackPressed()
-
-    }
-
-    private fun handleOnBackPressed() {
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                finish() // 기본 동작으로 MainActivity로 돌아가기
-            }
-        })
-    }
-
-    @Composable
-    fun PhotoDetailScreen(viewModel: PhotoDetailViewModel, photo: Photo) {
-        val transformedPhoto by viewModel.transformedPhoto.observeAsState()
-        val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
-        val isDownlaoding by viewModel.isDownloading.observeAsState(initial = false)
-        val downloadState by viewModel.downloadState.observeAsState()
-        val context = LocalContext.current
-        val activity = context as? Activity
-
-        val snackbarHostState = remember { SnackbarHostState() }
-
-        val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-        val itemWidthPx = with(LocalDensity.current) { screenWidth.toPx() }.toInt()
-
-        LaunchedEffect(downloadState) {
-            downloadState?.let { message ->
-                snackbarHostState.showSnackbar(
-                    message = message,
-                    withDismissAction = true,
-                    duration = SnackbarDuration.Short
-                )
-            }
-        }
-
-        transformedPhoto.let { transformed ->
-            Scaffold(
-                snackbarHost = {
-                    SnackbarHost(
-                        hostState = snackbarHostState,
-                    )
-                }
-            ) { padding ->
-                Column(
-                    modifier = Modifier
-                        .padding(padding)
-                        .fillMaxSize()
-                        .background((Color(0xFF2F2D2D)))
-                ) {
-                    PhotoImage(
-                        photoUrl = photo.thumbUrl,
-                        itemWidth = itemWidthPx,
-                        isFavorite = isFavorite,
-                        isDownloading = isDownlaoding,
-                        onFavoriteClick = { viewModel.toggleFavorite(photo) },
-                        onDownloadClick = {
-                            activity?.let {
-                                PermissionUtils.checkAndRequestImagePermission(
-                                    activity = it,
-                                    onGranted = { viewModel.downloadImage(photo) },
-                                    onDenied = {
-                                        PermissionDialogUtils.showPermissionDeniedDialog(
-                                            context
-                                        )
-                                    }
-                                )
-                            }
-                        },
-                    )
-
-                    PhotoDetailTextSection(
-                        photoTitle = transformed!!.title,
-                        photoDescription = transformed.description ?: "상세 설명이 없습니다."
-                    )
-                }
-            }
-        }
-    }
-
-    @Composable
-    fun PhotoImage(
-        photoUrl: String,
-        itemWidth: Int,
-        onDownloadClick: () -> Unit,
-        onFavoriteClick: () -> Unit,
-        isFavorite: Boolean,
-        isDownloading: Boolean
-    ) {
-        val painter = rememberAsyncImagePainter(model = photoUrl)
-        val state = painter.state
-
-        val heightPx = photo?.calculateHeight(itemWidth)
-        val heightDp = with(LocalDensity.current) { heightPx?.toDp() }
-
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(heightDp!!)
-        ) {
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-
-            if (state is AsyncImagePainter.State.Loading) {
-                Loading()
-            }
-
-            IconButton(
-                onClick = onFavoriteClick,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(end = 16.dp, bottom = 72.dp)
-                    .background(
-                        color = Color.Black.copy(alpha = 0.4f),
-                        shape = CircleShape
-                    )
-                    .size(52.dp)
-                    .border(width = 1.dp, color = Color.Gray, shape = CircleShape)
-            ) {
-                Icon(
-                    painter = painterResource(
-                        id = if (isFavorite) R.drawable.ic_nav_favorite_selected
-                        else R.drawable.ic_nav_favorite_normal
-                    ),
-                    contentDescription = "Favorite",
-                    tint = Color.White
-                )
-            }
-
-            AssistChip(
-                onClick = onDownloadClick,
-                label = { Text("다운로드", color = Color.White) },
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(end = 16.dp, bottom = 16.dp),
-                colors = AssistChipDefaults.assistChipColors(
-                    containerColor = Color.Black.copy(alpha = 0.4f)
-                ),
-                trailingIcon = {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_file_download),
-                        contentDescription = "download",
-                        tint = Color.White,
-                        modifier = Modifier.size(18.dp)
-                    )
-                },
-                shape = RoundedCornerShape(16.dp),
-                border = BorderStroke(1.dp, Color.Gray)
-            )
-
-            if (isDownloading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .align(Alignment.Center)
-                        .size(32.dp),
-                    color = Color.White,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun PhotoDetailTextSection(photoTitle: String, photoDescription: String) {
-    Column(modifier = Modifier.padding(20.dp)) {
-        Text(
-            text = photoTitle,
-            color = Color.White,
-            fontSize = 24.sp,
-            modifier = Modifier.padding(bottom = 20.dp),
-            fontWeight = FontWeight.Bold
-        )
-        Text(
-            text = photoDescription,
-            color = Color.White,
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold
-        )
-    }
-}
+//@Composable
+//fun PhotoDetailTextSection(photoTitle: String, photoDescription: String) {
+//    Column(modifier = Modifier.padding(20.dp)) {
+//        Text(
+//            text = photoTitle,
+//            color = Color.White,
+//            fontSize = 24.sp,
+//            modifier = Modifier.padding(bottom = 20.dp),
+//            fontWeight = FontWeight.Bold
+//        )
+//        Text(
+//            text = photoDescription,
+//            color = Color.White,
+//            fontSize = 18.sp,
+//            fontWeight = FontWeight.Bold
+//        )
+//    }
+//}
