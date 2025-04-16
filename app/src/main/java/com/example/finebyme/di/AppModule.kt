@@ -10,6 +10,8 @@ import com.example.finebyme.data.network.RetrofitService
 import com.example.finebyme.data.repository.PhotoRepositoryFake
 import com.example.finebyme.data.repository.PhotoRepositoryImpl
 import com.example.finebyme.domain.repositoryInterface.PhotoRepository
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +57,12 @@ object AppModule {
             localDataSource
         )
     }
+
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
 //    @Provides
 //    @Singleton
