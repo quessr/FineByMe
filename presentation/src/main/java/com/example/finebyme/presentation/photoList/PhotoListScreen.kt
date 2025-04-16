@@ -55,6 +55,7 @@ import com.example.finebyme.presentation.common.enums.LoadingState
 @Composable
 fun PhotoListScreen(
     viewModel: PhotoListViewModel,
+    gridState: LazyStaggeredGridState,
     onPhotoCLick: (Photo) -> Unit
 ) {
     val photos by viewModel.photos.observeAsState(emptyList())

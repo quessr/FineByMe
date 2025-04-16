@@ -12,6 +12,7 @@ import com.example.finebyme.presentation.common.component.PhotoStaggeredGrid
 @Composable
 fun FavoriteListScreen(
     viewModel: FavoriteListViewModel = hiltViewModel(),
+    gridState: LazyStaggeredGridState,
     onPhotoClick: (Photo) -> Unit
 ) {
     val photos by viewModel.photos.observeAsState(emptyList())

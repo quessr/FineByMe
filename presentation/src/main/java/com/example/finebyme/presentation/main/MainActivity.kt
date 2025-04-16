@@ -107,6 +107,8 @@ fun MainScreen() {
 
     val photoListViewModel: PhotoListViewModel = hiltViewModel()
 
+    val photoGridState = rememberLazyStaggeredGridState()
+
     Scaffold(
         bottomBar = {
             BottomNavigationBar(navController = navController)
@@ -115,6 +117,7 @@ fun MainScreen() {
         FbmNavGraph(
             navController = navController,
             photoListViewModel = photoListViewModel,
+            photoGridState = photoGridState,
             modifier = Modifier.padding(padding)
         )
     }
