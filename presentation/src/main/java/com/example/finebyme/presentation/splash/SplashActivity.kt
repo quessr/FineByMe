@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.databinding.ActivitySplashBinding
+import com.example.finebyme.presentation.main.MainActivity
 import com.example.finebyme.presentation.utils.ImageLoader
 
 class SplashActivity : AppCompatActivity() {
@@ -16,27 +18,11 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        loadGifImage()
-        navigateToMainActivity()
-    }
-
-    private fun loadGifImage() {
-
-        ImageLoader.loadGif(
-            context = this,
-            resourceId = R.drawable.camera,
-            circleCrop = true,
-            imageView = binding.imageViewSplash
-        )
-        binding.imageViewSplash.visibility = View.VISIBLE
-    }
-
-    private fun navigateToMainActivity() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent(this, com.example.finebyme.presentation.main.MainActivity::class.java)
-            startActivity(intent)
-
-            finish()
-        }, 3000)
+        setContent {
+            SplashScreen {
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
+        }
     }
 }
