@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.databinding.ActivitySplashBinding
 import com.example.finebyme.presentation.main.MainActivity
-import com.example.finebyme.presentation.utils.ImageLoader
 
 class SplashActivity : AppCompatActivity() {
     private val binding by lazy { ActivitySplashBinding.inflate(layoutInflater) }

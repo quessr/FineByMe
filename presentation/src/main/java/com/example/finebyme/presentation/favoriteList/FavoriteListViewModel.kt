@@ -5,11 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finebyme.domain.entity.Photo
-import com.example.finebyme.domain.repositoryInterface.PhotoRepository
 import com.example.finebyme.domain.usecase.GetFavoritePhotoListUseCase
-import com.example.finebyme.domain.usecase.GetRandomPhotoListUseCase
-import com.example.finebyme.domain.usecase.GetSearchPhotoListUseCase
-import com.example.finebyme.presentation.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
