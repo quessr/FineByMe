@@ -54,7 +54,8 @@ import com.example.finebyme.presentation.utils.PermissionUtils
 @Composable
 fun PhotoDetailScreen(
     viewModel: PhotoDetailViewModel = hiltViewModel(),
-    photo: Photo
+    photo: Photo,
+    snackbarHostState: SnackbarHostState
 ) {
     val transformedPhoto by viewModel.transformedPhoto.observeAsState()
     val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
@@ -63,7 +64,7 @@ fun PhotoDetailScreen(
     val context = LocalContext.current
     val activity = context as? Activity
 
-    val snackbarHostState = remember { SnackbarHostState() }
+//    val snackbarHostState = remember { SnackbarHostState() }
 
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val itemWidthPx = with(LocalDensity.current) { screenWidth.toPx() }.toInt()
@@ -83,13 +84,7 @@ fun PhotoDetailScreen(
     }
 
     transformedPhoto.let { transformed ->
-        Scaffold(
-            snackbarHost = {
-                SnackbarHost(
-                    hostState = snackbarHostState,
-                )
-            }
-        ) { padding ->
+        Scaffold { padding ->
             Column(
                 modifier = Modifier
                     .padding(padding)

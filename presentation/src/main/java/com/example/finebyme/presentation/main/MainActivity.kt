@@ -9,11 +9,21 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -103,21 +113,36 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 fun MainScreen() {
+    val snackbarHostState = remember { SnackbarHostState() }
     val navController = rememberNavController()
 
     val photoListViewModel: PhotoListViewModel = hiltViewModel()
-
     val photoGridState = rememberLazyStaggeredGridState()
 
+
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(
+                hostState = snackbarHostState,
+                modifier = Modifier.padding(bottom = 12.dp),
+                snackbar = { data ->
+                    Snackbar(
+                        snackbarData = data,
+                        containerColor = Color(0xFF388E3C),
+                        contentColor = Color.White
+                    )
+                }
+            )
+        },
         bottomBar = {
-            BottomNavigationBar(navController = navController)
+            BottomNavigationBar(navController)
         }
     ) { padding ->
         FbmNavGraph(
             navController = navController,
             photoListViewModel = photoListViewModel,
             photoGridState = photoGridState,
+            snackbarHostState = snackbarHostState,
             modifier = Modifier.padding(padding)
         )
     }

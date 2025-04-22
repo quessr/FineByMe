@@ -3,6 +3,7 @@ package com.example.finebyme.presentation.navigation
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -30,6 +31,7 @@ fun FbmNavGraph(
     navController: NavHostController,
     photoListViewModel: PhotoListViewModel,
     photoGridState: LazyStaggeredGridState,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -51,7 +53,8 @@ fun FbmNavGraph(
                 onPhotoCLick = { photo ->
                     val photoJson = Uri.encode(photoAdapter.toJson(photo))
                     navController.navigate("${Routes.PHOTO_DETAIL}/$photoJson")
-                }
+                },
+                snackbarHostState = snackbarHostState
             )
         }
 
@@ -76,7 +79,7 @@ fun FbmNavGraph(
             }
 
             photo?.let {
-                PhotoDetailScreen(photo = it)
+                PhotoDetailScreen(photo = it, snackbarHostState = snackbarHostState)
             }
         }
     }

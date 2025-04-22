@@ -56,12 +56,13 @@ import com.example.finebyme.presentation.common.enums.LoadingState
 fun PhotoListScreen(
     viewModel: PhotoListViewModel,
     gridState: LazyStaggeredGridState,
-    onPhotoCLick: (Photo) -> Unit
+    onPhotoCLick: (Photo) -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
     val photos by viewModel.photos.observeAsState(emptyList())
     val isLoading by viewModel.loadingState.observeAsState(initial = LoadingState.LOADING)
     val errorMessage by viewModel.errorMessage.observeAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
+//    val snackbarHostState = remember { SnackbarHostState() }
     var searchText by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
