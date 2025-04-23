@@ -30,8 +30,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -45,7 +45,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.common.component.Loading
@@ -59,9 +58,9 @@ fun PhotoListScreen(
     onPhotoCLick: (Photo) -> Unit,
     snackbarHostState: SnackbarHostState
 ) {
-    val photos by viewModel.photos.observeAsState(emptyList())
-    val isLoading by viewModel.loadingState.observeAsState(initial = LoadingState.LOADING)
-    val errorMessage by viewModel.errorMessage.observeAsState()
+    val photos by viewModel.photos.collectAsState(emptyList())
+    val isLoading by viewModel.loadingState.collectAsState(initial = LoadingState.LOADING)
+    val errorMessage by viewModel.errorMessage.collectAsState()
 //    val snackbarHostState = remember { SnackbarHostState() }
     var searchText by rememberSaveable { mutableStateOf("") }
     val focusManager = LocalFocusManager.current

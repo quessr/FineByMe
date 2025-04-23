@@ -8,21 +8,19 @@ import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.example.finebyme.domain.entity.Photo
-import com.example.finebyme.domain.repositoryInterface.PhotoRepository
 import com.example.finebyme.domain.usecase.CheckFavoritePhotoUseCase
 import com.example.finebyme.domain.usecase.SetFavoritePhotoUseCase
 import com.example.finebyme.presentation.R
-import com.example.finebyme.presentation.common.enums.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -40,36 +38,21 @@ class PhotoDetailViewModel @Inject constructor(
     // private val photoRepository: PhotoRepository
 ) : ViewModel() {
 
-    private val _transformedPhoto = MutableLiveData<Photo>()
-    val transformedPhoto: LiveData<Photo> get() = _transformedPhoto
+    private val _transformedPhoto = MutableStateFlow<Photo?>(null)
+    val transformedPhoto: StateFlow<Photo?> get() = _transformedPhoto
 
-    private val _isFavorite = MutableLiveData<Boolean>()
-    val isFavorite: LiveData<Boolean> get() = _isFavorite
+    private val _isFavorite = MutableStateFlow(false)
+    val isFavorite: StateFlow<Boolean> get() = _isFavorite
 
-    private val _loadingState: MutableLiveData<LoadingState> by lazy { MutableLiveData() }
-    val loadingState: LiveData<LoadingState> get() = _loadingState
+    private val _isDownloading = MutableStateFlow(false)
+    val isDownloading: StateFlow<Boolean> get() = _isDownloading
 
-    private val _isDownloading = MutableLiveData<Boolean>()
-    val isDownloading: LiveData<Boolean> get() = _isDownloading
-
-    private var _downloadState = MutableLiveData<String>()
-    val downloadState: LiveData<String> get() = _downloadState
+    private var _downloadState = MutableStateFlow<String?>(null)
+    val downloadState: StateFlow<String?> get() = _downloadState
     private val dateFormat =
         context.applicationContext.getString(R.string.date_format)
     private val appName =
         context.applicationContext.getString(R.string.app_name)
-
-    init {
-        _loadingState.value = LoadingState.LOADING
-    }
-
-    fun onPhotoLoadCompleted() {
-        _loadingState.value = LoadingState.DONE
-    }
-
-    fun onPhotoLoadFail() {
-        _loadingState.value = LoadingState.ERROR
-    }
 
     fun onEntryScreen(photo: Photo) {
         val transformTitle = transformTitle(photo.title)
@@ -78,7 +61,7 @@ class PhotoDetailViewModel @Inject constructor(
         _isFavorite.value = isPhotoFavorite(photo.id)
     }
 
-    fun isPhotoFavorite(id: String): Boolean {
+    private fun isPhotoFavorite(id: String): Boolean {
 //        return photoRepository.isPhotoFavorite(id)
         return checkFavoritePhotoUseCase.execute(id)
     }
@@ -112,7 +95,7 @@ class PhotoDetailViewModel @Inject constructor(
     }
 
     fun downloadImage(photo: Photo) {
-        if (_isDownloading.value == true) return
+        if (_isDownloading.value) return
 
         _isDownloading.value = true
         Glide.with(context.applicationContext)

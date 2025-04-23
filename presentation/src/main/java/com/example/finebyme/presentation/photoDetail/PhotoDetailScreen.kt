@@ -27,6 +27,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
@@ -57,10 +58,10 @@ fun PhotoDetailScreen(
     photo: Photo,
     snackbarHostState: SnackbarHostState
 ) {
-    val transformedPhoto by viewModel.transformedPhoto.observeAsState()
-    val isFavorite by viewModel.isFavorite.observeAsState(initial = false)
-    val isDownlaoding by viewModel.isDownloading.observeAsState(initial = false)
-    val downloadState by viewModel.downloadState.observeAsState()
+    val transformedPhoto by viewModel.transformedPhoto.collectAsState()
+    val isFavorite by viewModel.isFavorite.collectAsState(initial = false)
+    val isDownlaoding by viewModel.isDownloading.collectAsState(initial = false)
+    val downloadState by viewModel.downloadState.collectAsState()
     val context = LocalContext.current
     val activity = context as? Activity
 
