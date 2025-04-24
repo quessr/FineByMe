@@ -2,6 +2,10 @@ package com.example.finebyme.data.mapper
 
 import com.example.finebyme.data.model.UnsplashPhoto
 import com.example.finebyme.domain.entity.Photo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 object PhotoMapper {
     private fun mapToPhoto(unsplashPhoto: UnsplashPhoto): Photo =
@@ -33,8 +37,10 @@ object PhotoMapper {
             )
         }
 
-    fun mapToDomainPhotoList(dataPhotoList: List<com.example.finebyme.data.db.Photo>): List<Photo> =
-        dataPhotoList.map { mapToDomainPhoto(it) }
+    fun mapToDomainPhotoList(dataPhotoFlow: Flow<List<com.example.finebyme.data.db.Photo>>): Flow<List<Photo>> =
+        dataPhotoFlow.map { dataList ->
+            dataList.map { dataPhoto -> mapToDomainPhoto(dataPhoto) }
+        }
 
     fun mapToDataPhoto(domainPhoto: Photo): com.example.finebyme.data.db.Photo =
         domainPhoto.run {

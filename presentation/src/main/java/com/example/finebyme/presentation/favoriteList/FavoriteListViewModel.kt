@@ -19,18 +19,23 @@ class FavoriteListViewModel @Inject constructor(
     val photos: StateFlow<List<Photo>> get() = _photos
 
     init {
-        loadFavoritePhotos()
+        viewModelScope.launch {
+            getFavoritePhotoListUseCase.execute().collect { photoList ->
+                _photos.value = photoList
+            }
+        }
+//        loadFavoritePhotos()
     }
 
     fun onResumeScreen() {
-        loadFavoritePhotos()
+//        loadFavoritePhotos()
     }
 
-    private fun loadFavoritePhotos() {
-//        _photos.value = photoRepository.getFavoritePhotoList()
-        viewModelScope.launch {
-            _photos.value = getFavoritePhotoListUseCase.execute()
-        }
-    }
+//    private fun loadFavoritePhotos() {
+////        _photos.value = photoRepository.getFavoritePhotoList()
+//        viewModelScope.launch {
+//            _photos.value = getFavoritePhotoListUseCase.execute()
+//        }
+//    }
 
 }

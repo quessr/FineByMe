@@ -7,13 +7,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PhotoDao {
     //    @Query("SELECT * FROM favorite_photos ORDER BY inputAt DESC")
 //    fun getAllPhotos(): List<Photo>
     @Query("SELECT * FROM favorite_photos ORDER BY inputAt DESC")
-    fun getAllPhotos(): List<Photo>
+    fun getAllPhotos(): Flow<List<Photo>>
 
     @Query("SELECT * FROM favorite_photos WHERE id = :id LIMIT 1")
     fun getPhoto(id: String): Photo

@@ -2,10 +2,11 @@ package com.example.finebyme.data.datasource
 
 import com.example.finebyme.data.db.Photo
 import com.example.finebyme.data.db.PhotoDao
+import kotlinx.coroutines.flow.Flow
 
 class UserDataSource(private val photoDao: PhotoDao) {
 
-    fun getAllPhotos(): List<Photo> = photoDao.getAllPhotos()
+    fun getAllPhotos(): Flow<List<Photo>> = photoDao.getAllPhotos()
 
     fun getPhoto(id: String): Photo = photoDao.getPhoto(id)
 

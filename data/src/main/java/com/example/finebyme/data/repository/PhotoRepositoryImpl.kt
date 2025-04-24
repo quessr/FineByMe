@@ -7,6 +7,7 @@ import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.domain.repositoryInterface.PhotoRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -39,7 +40,7 @@ class PhotoRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun getFavoritePhotoList(): List<Photo> {
+    override fun getFavoritePhotoList(): Flow<List<Photo>> {
         val dataPhotos = userDataSource.getAllPhotos()
         return PhotoMapper.mapToDomainPhotoList(dataPhotos)
     }
