@@ -7,7 +7,6 @@ import com.example.finebyme.data.db.FavoritePhotosDatabase
 import com.example.finebyme.data.db.PhotoDao
 import com.example.finebyme.data.network.RetrofitInstance
 import com.example.finebyme.data.network.RetrofitService
-import com.example.finebyme.data.repository.PhotoRepositoryFake
 import com.example.finebyme.data.repository.PhotoRepositoryImpl
 import com.example.finebyme.domain.repositoryInterface.PhotoRepository
 import com.squareup.moshi.Moshi
