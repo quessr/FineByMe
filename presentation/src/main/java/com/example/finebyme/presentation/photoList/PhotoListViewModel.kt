@@ -8,8 +8,13 @@ import com.example.finebyme.domain.usecase.GetRandomPhotoListUseCase
 import com.example.finebyme.domain.usecase.GetSearchPhotoListUseCase
 import com.example.finebyme.presentation.common.enums.LoadingState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,6 +28,9 @@ class PhotoListViewModel @Inject constructor(
     private val _photos = MutableStateFlow<List<Photo>>(emptyList())
     val photos: StateFlow<List<Photo>> get() = _photos
 
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery: StateFlow<String> get() = _searchQuery
+
     private val _loadingState = MutableStateFlow<LoadingState?>(null)
     val loadingState: StateFlow<LoadingState?> get() = _loadingState
 
@@ -34,6 +42,7 @@ class PhotoListViewModel @Inject constructor(
 
     init {
         fetchPhotos()
+        observeSearchQuery()
     }
 
     private fun fetchPhotos() {
@@ -47,6 +56,7 @@ class PhotoListViewModel @Inject constructor(
                 _photos.value = photos
                 cachedPhotos = photos
                 _loadingState.value = LoadingState.DONE
+                _searchQuery.value = ""
             }?.onFailure { throwable ->
                 Log.e("PhotoListViewModel", "Failed to fetch photos: ${throwable.message}")
                 val errorMessage = throwable.message ?: "Unknown error"
@@ -55,32 +65,28 @@ class PhotoListViewModel @Inject constructor(
                 _loadingState.value = LoadingState.ERROR
             }
         }
-
-
-//        getRandomPhotoListUseCase.execute { result ->
-//            result?.onSuccess { photos ->
-//                Log.d("PhotoListViewModel", "Photos fetched successfully")
-//                _photos.postValue(photos)
-//                cachedPhotos = photos
-//                _loadingState.postValue(LoadingState.DONE)
-//            }?.onFailure { throwable ->
-//                Log.e("PhotoListViewModel", "Failed to fetch photos: ${throwable.message}")
-//                val errorMessage = throwable.message ?: "Unknown error"
-//                _errorMassage.postValue(errorMessage)
-//                _photos.postValue(listOf())
-//                _loadingState.postValue(LoadingState.ERROR)
-//            }
-//        }
     }
 
-    fun searchPhotos(query: String) {
-        // 검색어가 비어있을 때 캐시된 사진 목록을 다시 설정
-        if (query.isEmpty()) {
-            _photos.value = cachedPhotos
-            _loadingState.value = LoadingState.DONE
-            return
-        }
+    @OptIn(FlowPreview::class)
+    private fun observeSearchQuery() {
+        viewModelScope.launch {
+            _searchQuery
+                .debounce(500)
+                .distinctUntilChanged()
+                .collect { query ->
+                    Log.d("PhotoListViewModel", "Debounced query: $query")
 
+                    if (query.isEmpty()) {
+                        _photos.value = cachedPhotos
+                        _loadingState.value = LoadingState.DONE
+                    } else {
+                        searchPhotos(query)
+                    }
+                }
+        }
+    }
+
+    private fun searchPhotos(query: String) {
         _loadingState.value = LoadingState.LOADING
         Log.d("PhotoListViewModel", "Searching for photos with query: $query")
 
@@ -100,19 +106,11 @@ class PhotoListViewModel @Inject constructor(
                 _loadingState.value = LoadingState.ERROR
             }
         }
+    }
 
-//        getSearchPhotoListUseCase.execute(query) { result ->
-//            result?.onSuccess { photos ->
-//                Log.d("PhotoListViewModel", "Received response: $photos")
-//                _photos.postValue(photos)
-//                _loadingState.postValue(LoadingState.DONE)
-//            }?.onFailure { throwable ->
-//                Log.d("PhotoListViewModel", "Search failed or no results found")
-//                val errorMessage = throwable.message
-//                _errorMassage.postValue(errorMessage)
-//                _photos.postValue(emptyList())
-//                _loadingState.postValue(LoadingState.ERROR)
-//            }
-//        }
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 }
+
+

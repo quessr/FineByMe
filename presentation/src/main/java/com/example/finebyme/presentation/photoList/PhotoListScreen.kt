@@ -101,16 +101,16 @@ fun PhotoListScreen(
                 searchText = searchText,
                 onTextChange = {
                     searchText = it
-                    viewModel.searchPhotos(it)
+                    viewModel.updateSearchQuery(it)
                 },
                 onSearch = {
                     Log.d("Search", "Search submitted: $searchText")
-                    viewModel.searchPhotos(searchText)
+                    viewModel.updateSearchQuery(searchText)
                     focusManager.clearFocus()
                 },
                 onCancle = {
                     searchText = ""
-                    viewModel.searchPhotos("")
+                    viewModel.updateSearchQuery("")
                     focusManager.clearFocus()
                 }
             )
