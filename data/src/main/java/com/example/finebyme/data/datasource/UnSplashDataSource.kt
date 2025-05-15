@@ -9,9 +9,9 @@ class UnSplashDataSource(private val retrofitService: RetrofitService) {
     private val apiKey = BuildConfig.UNSPLASH_API_KEY
 
     // Fetch random photos
-    suspend fun getRandomPhotoList(): Result<List<UnsplashPhoto>> {
+    suspend fun getRandomPhotoList(page: Int, perPage: Int): Result<List<UnsplashPhoto>> {
         return try {
-            val response = retrofitService.getRandomPhoto(apiKey, 1000)
+            val response = retrofitService.getRandomPhoto(apiKey, page, perPage)
             if (response != null) {
                 Result.success(response)
             } else {
@@ -23,9 +23,13 @@ class UnSplashDataSource(private val retrofitService: RetrofitService) {
     }
 
     // Search photos by query
-    suspend fun getSearchPhotoList(query: String): Result<List<UnsplashPhoto>> {
+    suspend fun getSearchPhotoList(
+        query: String,
+        page: Int,
+        perPage: Int
+    ): Result<List<UnsplashPhoto>> {
         return try {
-            val response = retrofitService.getSearchPhoto(apiKey, query).results
+            val response = retrofitService.getSearchPhoto(apiKey, query, page, perPage).results
             if (response != null) {
                 Result.success(response)
             } else {

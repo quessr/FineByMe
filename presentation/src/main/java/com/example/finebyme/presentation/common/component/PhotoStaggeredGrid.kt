@@ -16,8 +16,47 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.domain.entity.calculateHeight
+
+@Composable
+fun PhotoStaggeredGrid(
+    photos: LazyPagingItems<Photo>,
+    onPhotoClick: (Photo) -> Unit,
+    gridState: LazyStaggeredGridState
+) {
+    val density = LocalDensity.current
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val itemSpacing = 4.dp * 3
+    val itemWidthDp = (screenWidth - itemSpacing) / 2
+
+    val itemWidthPx = with(density) { itemWidthDp.toPx() }.toInt()
+
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+        state = gridState,
+        contentPadding = PaddingValues(4.dp),
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
+        verticalItemSpacing = 4.dp
+    ) {
+        items(count = photos.itemCount) { index ->
+            val photo = photos[index]
+            photo?.let {
+                val heightPx = it.calculateHeight(itemWidthPx)
+                PhotoItem(
+                    photo = it,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(with(density) { heightPx.toDp() })
+                        .clip(RoundedCornerShape(8.dp)),
+                    onClick = { onPhotoClick(photo) }
+                )
+            }
+        }
+    }
+}
 
 @Composable
 fun PhotoStaggeredGrid(

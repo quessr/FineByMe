@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.presentation.R
 import com.example.finebyme.presentation.common.component.Loading
@@ -59,6 +60,7 @@ fun PhotoListScreen(
     snackbarHostState: SnackbarHostState
 ) {
     val photos by viewModel.photos.collectAsState(emptyList())
+    val photoItems = viewModel.photoPagingFlow.collectAsLazyPagingItems()
     val isLoading by viewModel.loadingState.collectAsState(initial = LoadingState.LOADING)
     val errorMessage by viewModel.errorMessage.collectAsState()
 //    val snackbarHostState = remember { SnackbarHostState() }
@@ -119,7 +121,7 @@ fun PhotoListScreen(
                 Loading()
             } else {
                 PhotoStaggeredGrid(
-                    photos = photos,
+                    photos = photoItems,
                     onPhotoClick = onPhotoCLick,
                     gridState = gridState
                 )

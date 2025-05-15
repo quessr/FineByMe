@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.example.finebyme.presentation"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
 //        applicationId = "com.example.finebyme.presentation"
@@ -100,4 +100,8 @@ dependencies {
 
     // Moshi
     implementation("com.squareup.moshi:moshi-kotlin:1.12.0")
+
+    // Paging
+    implementation("androidx.paging:paging-runtime:3.3.2")
+    implementation("androidx.paging:paging-compose:1.0.0-alpha18")
 }

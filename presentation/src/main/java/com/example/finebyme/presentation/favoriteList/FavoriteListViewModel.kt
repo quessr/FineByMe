@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.finebyme.domain.entity.Photo
 import com.example.finebyme.domain.usecase.GetFavoritePhotoListUseCase
+import com.example.finebyme.domain.usecase.GetPhotoPagingUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteListViewModel @Inject constructor(
 //    private val photoRepository: PhotoRepository
-    private val getFavoritePhotoListUseCase: GetFavoritePhotoListUseCase
+    private val getFavoritePhotoListUseCase: GetFavoritePhotoListUseCase,
 ) : ViewModel() {
     private val _photos = MutableStateFlow<List<Photo>>(emptyList())
     val photos: StateFlow<List<Photo>> get() = _photos
